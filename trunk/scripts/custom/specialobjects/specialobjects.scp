@@ -1,0 +1,39 @@
+
+[FUNCTION cs_poison]
+
+	LOCAL.poisoner = <UID.<ARGN1>>
+	LOCAL.victim = <UID.<ARGN2>>
+	
+[ITEMDEF i_cs_memory_poison]
+ID=i_memory
+TYPE=t_eq_script
+NAME=bandage memory
+LAYER=layer_flag_poison
+
+ON=@Timer
+	LOCAL.nfrases = 3
+	
+	REF1 = <I.TAG.ataquer>  //Ataquer UID (to objet)
+	REF2 = <I.TAG.victim> //victim UId (to object)
+	
+	LOCAL.fase = <I.TAG.fase>
+	
+	LOCAL.daVeneno = <FEVAL <FLOATVAL <VAR.daPoisonMax>*(<EVAL <LOCAL.fase>>/10)>>
+	
+	REF2.DAMAGE <LOCAL.daVeneno> , , <REF1.UID>
+	
+	IF (<LOCAL.fase> <= 3) //1 2 3
+		REF1.EMOTE msg_poisonedDamage1
+	ELIF (<LOCAL.fase> <= 6) //4 5 6
+		REF1.EMOTE msg_poisonedDamage2
+	ELSE //7 8 9 10
+		REF1.EMOTE msg_poisonedDamage3
+	ENDIF
+	
+	I.TAG.fase -= 1
+	IF <I.TAG.fase> == 0
+		I.REMOVE
+	ENDIF
+	I.TIMER = <EVAL {VAL.tPoisonMin VAL.tPoisonMax}>
+
+[EOF]

@@ -1,0 +1,77 @@
+[FUNCTION f_cs_SM_SPAWNZombie]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_spawn_zombie
+	dtext +20 -3 33 Zombie
+
+[FUNCTION f_cs_SM_SPAWNGrimReaper]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_spawn_Grim_Reaper
+	dtext +20 -3 33 Grim Reaper
+
+[FUNCTION f_cs_SM_SPAWNSkeleton]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_spawn_Skeleton
+	dtext +20 -3 33 Esqueleto Normal
+
+[FUNCTION f_cs_SM_SPAWNSkeletonMage]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_spawn_SkeletonMage
+	dtext +20 -3 33 Esqueleto Mago
+	
+[FUNCTION f_cs_SM_SPAWNSkeletonSwordAndShield]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_spawn_SkeletonSwordAndShield
+	dtext +20 -3 33 Esqueleto con escudo y espada
+	
+[FUNCTION f_cs_SM_SPAWNSkeletonSpectro]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_spawn_Spectro
+	dtext +20 -3 33 Espectro
+
+[FUNCTION f_cs_SM_SPAWNLiche]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_spawn_liche
+	dtext +20 -3 33 Liche
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[FUNCTION f_cs_SM_SpecialButtonBack]
+	IF (<TAG0.spawnMenu.actualPage>!=cs_SM_portada) && (<TAG0.spawnMenu.actualPage>!=cs_SM_noZone) && (<TAG0.spawnMenu.actualPage>!=cs_SM_zones)
+		IF <TAG0.spawnMenu.actualPage> == cs_SM_numZones
+			button +0 +0 1209 1210 1 cs_SM_zones 999
+		ELIF <TAG0.spawnMenu.actualPage> == cs_SM_spawn
+			button +0 +0 1209 1210 1 cs_SM_numZones 999
+		END IF
+		dtext +20 -3 colors_blue Atrás
+	END IF
+	
+[FUNCTION f_cs_SM_ZONEBritain]
+	button +0 *20 1209 1210 1 cs_SM_numZones cs_SM_zoneBritain
+	dtext +20 -3 33 Zona de Britain
+	
+[FUNCTION f_cs_SM_NZONEBrit_Cemen]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_numZoneCemen
+	dtext +20 -3 33 Cementerio britain (5)
+	
+[FUNCTION f_cs_SM_NZONEBrit_BosqueNorte]
+	button +0 *20 1209 1210 1 cs_SM_spawn cs_SM_numZoneBosqueNorte
+	dtext +20 -3 33 Bosque del Norte (3)
+	
+	
+//Generic create spawn item
+[FUNCTION f_cs_SM_CreateSpawn]	
+	SERV.NEWITEM = 01ea7
+	NEW.TYPE = t_spawn_char
+	NEW.AMOUNT = <I.TAG0.spawnMenu.amount>
+	NEW.MORE = <ARGS>
+	NEW.MOREP = <I.TAG0.spawnMenu.time1> <I.TAG0.spawnMenu.time2> <I.TAG0.spawnMenu.dist_home> 
+	NEW.ATTR = attr_move_never|attr_magic|attr_invis
+	NEW.TIMER = 1
+	NEW.P = <P>
+	
+[EOF]

@@ -1,0 +1,9 @@
+[DEFNAME deffs_cs_buffAdd]
+addBuff_Healing 01
+addBuff_Poison 02
+
+[DEFNAME deffs_cs_buffRemove]
+removeBuff_Healing 0ffe
+removeBuff_Posion 0ffd
+
+[EOF]

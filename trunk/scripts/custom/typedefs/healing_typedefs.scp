@@ -1,0 +1,105 @@
+[typedef t_bandage]
+on=@dclick
+	SRC.SYSMESSAGE ¿A quién quieres curar?
+	target
+	RETURN 1
+	
+on=@targon_char
+	SRC.SYSMESSAGE Has seleccionado un pj
+	
+	IF <SRC.FINDLAYER.layer_flag_bandage>
+		SRC.SYSMESSAGE Ya estas ocupado curando.
+		RETURN 1
+	ENDIF
+	
+	IF <ARGO.HITS> >= <ARGO.MAXHITS>
+		SRC.SYSMESSAGE Se le ve muy sano.
+		RETURN 1
+	ENDIF
+	serv.newitem = i_cs_memory_bandage_healing
+	new.LINK = <ARGO.UID>
+	NEW.MORE = <I.UID>
+	
+	IF (<SRC.FINDLAYER.layer_hand1>) || (<SRC.FINDLAYER.layer_hand2>) || (<SRC.FLAGS>&memory_war_targ)
+		NEW.MORE2 = 1 //Healer Ocupado
+	ELSE
+		NEW.MORE2 = 0 //Healer Libre y relajado
+	ENDIF
+	
+	SRC.EQUIP <NEW.UID>
+	LOCAL.timerHeal = <EVAL {<VAR.timerHeal>}>
+	
+	NEW.TIMER = <LOCAL.timerHeal> //5 secs
+	
+	SRC.cs_addBuff <DEF.addBuff_Healing>
+	
+	SRC.SYSMESSAGE <LOCAL.timerHeal>
+	
+	
+	RETURN 1
+
+[ITEMDEF i_cs_memory_bandage_healing]
+ID=i_memory
+TYPE=t_eq_script
+NAME=bandage memory
+LAYER=layer_flag_bandage
+
+ON=@Timer
+	REF2 = <I.TOPOBJ> //The healer
+	
+	TRYSRC <REF2> cs_removeBuff <DEF.removeBuff_Healing>
+	
+	FLOAT.hAnatomy = <REF2.anatomy>
+	FLOAT.hHealing = <REF2.Healing>
+	
+	LOCAL.pAcierto = <FEVAL <FLOATVAL (<FLOAT.hAnatomy> + <FLOAT.hHealing>)/2 > >
+	IF <REF2.FOOD> < <VAR.factorHungry>
+		LOCAL.pAcierto = <FEVAL <FLOATVAL <EVAL <LOCAL.pAcierto>> * (<REF2.FOOD> / <VAR.factorHungry>)>>
+	ENDIF
+	
+	LOCAL.pAcierto = <EVAL 100 - {<EVAL 100 - <LOCAL.pAcierto>> 0} >
+	IF {0 100} < <LOCAL.pAcierto>
+
+		IF <I.MORE2>
+			LOCAL.factorMax = <VAR.factorMaxOcupado>
+			FLOAT.factorCuracion = <VAR.factorCuracionOcupado>
+		ELSE
+			LOCAL.factorMax = <VAR.factorMaxLibre>
+			FLOAT.factorCuracion = <VAR.factorCuracionLibre>
+		END IF
+		
+		REF2.SYSMESSAGE FactorMax: <LOCAL.factorMax> hAnat: <FLOAT.hAnatomy> hHeal: <FLOAT.hHealing>
+	
+		LOCAL.curacionMax = <FEVAL <FLOATVAL <EVAL <LOCAL.factorMax>>*((<FLOAT.hAnatomy>+<FLOAT.hHealing>)/200) >>
+		IF <REF2.FOOD> < <VAR.factorHungry>
+			LOCAL.curacionMax = <FEVAL <FLOATVAL <EVAL <LOCAL.curacionMax>> * (<REF2.FOOD> / <VAR.factorHungry>)>>
+		ENDIF
+		LOCAL.curacionMin = <FEVAL <FLOATVAL <FLOAT.factorCuracion> * <EVAL <LOCAL.curacionMax>>  >>
+		REF2.SYSMESSAGE MinCurar: <EVAL <LOCAL.curacionMax>> maxCurar: <EVAL <LOCAL.curacionMin>>
+
+		LOCAL.curacionFinal = <EVAL {<LOCAL.curacionMax> <LOCAL.curacionMin>}>
+		
+		REF2.SYSMESSAGE CuracionFinal: <EVAL <LOCAL.curacionFinal>>
+		REF1 = <UID.<I.LINK>>
+	
+		IF <REF1.HITS> < <REF1.MAXHITS>
+			REF1.HITS = <min <EVAL <REF1.HITS> + <LOCAL.curacionFinal>> , <REF1.MAXHITS>>
+			REF1.EMOTE Te has curado
+		ELSE
+			REF2.SYSMESSAGE No ha sido muy efectivo.
+		ENDIF
+	ELSE
+		REF2.SYSMESSAGE Has fallado al intentar aplicarte las vendas.
+	ENDIF
+	
+	IF {0 100} < <VAR.pBloodyBandage>
+		SERV.newitem i_bandage_bloody
+		NEW.COLOR <UID.<MORE>.COLOR>
+		REF1.BOUNCE <NEW.UID>
+	ENDIF
+
+	UID.<MORE>.CONSUME 1
+
+	I.REMOVE
+
+[EOF]
