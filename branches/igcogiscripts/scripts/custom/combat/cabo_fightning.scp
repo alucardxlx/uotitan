@@ -1,3 +1,5 @@
+//borrame
+
 [EVENTS e_cs_combatPVP]
 ON=@HitTry
 	IF (<ARGO.ISWEAPON>) //Is a weapon
