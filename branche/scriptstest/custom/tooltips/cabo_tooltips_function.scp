@@ -1,0 +1,166 @@
+[FUNCTION f_cs_tooltip_weapon]
+
+	LOCAL.name = <UID.<ARGN1>.NAME>
+	LOCAL.dwmin = <UID.<ARGN1>.DAM.LO>
+	LOCAL.dwmax = <UID.<ARGN1>.DAM.HI>
+	LOCAL.speed = <UID.<ARGN1>.SPEED>
+	LOCAL.maxDura = <UID.<ARGN1>.MAXHITS>
+	LOCAL.actDura = <UID.<ARGN1>.HITPOINTS>
+	LOCAL.peso = <UID.<ARGN1>.WEIGHT>
+	
+	IF <UID.<ARGN1>.DMGFIRE>
+		LOCAL.damFireMin = <min <UID.<ARGN1>.DMGFIRE>>
+		LOCAL.damFireMax = <max <UID.<ARGN1>.DMGFIRE>>
+	ENDIF
+	
+	IF <UID.<ARGN1>.DMGCOLD>
+		LOCAL.damColdMin = <min <UID.<ARGN1>.DMGCOLD>>
+		LOCAL.damColdMax = <max <UID.<ARGN1>.DMGCOLD>>
+	ENDIF
+	IF <UID.<ARGN1>.DMGPOISON>
+		LOCAL.damPoisonMin = <min <UID.<ARGN1>.DMGPOISON>>
+		LOCAL.damPoisonMax = <max <UID.<ARGN1>.DMGPOISON>>
+	ENDIF
+	IF <UID.<ARGN1>.DMGENERGY>
+		LOCAL.damEnergyMin = <min <UID.<ARGN1>.DMGENERGY>>
+		LOCAL.damEnergyMax = <max <UID.<ARGN1>.DMGENERGY>>
+	ENDIF
+	
+	IF (<UID.<ARGN1>.REQSTR>) && (<STR> < <UID.<ARGN1>.REQSTR>)
+		LOCAL.reqstr = <UID.<ARGN1>.REQSTR>
+	ENDIF
+	
+	IF (<UID.<ARGN1>.TAG0.REQDEX>) && (<DEX> < <UID.<ARGN1>.TAG0.REQDEX>)
+		LOCAL.reqdex = <UID.<ARGN1>.TAG.REQDEX>
+	ENDIF
+	
+	IF (<UID.<ARGN1>.TAG0.REQINT>) && (<INT> < <UID.<ARGN1>.TAG0.REQINT>)
+		LOCAL.reqint = <UID.<ARGN1>.TAG.REQINT>
+	ENDIF
+
+	SRC.addcliloc 1042971 , <LOCAL.name>
+	
+	LOCAL.tooltip = <DEF.BFONT_white>
+	LOCAL.tooltip = Daño: <EVAL <LOCAL.dwmin>> - <EVAL <LOCAL.dwmax>><DEF.BR>
+	LOCAL.tooltip = <LOCAL.tooltip>Velocidad: <FVAL <LOCAL.speed>> s
+	
+	IF <LOCAL.damFireMax>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_FIRE>+ Daño Fuego: <EVAL <LOCAL.damFireMin>> - <EVAL <LOCAL.damFireMax>>
+	ENDIF
+	IF <LOCAL.damColdMax>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_COLD>+ Daño Frío: <EVAL <LOCAL.damColdMin>> - <EVAL <LOCAL.damColdMax>>
+	ENDIF
+	IF <LOCAL.damPoisonMax>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_POISON>+ Daño Veneno: <EVAL <LOCAL.damPoisonMin>> - <EVAL <LOCAL.damPoisonMax>>
+	ENDIF
+	IF <LOCAL.damEnergyMax>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_ENERGY>+ Daño Energía: <EVAL <LOCAL.damEnergyMin>> - <EVAL <LOCAL.damEnergyMax>>
+	ENDIF
+	
+	IF <LOCAL.reqstr>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Fuerza req.: <EVAL <LOCAL.reqstr>>
+	ENDIF
+	IF <LOCAL.reqdex>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Destreza req.: <EVAL <LOCAL.reqdex>>
+	ENDIF
+	IF <LOCAL.reqint>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Inteligencia req.: <EVAL <LOCAL.reqint>>
+	ENDIF
+	
+	LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_white>
+	LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Durabilidad: <EVAL <LOCAL.actDura>> / <EVAL <LOCAL.maxDura>>
+	
+	addcliloc 1070722 , <LOCAL.tooltip>
+	
+[FUNCTION f_cs_tooltip_armor]
+
+	LOCAL.name = <UID.<ARGN1>.NAME>
+	
+	IF (<UID.<ARGN1>.LAYER> == layer_helm)
+		LOCAL.percZones = armor_helm_percentage
+	ELIF (<UID.<ARGN1>.LAYER> == layer_collar)
+		LOCAL.percZones = armor_gorget_percentage
+	ELIF (<UID.<ARGN1>.LAYER> == layer_chest) || (<UID.<ARGN1>.LAYER> == layer_shirt) || (<UID.<ARGN1>.LAYER> == layer_tunic)
+		LOCAL.percZones = armor_chest_percentage + armor_back_percentage
+	ELIF (<UID.<ARGN1>.LAYER> == layer_cape)
+		LOCAL.percZones = armor_back_percentage + armor_arms_percentage
+	ELIF (<UID.<ARGN1>.LAYER> == layer_robe)
+		LOCAL.percZones = armor_back_percentage + armor_arms_percentage + armor_chest_percentage
+	ELIF (<UID.<ARGN1>.LAYER> == layer_arms)
+		LOCAL.percZones = armor_arms_percentage
+	ELIF (<UID.<ARGN1>.LAYER> == layer_pants) || (<UID.<ARGN1>.LAYER> == layer_skirt) || (<UID.<ARGN1>.LAYER> == layer_HALF_APRON)
+		LOCAL.percZones = armor_legs_percentage
+	ELIF (<UID.<ARGN1>.LAYER> == layer_legs)
+		LOCAL.percZones = armor_legs_percentage + armor_shoes_percentage
+	ELIF (<UID.<ARGN1>.LAYER> == layer_shoes)
+		LOCAL.percZones = armor_shoes_percentage
+	ENDIF		
+		
+	LOCAL.armorCompleta = <max <UID.<ARGN1>.ARMOR>>
+	
+	LOCAL.armor = <FEVAL <FLOATVAL <EVAL <LOCAL.armorCompleta>>*(<EVAL <LOCAL.percZones>>/100)>>
+	
+
+	LOCAL.maxDura = <UID.<ARGN1>.MAXHITS>
+	LOCAL.actDura = <UID.<ARGN1>.HITPOINTS>
+	LOCAL.peso = <UID.<ARGN1>.WEIGHT>
+	
+	IF <UID.<ARGN1>.TAG0.RESFIRE>
+		LOCAL.resFire = <UID.<ARGN1>.TAG0.RESFIRE>
+	ENDIF
+	IF <UID.<ARGN1>.TAG0.RESCOLD>
+		LOCAL.resCold = <UID.<ARGN1>.TAG0.RESCOLD>
+	ENDIF
+	IF <UID.<ARGN1>.TAG0.RESPOISON>
+		LOCAL.resPoison = <UID.<ARGN1>.TAG0.RESPOISON>
+	ENDIF
+	IF <UID.<ARGN1>.TAG0.RESENERGY>
+		LOCAL.resEnergy = <UID.<ARGN1>.TAG0.RESENERGY>
+	ENDIF
+	
+	IF (<UID.<ARGN1>.REQSTR>) && (<STR> < <UID.<ARGN1>.REQSTR>)
+		LOCAL.reqstr = <UID.<ARGN1>.REQSTR>
+	ENDIF
+	
+	IF (<UID.<ARGN1>.TAG0.REQDEX>) && (<DEX> < <UID.<ARGN1>.TAG0.REQDEX>)
+		LOCAL.reqdex = <UID.<ARGN1>.TAG.REQDEX>
+	ENDIF
+	
+	IF (<UID.<ARGN1>.TAG0.REQINT>) && (<INT> < <UID.<ARGN1>.TAG0.REQINT>)
+		LOCAL.reqint = <UID.<ARGN1>.TAG.REQINT>
+	ENDIF
+
+	SRC.addcliloc 1042971 , <LOCAL.name>
+	
+	LOCAL.tooltip = <DEF.BFONT_white>
+	LOCAL.tooltip = Armadura: <EVAL <LOCAL.armor>> (<EVAL <LOCAL.armorCompleta>>)
+	
+	IF <LOCAL.resFire>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_FIRE>+ <EVAL <LOCAL.resFire>> Resist. fuego
+	ENDIF
+	IF <LOCAL.resCold>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_COLD>+ <EVAL <LOCAL.resCold>> Resist. frío
+	ENDIF
+	IF <LOCAL.resPoison>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_POISON>+ <EVAL <LOCAL.resPoison>> Resist. Veneno
+	ENDIF
+	IF <LOCAL.resEnergy>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_ENERGY>+ <EVAL <LOCAL.resEnergy>> Resist. Energia
+	ENDIF
+	
+	IF <LOCAL.reqstr>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Fuerza req.: <EVAL <LOCAL.reqstr>>
+	ENDIF
+	IF <LOCAL.reqdex>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Destreza req.: <EVAL <LOCAL.reqdex>>
+	ENDIF
+	IF <LOCAL.reqint>
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Inteligencia req.: <EVAL <LOCAL.reqint>>
+	ENDIF
+	
+	LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_white>
+	LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Durabilidad: <EVAL <LOCAL.actDura>> / <EVAL <LOCAL.maxDura>>
+	
+	addcliloc 1070722 , <LOCAL.tooltip>
+
+[EOF]
