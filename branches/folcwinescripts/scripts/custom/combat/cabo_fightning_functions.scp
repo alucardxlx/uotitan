@@ -1,3 +1,6 @@
+//cabo script test
+//cabo test
+
 [FUNCTION f_cs_calculate_p_durability]
 	LOCAL.Damage = <ARGN1>
 	LOCAL.armorZoneNpc = <ARGN2>
