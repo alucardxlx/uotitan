@@ -1,0 +1,11 @@
+//cabo events
+
+[FUNCTION max]
+RETURN <QVAL <ARGN2> < <ARGN1>? <ARGN1> : <ARGN2>>
+
+[FUNCTION min]
+RETURN <QVAL <ARGN2> < <ARGN1>? <ARGN2> : <ARGN1>>
+
+
+
+[EOF]
