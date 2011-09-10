@@ -1,0 +1,18 @@
+\\ Sphere CaboShard accounts file
+\\ NOTE: This file cannot be edited while the server is running.
+\\ Any file changes must be made to sphereaccu.scp. This is read in at save time.
+
+[superadmin]
+PLEVEL=Owner
+PRIV=04a
+PASSWORD=1234
+TOTALCONNECTTIME=215
+LASTCONNECTTIME=38
+LASTCHARUID=01
+CHARUID=01
+FIRSTCONNECTDATE=2010/11/30 16:48:49
+FIRSTIP=127.0.0.1
+LASTCONNECTDATE=2010/12/01 00:54:39
+LASTIP=127.0.0.1
+CHATNAME=asfdasa
+LANG=ESP
