@@ -20,10 +20,10 @@ ON=@HitTry
 	IF <I.FOOD> < <VAR.factorHungry>
 		LOCAL.v = <FEVAL <FLOATVAL <EVAL <LOCAL.SPEED>> + (1 - ( ((<FLOAT.Harma> + (2*<I.DEX>))/300)*(<I.FOOD>/<VAR.factorHungry>)) ) * (<EVAL <LOCAL.SPEED>>/<VAR.factorSpeed>)> >
 	ELSE
-		LOCAL.v = <FEVAL <FLOATVAL <EVAL <LOCAL.SPEED>> + (1 - ((<FLOAT.Harma> + <I.DEX>)/200)) * (<EVAL <LOCAL.SPEED>>/<VAR.factorSpeed>)> >
+		LOCAL.v = <FEVAL <FLOATVAL <EVAL <LOCAL.SPEED>> + (1 - ((<FLOAT.Harma> + <I.DEX>)/200))*<EVAL <LOCAL.SPEED>>/<EVAL <VAR.factorSpeed>>>>
 	END IF
 	
-	I.SYSMESSAGE @33,3 Velocidad <LOCAL.v>
+	I.SYSMESSAGE @43,3 <EVAL <LOCAL.v>> <VAR.factorSpeed>
 	ARGN1 = <LOCAL.v>
 	
 	RETURN 0
