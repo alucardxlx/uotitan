@@ -10,6 +10,7 @@
 // Updated By: Blizzard
 VERSION=0.56b
 
+//modificated item start cabo
 [ITEMDEF 013bb]
 DEFNAME=i_chainmail_coif
 TYPE=T_ARMOR
@@ -17,12 +18,14 @@ RESOURCES=10 i_ingot_iron
 SKILLMAKE=BLACKSMITHING 14.5
 WEIGHT=7
 FLIP=1
-ARMOR=23
+//ARMOR=23
+TAG0.armor=20
 REQSTR=20
 CATEGORY=Provisions - Armor
 SUBSECTION=Chainmail Armor
 DESCRIPTION=Chainmail Coif
 DUPELIST=013c0
+//modificated item END cabo
 
 ON=@Create
 COLOR=color_o_iron
