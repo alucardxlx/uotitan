@@ -1,0 +1,11 @@
+//HIERRO weapon definition
+//n=0
+[ITEMDEF i_sword_long_hierro]
+ID=i_sword_long_base
+ON=@Create
+	HITPOINTS={50 60} //Revisar
+	DMGFISIC=({4,6}),({7,11}) //{MIN_min, MIN_max},{MAX_min, MAX_max}
+	DMGFIRE=5,20
+	DMGCOLD=0,0
+	DMGENERGY=0,0
+	DMGPOISON=0,0
