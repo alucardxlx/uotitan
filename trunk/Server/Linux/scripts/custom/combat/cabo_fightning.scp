@@ -44,12 +44,14 @@ ON=@Hit
 	
 	I.SAY armorzone : <LOCAL.armorZone> zone: <LOCAL.zona>
 	
+	I.SAY DMGFISIC : <ARGO.TAG.DMGFISIC> HI : <max <ARGO.TAG.DMGFISIC>> LO : <min <ARGO.TAG.DMGFISIC>>
+	
 	LOCAL.daFinal = 0
 	IF <ARGO.ISWEAPON>
 	
 		//Fisical damage
-		IF <ARGO.DAM.HI> != 0
-			LOCAL.daFis =  <I.f_cs_fighting_calc <ARGO.DAM.HI> <ARGO.DAM.LO> <LOCAL.armorZone>>
+		IF <ARGO.TAG.DMGFISIC> != 0
+			LOCAL.daFis =  <I.f_cs_fighting_calc <max <ARGO.TAG.DMGFISIC>> <min <ARGO.TAG.DMGFISIC>> <LOCAL.armorZone>>
 		END IF
 		
 		//FireDamage
