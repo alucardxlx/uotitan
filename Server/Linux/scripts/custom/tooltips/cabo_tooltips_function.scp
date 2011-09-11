@@ -1,29 +1,29 @@
 [FUNCTION f_cs_tooltip_weapon]
 
 	LOCAL.name = <UID.<ARGN1>.NAME>
-	LOCAL.dwmin = <UID.<ARGN1>.DAM.LO>
-	LOCAL.dwmax = <UID.<ARGN1>.DAM.HI>
+	LOCAL.dwmin = <UID.<ARGN1>.TAG.DMGFISIC>
+	LOCAL.dwmax = <UID.<ARGN1>.TAG.DMGFISIC>
 	LOCAL.speed = <UID.<ARGN1>.SPEED>
 	LOCAL.maxDura = <UID.<ARGN1>.MAXHITS>
 	LOCAL.actDura = <UID.<ARGN1>.HITPOINTS>
 	LOCAL.peso = <UID.<ARGN1>.WEIGHT>
 	
-	IF <UID.<ARGN1>.DMGFIRE>
-		LOCAL.damFireMin = <min <UID.<ARGN1>.DMGFIRE>>
-		LOCAL.damFireMax = <max <UID.<ARGN1>.DMGFIRE>>
+	IF <UID.<ARGN1>.TAG.DMGFIRE>
+		LOCAL.damFireMin = <min <UID.<ARGN1>.TAG.DMGFIRE>>
+		LOCAL.damFireMax = <max <UID.<ARGN1>.TAG.DMGFIRE>>
 	ENDIF
 	
-	IF <UID.<ARGN1>.DMGCOLD>
-		LOCAL.damColdMin = <min <UID.<ARGN1>.DMGCOLD>>
-		LOCAL.damColdMax = <max <UID.<ARGN1>.DMGCOLD>>
+	IF <UID.<ARGN1>.TAG.DMGCOLD>
+		LOCAL.damColdMin = <min <UID.<ARGN1>.TAG.DMGCOLD>>
+		LOCAL.damColdMax = <max <UID.<ARGN1>.TAG.DMGCOLD>>
 	ENDIF
-	IF <UID.<ARGN1>.DMGPOISON>
-		LOCAL.damPoisonMin = <min <UID.<ARGN1>.DMGPOISON>>
-		LOCAL.damPoisonMax = <max <UID.<ARGN1>.DMGPOISON>>
+	IF <UID.<ARGN1>.TAG.DMGPOISON>
+		LOCAL.damPoisonMin = <min <UID.<ARGN1>.TAG.DMGPOISON>>
+		LOCAL.damPoisonMax = <max <UID.<ARGN1>.TAG.DMGPOISON>>
 	ENDIF
-	IF <UID.<ARGN1>.DMGENERGY>
-		LOCAL.damEnergyMin = <min <UID.<ARGN1>.DMGENERGY>>
-		LOCAL.damEnergyMax = <max <UID.<ARGN1>.DMGENERGY>>
+	IF <UID.<ARGN1>.TAG.DMGENERGY>
+		LOCAL.damEnergyMin = <min <UID.<ARGN1>.TAG.DMGENERGY>>
+		LOCAL.damEnergyMax = <max <UID.<ARGN1>.TAG.DMGENERGY>>
 	ENDIF
 	
 	IF (<UID.<ARGN1>.REQSTR>) && (<STR> < <UID.<ARGN1>.REQSTR>)
