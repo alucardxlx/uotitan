@@ -1,6 +1,6 @@
 //HIERRO weapon definition
 //n=0
-[ITEMDEF i_iron_knife_butcher]
+[ITEMDEF i_knife_butcher_iron]
 ID=i_knife_butcher_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -10,7 +10,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 
-[ITEMDEF i_iron_cleaver_meat]
+[ITEMDEF i_cleaver_meat_iron]
 ID=i_cleaver_meat_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -20,7 +20,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_knife_skinning]
+[ITEMDEF i_knife_skinning_iron]
 ID=i_knife_skinning_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -30,7 +30,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_cutlass]
+[ITEMDEF i_cutlass_iron]
 ID=i_cutlass_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -40,7 +40,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_katana]
+[ITEMDEF i_katana_iron]
 ID=i_katana_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -50,7 +50,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_sword_long]
+[ITEMDEF i_sword_long_iron]
 ID=i_sword_long_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -61,7 +61,7 @@ ON=@Create
 	TAG0.DMGPOISON=0,0
 	
 	
-[ITEMDEF i_iron_scimitar]
+[ITEMDEF i_scimitar_iron]
 ID=i_scimitar_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -71,7 +71,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_sword_broad]
+[ITEMDEF i_sword_broad_iron]
 ID=i_sword_broad_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -81,7 +81,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_sword_viking]
+[ITEMDEF i_sword_viking_iron]
 ID=i_sword_viking_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -91,7 +91,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 
-[ITEMDEF i_iron_bone_harvester]
+[ITEMDEF i_bone_harvester_iron]
 ID=i_bone_harvester_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -101,7 +101,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 
-[ITEMDEF i_iron_elven_Machete]
+[ITEMDEF i_elven_Machete_iron]
 ID=i_elven_Machete_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -111,7 +111,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_Radiant_Scimitar]
+[ITEMDEF i_Radiant_Scimitar_iron]
 ID=i_Radiant_Scimitar_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -121,7 +121,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_wakizashi]
+[ITEMDEF i_wakizashi_iron]
 ID=i_wakizashi_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -131,7 +131,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 
-[ITEMDEF i_iron_axe]
+[ITEMDEF i_axe_iron]
 ID=i_axe_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -142,7 +142,7 @@ ON=@Create
 	TAG0.DMGPOISON=0,0
 	
 	
-[ITEMDEF i_iron_bardiche]
+[ITEMDEF i_bardiche_iron]
 ID=i_bardiche_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -152,7 +152,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_axe_battle]
+[ITEMDEF i_axe_battle_iron]
 ID=i_axe_battle_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -162,7 +162,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_crescent_blade]
+[ITEMDEF i_crescent_blade_iron]
 ID=i_crescent_blade_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -172,7 +172,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_daisho]
+[ITEMDEF i_daisho_iron]
 ID=i_daisho_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -182,7 +182,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 
-[ITEMDEF i_iron_axe_double]
+[ITEMDEF i_axe_double_iron]
 ID=i_axe_double_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -192,7 +192,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_axe_exec]
+[ITEMDEF i_axe_exec_iron]
 ID=i_axe_exec_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -202,7 +202,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_halberd]
+[ITEMDEF i_halberd_iron]
 ID=i_halberd_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -212,7 +212,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_hatchet]
+[ITEMDEF i_hatchet_iron]
 ID=i_hatchet_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -223,7 +223,7 @@ ON=@Create
 	TAG0.DMGPOISON=0,0
 	
 
-[ITEMDEF i_iron_axe_battle_large]
+[ITEMDEF i_axe_battle_large_iron]
 ID=i_axe_battle_large_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -233,7 +233,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_no_dachi]
+[ITEMDEF i_no_dachi_iron]
 ID=i_no_dachi_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -243,7 +243,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_Ornate_Axe]
+[ITEMDEF i_iron_Ornate_Axe_iron]
 ID=i_Ornate_Axe_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -253,7 +253,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_sword_paladin]
+[ITEMDEF i_sword_paladin_iron]
 ID=i_sword_paladin_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -263,7 +263,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_Rune_Blade]
+[ITEMDEF i_Rune_Blade_iron]
 ID=i_Rune_Blade_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -273,7 +273,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 	
-[ITEMDEF i_iron_scythe]
+[ITEMDEF i_scythe_iron]
 ID=i_scythe_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
@@ -283,7 +283,7 @@ ON=@Create
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
 
-[ITEMDEF i_iron_axe_two_hand]
+[ITEMDEF i_axe_two_hand_iron]
 ID=i_axe_two_hand_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
