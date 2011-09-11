@@ -44,34 +44,34 @@ ON=@Hit
 	
 	I.SAY armorzone : <LOCAL.armorZone> zone: <LOCAL.zona>
 	
-	I.SAY DMGFISIC : <ARGO.TAG.DMGFISIC> HI : <max <ARGO.TAG.DMGFISIC>> LO : <min <ARGO.TAG.DMGFISIC>>
+	I.SAY DMGFISIC : <ARGO.TAG0.DMGFISIC> HI : <max <ARGO.TAG0.DMGFISIC>> LO : <min <ARGO.TAG0.DMGFISIC>>
 	
 	LOCAL.daFinal = 0
 	IF <ARGO.ISWEAPON>
 	
 		//Fisical damage
 		IF <ARGO.TAG.DMGFISIC> != 0
-			LOCAL.daFis =  <I.f_cs_fighting_calc <max <ARGO.TAG.DMGFISIC>> <min <ARGO.TAG.DMGFISIC>> <LOCAL.armorZone>>
+			LOCAL.daFis =  <I.f_cs_fighting_calc <max <ARGO.TAG0.DMGFISIC>> <min <ARGO.TAG0.DMGFISIC>> <LOCAL.armorZone>>
 		END IF
 		
 		//FireDamage
 		IF <ARGO.DMGFIRE> != 0
-			LOCAL.daFire = <I.f_cs_fighting_calc_elem <max <ARGO.DMGFIRE>> <min <ARGO.DMGFIRE>> <SRC.RESFIRE>>
+			LOCAL.daFire = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGFIRE>> <min <ARGO.TAG0.DMGFIRE>> <SRC.RESFIRE>>
 		END IF
 		
 		//Cold Damage
 		IF <ARGO.DMGCOLD> != 0
-			LOCAL.daCold = <I.f_cs_fighting_calc_elem <max <ARGO.DMGCOLD>> <min <ARGO.DMGCOLD>> <SRC.RESCOLD>>
+			LOCAL.daCold = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGCOLD>> <min <ARGO.TAG0.DMGCOLD>> <SRC.RESCOLD>>
 		END IF
 		
 		//Poison Damage
 		IF <ARGO.DMGPOISON> != 0
-			LOCAL.daPoison = <I.f_cs_fighting_calc_elem <max <ARGO.DMGPOISON>> <min <ARGO.DMGPOISON>> <SRC.RESPOISON>>
+			LOCAL.daPoison = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGPOISON>> <min <ARGO.TAG0.DMGPOISON>> <SRC.RESPOISON>>
 		END IF
 		
 		//Energy Damage
 		IF <ARGO.DMGENERGY> != 0
-			LOCAL.daEnergy = <I.f_cs_fighting_calc_elem <max <ARGO.DMGENERGY>> <min <ARGO.DMGENERGY>> <SRC.RESENERGY>>
+			LOCAL.daEnergy = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGENERGY>> <min <ARGO.TAG0.DMGENERGY>> <SRC.RESENERGY>>
 		END IF
 		I.SYSMESSAGE Fisico: <LOCAL.daFis> Fuego: <LOCAL.daFire> Frio: <LOCAL.daCold> Veneno: <LOCAL.daPoison> Energy: <LOCAL.daEnergy>
 		
