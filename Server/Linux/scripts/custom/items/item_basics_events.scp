@@ -1,22 +1,31 @@
 [EVENTS e_uot_playerInteractItem]
 on=@ItemEquip
-	I "Te vas a equipar algo"
 	//If chungo y rápido pero habría que comprobar que el item es de tipo
 	//"armadura" (armor, ropa, piel, etc...)
 	//y NO es otra cosa como una daga, etc...
-	IF <ISARMOR <ACT.UID>>
-		I.SYSMESSAGE "Es una armadura"
-		I.MODAR = <EVAL <I.MODAR> + <ACT.TAG0.armor> >
+	IF (<ISARMOR <ACT.UID>>) || (<ACT.TYPE> == T_CLOTHING)
+		I.SYSMESSAGE Es una armadura
+		LOCAL.arMax = <f_cs_ar_layer_in_zones <ACT.layer> <I>> //Armor maxima de la zona
+		I.SYSMESSAGE ARMAX: <LOCAL.arMax> ZONE: <LOCAL.zone>
+		IF <ACT.TAG0.ARMOR> > <LOCAL.arMax>
+			I.MODAR = <EVAL <I.MODAR> - <LOCAL.arMax> >
+			I.MODAR = <EVAL <I.MODAR> + <ACT.TAG0.ARMOR> >
+			I.SYSMESSAGE Entro: <I.MODAR>
+		ENDIF			
 		I.SYSMESSAGE "defensa actual: "<I.MODAR>
 	ELSE
 		I.SYSMESSAGE "No es una armadura"
 		I.SYSMESSAGE "defensa actual: "<I.MODAR>
 	ENDIF
+	
 on=@ItemUnEquip
 	I.SAY "Te has desequipado de algo"
 	
-	IF <ISARMOR <ACT.UID>>
-		I.MODAR = <EVAL <I.MODAR> - <ACT.TAG0.armor> >
+	IF <ISARMOR <ACT.UID>> || (<ACT.TYPE> == T_CLOTHING)
+		I.MODAR = <EVAL <I.MODAR> - <ACT.TAG0.ARMOR> >
+		LOCAL.layer = <f_cs_armor_zone_calc <LOCAL.zone> 2>
+		I.SYSMESSAGE "layer: "<LOCAL.layer>
+		
 	ENDIF
 	
 	I.SYSMESSAGE "defensa actual: "<I.MODAR>
