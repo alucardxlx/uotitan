@@ -3,3 +3,8 @@ scripts/custom/items/weapons/weapons_base_defs.scp
 scripts/custom/items/weapons/
 scripts/custom/items/weapons/crafteable/
 scripts/custom/items/weapons/crafteable/blacksmithing/
+
+scripts/custom/items/armors/armors_base_defs.scp
+scripts/custom/items/armors/
+scripts/custom/items/armors/crafteable/
+scripts/custom/items/armors/crafteable/blacksmithing/
