@@ -68,6 +68,7 @@ scripts/custom/
 scripts/custom/skillsgain/
 scripts/custom/combat/
 scripts/custom/dialogs/
+scripts/custom/functions/
 scripts/custom/tooltips/
 scripts/custom/typedefs/
 scripts/custom/items/
