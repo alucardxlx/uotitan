@@ -65,6 +65,7 @@ scripts/speech/
 // scripts/stones/towns/
 // -----------------------------------
 scripts/custom/
+scripts/custom/skills/
 scripts/custom/skillsgain/
 scripts/custom/combat/
 scripts/custom/dialogs/

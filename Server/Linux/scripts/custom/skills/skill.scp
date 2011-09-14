@@ -1,0 +1,17 @@
+
+//Addition to swordsmanship.
+[SKILL 40]
+on=@start
+	LOCAL.pos = <I.P>
+	LOCAL.dist = <I.DISTANCE <I.TAG0.attackTo>>
+	I.SYSMESSAGE @133,3 Dist between us: <LOCAL.dist>
+	
+	IF <LOCAL.dist> <= 1
+		Local.Speed = <QVAL <Weapon> ? <Weapon.Speed> : 20> //Speed weapon or 20.
+		//Formula: LOCAL.speed = [...]
+		
+		I.SYSMESSAGE @133,3 Speed final to wait: <Local.Speed>
+		timerd = <Local.Speed>
+	ELSE
+		RETURN 1
+	ENDIF
