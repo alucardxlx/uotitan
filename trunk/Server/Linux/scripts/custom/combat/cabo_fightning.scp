@@ -1,7 +1,8 @@
 [EVENTS e_cs_combatPVP]
-
-
+on=@Attack
+	I.TAG.attackTo = <SRC.UID> //Guarda a quien estás atacando.
 ON=@HitTry
+	RETURN 0 //test cabo.
 	IF (<ARGO.ISWEAPON>) //Is a weapon
 		IF (<ARGO.TYPE> == t_weapon_sword) || (<ARGO.TYPE> == t_weapon_axe)
 			FLOAT.Harma = <I.swordsmanship>
@@ -25,7 +26,7 @@ ON=@HitTry
 	
 	I.SYSMESSAGE @43,3 <EVAL <LOCAL.v>> <VAR.factorHungry>
 	ARGN1 = <LOCAL.v>
-	
+
 	RETURN 0
 	
 ON=@Hit
