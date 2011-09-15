@@ -20,13 +20,11 @@
 		LOCAL.pZone = armor_shoes_percentage
 	END IF
 	
-	I.SAY <FLOAT.pZone>
-	
 	LOCAL.armor = <FEVAL <FLOATVAL (<EVAL <LOCAL.pZone>>/100)*<EVAL <LOCAL.armorG>> > >
 	
-	I.SAY tengo <LOCAL.armor> de armor en esa zona
-	
 	RETURN <LOCAL.armor>
+
+[FUNCTION f_damage_by_npc_nohuman]
 
 [FUNCTION f_cs_armor_calc]
 	LOCAL.zone = <ARGN1> //Zona
@@ -156,16 +154,15 @@
 	LOCAL.dawLO = <ARGN2> //Daño weapon LO
 	LOCAL.armor = <ARGN3> //Armor de victima
 
-	I.SYSMESSAGE Hi: <LOCAL.dawHI> LO: <LOCAL.dawLO>
+	I.SYSMESSAGE @70,1 "--Atacante--"
+	SRC.SYSMESSAGE @70,1 "--Atacante--"
 	
 	IF <I.WEAPON.ISWEAPON> //Is a weapon
-		SYSMESSAGE INTENTO1
 		IF (<I.WEAPON.TYPE> == t_weapon_sword) || (<I.WEAPON.TYPE> == t_weapon_axe)
 			FLOAT.Harma = <I.swordsmanship>
 		ELSEIF (<I.WEAPON.TYPE> == t_weapon_fence )
 			FLOAT.Harma = <I.Fencing>
 		ELSEIF (<I.WEAPON.TYPE> == t_weapon_mace_pick) || (<I.WEAPON.TYPE> == t_weapon_mace_smith) || (<I.WEAPON.TYPE> == t_weapon_mace_sharp) || (<I.WEAPON.TYPE> == t_weapon_mace_staff) || (<I.WEAPON.TYPE> == t_weapon_mace_crook)
-			SYSMESSAGE llego al macefigting
 			FLOAT.Harma = <I.Macefighting>
 		END IF
 	ELSE
@@ -175,37 +172,48 @@
 	FLOAT.hanatomia = <I.Anatomy>
 	FLOAT.htacticas = <I.Tactics>
 	
-	I.SYSMESSAGE @33,3 Fuerza: <STR> Arma: <FLOAT.Harma> anatomia: <FLOAT.hanatomia> Tacticas: <FLOAT.htacticas>
-	IF <I.FOOD> < <VAR.factorHungry>
+	I.SYSMESSAGE @70,1 Fuerza : <STR> -- Arma : <FLOAT.Harma> -- Anatomia : <FLOAT.hanatomia> -- Tacticas : <FLOAT.htacticas>
+	I.SYSMESSAGE @70,1 Comida : <I.FOOD>
+	
+	SRC.SYSMESSAGE @70,1 Fuerza : <STR> -- Arma : <FLOAT.Harma> -- Anatomia : <FLOAT.hanatomia> -- Tacticas : <FLOAT.htacticas>
+	SRC.SYSMESSAGE @70,1 Comida : <I.FOOD>
+
+	IF !(<I.BRAIN>) && (<I.FOOD> < <VAR.factorHungry>)
 		LOCAL.damax = <FEVAL <FLOATVAL  <STR> * ((<FLOAT.hanatomia> + <FLOAT.htacticas> ) / 200 ) * (<FLOAT.Harma>/100)*(<I.FOOD>/<VAR.factorHungry>)> >
 	ELSE
 		LOCAL.damax = <FEVAL <FLOATVAL  <STR> * ((<FLOAT.hanatomia> + <FLOAT.htacticas> ) / 200 ) * (<FLOAT.Harma>/100) >>
 	END IF
 	
-	SRC.SYSMESSAGE  <LOCAL.damax>
-	
 	LOCAL.damin = <EVAL <LOCAL.damax> / <VAR.factorMinPower> >
-	I.SYSMESSAGE derechoMax: <LOCAL.damax> derechoMin: <LOCAL.damin>
+	
+	I.SYSMESSAGE @70,1 Danyo-W: <EVAL <LOCAL.dawLO>>-<EVAL <LOCAL.dawHI>>
+	I.SYSMESSAGE @70,1 Derecho: <EVAL <LOCAL.damin>>-<EVAL <LOCAL.damax>> 
+	
+	SRC.SYSMESSAGE @70,1 Danyo-W: <EVAL <LOCAL.dawLO>>-<EVAL <LOCAL.dawHI>>
+	SRC.SYSMESSAGE @70,1 Derecho: <EVAL <LOCAL.damin>>-<EVAL <LOCAL.damax>> 
 	
 	LOCAL.damInfMin = <max <LOCAL.damin> , <LOCAL.dawLO> >
 	LOCAL.damInfMax = <min <LOCAL.damax> , <LOCAL.dawHI> >
 	
 	LOCAL.damInfMin = <min <LOCAL.damInfMax> , <LOCAL.damInfMin>>
 	
-	I.SYSMESSAGE @33,3 DaInflmax: <LOCAL.damInfMax> y DaInflmin: <LOCAL.damInfMin>
+	I.SYSMESSAGE @70,1 Rango Danyo Infligido: <EVAL <LOCAL.damInfMin>>-<EVAL <LOCAL.damInfMax>>
+	SRC.SYSMESSAGE @70,1 Rango Danyo Infligido: <EVAL <LOCAL.damInfMin>>-<EVAL <LOCAL.damInfMax>>
 	
 	LOCAL.damInf = <EVAL {<LOCAL.damInfMax> <LOCAL.damInfMin>}>
 	
-	I.SYSMESSAGE @33,3 rand: <LOCAL.damInf>
+	I.SYSMESSAGE @70,1 Danyo Infligido: <EVAL <LOCAL.damInf>>
+	SRC.SYSMESSAGE @70,1 Danyo Infligido: <EVAL <LOCAL.damInf>>
 	
 	IF <LOCAL.damInf> == 0
 		RETURN 0
 	ENDIF
 	
-	LOCAL.damInf = <FEVAL <FLOATVAL <EVAL <LOCAL.damInf>>*((<EVAL <LOCAL.damInf>-<LOCAL.armor>>)/<EVAL <LOCAL.damInf>>) > >
+	LOCAL.damInf = <EVAL <LOCAL.damInf>-<LOCAL.armor>>
 	
 	LOCAL.damInf = <max <EVAL <LOCAL.damInf>>, 0>
-	SRC.SYSMESSAGE @58,3 Te voy a hacer <LOCAL.damInf>
+	I.SYSMESSAGE @70,1 Danyo Infligido - Armor Enemigo : <EVAL <LOCAL.damInf>>
+	SRC.SYSMESSAGE @70,1 Danyo Infligido - Armor Enemigo : <EVAL <LOCAL.damInf>>
 	
 	RETURN <LOCAL.damInf>
 
@@ -213,17 +221,13 @@
 	LOCAL.dawHI = <ARGN1> //Daño weapon Hi
 	LOCAL.dawLO = <ARGN2> //Daño weapon LO
 	LOCAL.armor = <ARGN3> //Armor de victima
-
-	I.SYSMESSAGE Hi: <LOCAL.dawHI> LO: <LOCAL.dawLO>
 	
 	IF <I.WEAPON.ISWEAPON> //Is a weapon
-		SYSMESSAGE INTENTO1
 		IF (<I.WEAPON.TYPE> == t_weapon_sword) || (<I.WEAPON.TYPE> == t_weapon_axe)
 			FLOAT.Harma = <I.swordsmanship>
 		ELSEIF (<I.WEAPON.TYPE> == t_weapon_fence )
 			FLOAT.Harma = <I.Fencing>
 		ELSEIF (<I.WEAPON.TYPE> == t_weapon_mace_pick) || (<I.WEAPON.TYPE> == t_weapon_mace_smith) || (<I.WEAPON.TYPE> == t_weapon_mace_sharp) || (<I.WEAPON.TYPE> == t_weapon_mace_staff) || (<I.WEAPON.TYPE> == t_weapon_mace_crook)
-			SYSMESSAGE llego al macefigting
 			FLOAT.Harma = <I.Macefighting>
 		END IF
 	ELSE
@@ -232,26 +236,20 @@
 		
 	FLOAT.hanatomia = <I.Anatomy>
 	FLOAT.htacticas = <I.Tactics>
-	
-	I.SYSMESSAGE @33,3 NPC Fuerza: <STR> Arma: <FLOAT.Harma> anatomia: <FLOAT.hanatomia> Tacticas: <FLOAT.htacticas>
-	IF <I.FOOD> < <VAR.factorHungry>
+
+
+	IF !(<I.BRAIN>) && (<I.FOOD> < <VAR.factorHungry>)
 		LOCAL.damax = <FEVAL <FLOATVAL  <STR> * ((<FLOAT.hanatomia> + <FLOAT.htacticas> ) / 200 ) * (<FLOAT.Harma>/100)*(<I.FOOD>/<VAR.factorHungry>)> >
 	ELSE
 		LOCAL.damax = <FEVAL <FLOATVAL  <STR> * ((<FLOAT.hanatomia> + <FLOAT.htacticas> ) / 200 ) * (<FLOAT.Harma>/100) >>
 	END IF
 	
-	SRC.SYSMESSAGE primerDamax:  <LOCAL.damax>
-	
 	LOCAL.damin = <EVAL <LOCAL.damax> / <VAR.factorMinPower> >
-	SRC.SYSMESSAGE derechoMax: <LOCAL.damax> derechoMin: <LOCAL.damin>
 	
 	LOCAL.daminCorr = <max <EVAL <LOCAL.damin> - <LOCAL.armor>> , 0>
 	LOCAL.damaxCorr = <max <EVAL <LOCAL.damax> - <LOCAL.armor>> , 0 >
-	SRC.SYSMESSAGE armorMalo: <LOCAL.armor>
-	SRC.SYSMESSAGE dacorrMax: <LOCAL.damaxCorr> dacorrMin: <LOCAL.daminCorr>
 	
 	IF <LOCAL.damaxCorr> < <LOCAL.dwmin>
-		SRC.SYSMESSAGE Soy un mierda, no le hago nada.
 		RETURN 1
 	END IF
 	LOCAL.damInfMin = <max <LOCAL.daminCorr> , <LOCAL.dawLO> >
@@ -259,24 +257,27 @@
 	
 	LOCAL.damInfMin = <min <LOCAL.damInfMax> , <LOCAL.damInfMin>>
 	
-	I.SYSMESSAGE DaInflmax: <LOCAL.damInfMax> y DaInflmin: <LOCAL.damInfMin>
-	
 	RETURN <EVAL {<LOCAL.damInfMax> <LOCAL.damInfMin>}>
 	
-[FUNCTION f_cs_Boxeo_Calc]
-
-	FLOAT.Harma = <I.WRESTLING>
-	LOCAL.armor = <SRC.AR>
-	FLOAT.hanatomia = <I.Anatomy>
-	FLOAT.htacticas = <I.Tactics>
+[FUNCTION f_boxeo_calc]
+	LOCAL.I = <ARGN1>
+	LOCAL.armor = <ARGN2>
 	
 	
-	LOCAL.da = <FEVAL <FLOATVAL  <I.STR> * ((<FLOAT.hanatomia> + <FLOAT.htacticas> ) / 200 ) * (<FLOAT.Harma>/100) >>
+	FLOAT.Harma = <UID.<LOCAL.I>.WRESTLING>
+	FLOAT.hanatomia = <UID.<LOCAL.I>.Anatomy>
+	FLOAT.htacticas = <UID.<LOCAL.I>.Tactics>
 	
-	LOCAL.dabmax = <max <EVAL (<LOCAL.da>/<VAR.factorBoxeoMax>) - <LOCAL.armor> > , 0>
-	LOCAL.dabmin = <max <EVAL (<LOCAL.da>/<VAR.factorBoxeoMin>) - <LOCAL.armor> > , 0>
+	LOCAL.gloves = <UID.<LOCAL.I>.FINDLAYER.layer_gloves.UID>
 	
-	I.SYSMESSAGE Boxeo: hi:<LOCAL.dabmax> lo: <LOCAL.dabmin> 
-	RETURN <EVAL {<LOCAL.dabmax> <LOCAL.dabmin> }>
+	IF <LOCAL.gloves>
+		LOCAL.daFin = <f_cs_fighting_calc <max <UID.<LOCAL.gloves>.TAG0.DMGFISIC>> <min <UID.<LOCAL.gloves>.TAG0.DMGFISIC>> <LOCAL.armor>>
+	ELSE	
+		LOCAL.daFin = <f_cs_fighting_calc <EVAL <VAR.factorBoxeoMax>> <EVAL <VAR.factorBoxeoMin>> <LOCAL.armor>>
+	ENDIF
+	
+	UID.<LOCAL.I>.SYSMESSAGE @110,1 Danyo Final Boxeo : <LOCAL.daFin>
+	
+	RETURN <LOCAL.daFin>
 	
 [EOF]

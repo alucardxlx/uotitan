@@ -1,99 +1,123 @@
 
 [EVENTS e_cs_combatNPC]
-ON=@HitTry
-	IF (<ARGO.ISWEAPON>) //Is a weapon
-		IF <ARGO.TYPE> == t_weapon_sword
-			FLOAT.Harma = <I.swordsmanship>
-		END IF
-		LOCAL.vel = <ARGO.SPEED>
-	ELSE
-		FLOAT.Harma = <I.WRESTLING>
-		LOCAL.vel = <I.TAG.nowSpeed>
-	END IF
-
-	LOCAL.v = <FEVAL <FLOATVAL <EVAL <LOCAL.vel>> + ((1 - (( <FLOAT.Harma> + <I.DEX>)/200)) * (<EVAL <LOCAL.vel>>/<VAR.factorSpeed>))> >
-	
-	SRC.SYSMESSAGE NPC Velocidad: <LOCAL.v>
-	ARGN1 = <LOCAL.v>
-	
-	RETURN 0
-	
+on=@Attack
+	I.TAG.attackTo = <SRC.UID> //Guarda a quien estás atacando.
+		
 ON=@Hit
-
 	IF <I.TRIGGER @HitMiss> == 1
-	RETURN 1
-	END IF
+		RETURN 1
+	ENDIF
 
-	LOCAL.daFinal = 0
-	IF <ARGO.ISWEAPON>
-		LOCAL.DAM = <ARGO.DAM>
-		LOCAL.DMGFIRE = <ARGO.DMGFIRE>
-		LOCAL.DMGCOLD = <ARGO.DMGCOLD>
-		LOCAL.DMGPOISON = <ARGO.DMGPOISON>
-		LOCAL.DMGENERGY = <ARGO.DMGENERGY>
-	ELSE
-		LOCAL.DAM = <I.DAM>
-		LOCAL.DMGFIRE = <I.TAG.DMGFIRE>
-		LOCAL.DMGCOLD = <I.TAG.DMGCOLD>
-		LOCAL.DMGPOISON = <I.TAG.DMGPOISON>
-		LOCAL.DMGENERGY = <I.TAG.DMGENERGY>
-	END IF
-	
-	SRC.SYSMESSAGE @58,3 NPC Intentover: <max <LOCAL.DAM.HI>>
-	
+	//Zona de golpeo
 	LOCAL.zona = <EVAL { cs_zone_head armor_helm_percentage cs_zone_neck armor_gorget_percentage cs_zone_chest armor_chest_percentage cs_zone_back armor_back_percentage cs_zone_arms armor_arms_percentage cs_zone_hands armor_gloves_percentage cs_zone_legs armor_legs_percentage cs_zone_feet armor_shoes_percentage }>
 	
-	IF (<SRC.BRAIN> && <SRC.BODY> != c_man && <SRC.BODY> != c_woman) 
+	IF (<SRC.BRAIN>) && (<SRC.BODY> != c_man) && (<SRC.BODY> != c_woman)
+		//Si es un NPC y no es humano
 		LOCAL.armorZone = <SRC.f_cs_armor_npcnohuman_calc <LOCAL.zona> <SRC.AR>>
 	ELSE
-		LOCAL.armorZone = <SRC.f_cs_armor_calc <LOCAL.zona> >
-	END IF
+		LOCAL.armorZone = <f_ar_zone <SRC.UID> <EVAL <LOCAL.zona>> >
+	ENDIF
 	
-	SRC.SYSMESSAGE @58,3 El bicho me da en <LOCAL.zona> y tengo <LOCAL.armorZone> armadura en esa zona 
+	SRC.SYSMESSAGE @33,1 "** Sistema de Combate MALO **"
+	
+	SRC.SYSMESSAGE @16,1 "--Enemigo--"
+	SRC.SYSMESSAGE @16,1 Zona que golpeo: <EVAL <LOCAL.zona>>
+	SRC.SYSMESSAGE @16,1 Armor en esa zona : <EVAL <LOCAL.armorZone>>
+		
+	LOCAL.daFinal = 0
+	IF <ARGO.ISWEAPON>
+		//Fisical damage
+		IF <ARGO.TAG0.DMGFISIC> != 0
+			LOCAL.daFis =  <I.f_cs_fighting_calc <max <ARGO.TAG0.DMGFISIC>> <min <ARGO.TAG0.DMGFISIC>> <LOCAL.armorZone>>
+		ENDIF
+		
+		//FireDamage
+		IF <ARGO.TAG0.DMGFIRE> != 0
+			LOCAL.daFire = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGFIRE>> <min <ARGO.TAG0.DMGFIRE>> <SRC.RESFIRE>>
+		ENDIF
+		
+		//Cold Damage
+		IF <ARGO.TAG0.DMGCOLD> != 0
+			LOCAL.daCold = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGCOLD>> <min <ARGO.TAG0.DMGCOLD>> <SRC.RESCOLD>>
+		ENDIF
+		
+		//Poison Damage
+		IF <ARGO.TAG0.DMGPOISON> != 0
+			LOCAL.daPoison = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGPOISON>> <min <ARGO.TAG0.DMGPOISON>> <SRC.RESPOISON>>
+		ENDIF
+		
+		//Energy Damage
+		IF <ARGO.TAG0.DMGENERGY> != 0
+			LOCAL.daEnergy = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGENERGY>> <min <ARGO.TAG0.DMGENERGY>> <SRC.RESENERGY>>
+		ENDIF
+		
+		SRC.SYSMESSAGE @100,2 "--Danyo Final--"
+		SRC.SYSMESSAGE @100,2 Fisico: <EVAL <LOCAL.daFis>> -- Fuego: <EVAL <LOCAL.daFire>> -- Frio: <EVAL <LOCAL.daCold>> -- Veneno: <EVAL <LOCAL.daPoison>> -- Energy: <EVAL <LOCAL.daEnergy>>
+		
+		LOCAL.daFinal = <EVAL <LOCAL.daFis> + <LOCAL.daFire> + <LOCAL.daCold> + <LOCAL.daPoison> + <LOCAL.daEnergy> >
+		
+		//Sonidos
+		IF (<I.WEAPON.TYPE> == t_weapon_sword)
+			SOUND {snd_weapons_sword1  1 snd_weapons_sword7 1}
+		ELSEIF (<I.WEAPON.TYPE> == t_weapon_fence )
+			SOUND {snd_weapons_sword1  1 snd_weapons_sword7 1} 
+		ELSEIF (<I.WEAPON.TYPE> == t_weapon_mace_pick) || (<I.WEAPON.TYPE> == t_weapon_mace_smith) || (<I.WEAPON.TYPE> == t_weapon_mace_sharp) || (<I.WEAPON.TYPE> == t_weapon_mace_staff) || (<I.WEAPON.TYPE> == t_weapon_mace_crook)|| (<I.WEAPON.TYPE> == t_weapon_axe)
+			SOUND {snd_weapons_hvyswrd1  1 snd_weapons_hvyswrd4 1}
+		ENDIF
+			
+	ELSE //Si no tiene arma.
+		IF (<I.BRAIN>) && (<I.BODY> != c_man) && (<I.BODY> != c_woman)
+		//Si es un NPC y no es humano
+			LOCAL.daFis <I.f_cs_fighting_calc <I.DAM.HI> <I.DAM.LO> <LOCAL.armorZone>>
+			
+			//FireDamage
+			IF <I.TAG0.DMGFIRE> != 0
+				LOCAL.daFire = <I.f_cs_fighting_calc_elem <max <I.TAG0.DMGFIRE>> <min <I.TAG0.DMGFIRE>> <SRC.RESFIRE>>
+			ENDIF
+		
+			//Cold Damage
+			IF <I.TAG0.DMGCOLD> != 0
+				LOCAL.daCold = <I.f_cs_fighting_calc_elem <max <I.TAG0.DMGCOLD>> <min <I.TAG0.DMGCOLD>> <SRC.RESCOLD>>
+			ENDIF
+		
+			//Poison Damage
+			IF <I.TAG0.DMGPOISON> != 0
+				LOCAL.daPoison = <I.f_cs_fighting_calc_elem <max <I.TAG0.DMGPOISON>> <min <I.TAG0.DMGPOISON>> <SRC.RESPOISON>>
+			ENDIF
+		
+			//Energy Damage
+			IF <I.TAG0.DMGENERGY> != 0
+				LOCAL.daEnergy = <I.f_cs_fighting_calc_elem <max <I.TAG0.DMGENERGY>> <min <I.TAG0.DMGENERGY>> <SRC.RESENERGY>>
+			ENDIF
+			
+			SRC.SYSMESSAGE @100,2 MALO: Fisico: <EVAL <LOCAL.daFis>> -- Fuego: <EVAL <LOCAL.daFire>> -- Frio: <EVAL <LOCAL.daCold>> -- Veneno: <EVAL <LOCAL.daPoison>> -- Energy: <EVAL <LOCAL.daEnergy>>
+			
+			LOCAL.daFinal = <EVAL <LOCAL.daFis> + <LOCAL.daFire> + <LOCAL.daCold> + <LOCAL.daPoison> + <LOCAL.daEnergy> >
+			
+			
+		ELSE //Si es un NPC humano o un player
+			LOCAL.daFinal = <f_boxeo_calc <I.UID> <LOCAL.armorZone>>
+		ENDIF
+	ENDIF
+	
+	SRC.SYSMESSAGE @100,1 Danyo Final: <EVAL <LOCAL.daFinal>>
+	
+	SRC.DAMAGE <LOCAL.daFinal> , <ARGO.TYPE> , <I.UID>
 
-	//Fisical damage
-	IF <max <LOCAL.DAM>> != 0
-		SRC.SYSMESSAGE dentro if
-		LOCAL.daFis =  <I.f_cs_fighting_calc <max <LOCAL.DAM>> <min <LOCAL.DAM>> <LOCAL.armorZone>>
-	END IF
-	
-	//FireDamage
-	IF <LOCAL.DMGFIRE> != 0
-		LOCAL.daFire = <I.f_cs_fighting_calc_elem <max <LOCAL.DMGFIRE>> <min <LOCAL.DMGFIRE>> <SRC.RESFIRE>>
-	END IF
-	
-	//Cold Damage
-	IF <LOCAL.DMGCOLD> != 0
-		LOCAL.daCold = <I.f_cs_fighting_calc_elem <max <LOCAL.DMGCOLD>> <min <LOCAL.DMGCOLD>> <SRC.RESCOLD>>
-	END IF
-	
-	//Poison Damage
-	IF <LOCAL.DMGPOISON> != 0
-		LOCAL.daPoison = <I.f_cs_fighting_calc_elem <max <LOCAL.DMGPOISON>> <min <LOCAL.DMGPOISON>> <SRC.RESPOISON>>
-	END IF
-	
-	//Energy Damage
-	IF <LOCAL.DMGENERGY> != 0
-		LOCAL.daEnergy = <I.f_cs_fighting_calc_elem <max <LOCAL.DMGENERGY>> <min <LOCAL.DMGENERGY>> <SRC.RESENERGY>>
-	END IF
-	
-	LOCAL.daFinal = <EVAL <LOCAL.daFis> + <LOCAL.daFire> + <LOCAL.daCold> + <LOCAL.daPoison> + <LOCAL.daEnergy> >
-	
-	ARGN1 = 0
-	SRC.SYSMESSAGE @58,3 NPC Danyo Final: <LOCAL.daFinal>
-	
-	SRC.DAMAGE <LOCAL.daFinal> , 0 , <I.UID>
-
-	RETURN 0
+	RETURN 1
 	
 ON=@HitMiss
 	IF <I.WEAPON.ISWEAPON>
-		IF <I.WEAPON.TYPE> == t_weapon_sword
+		IF (<I.WEAPON.TYPE> == t_weapon_sword) || (<I.WEAPON.TYPE> == t_weapon_axe)
 			FLOAT.Harma = <I.swordsmanship>
-		END IF
+		ELSEIF <I.WEAPON.TYPE> == t_weapon_fence
+			FLOAT.Harma = <I.Fencing>
+		ELSEIF (<I.WEAPON.TYPE> == t_weapon_mace_pick) || (<I.WEAPON.TYPE> == t_weapon_mace_smith) || (<I.WEAPON.TYPE> == t_weapon_mace_sharp) || (<I.WEAPON.TYPE> == t_weapon_mace_staff) || (<I.WEAPON.TYPE> == t_weapon_mace_crook)
+			FLOAT.Harma = <I.Macefighting>
+		ENDIF
 	ELSE
 		FLOAT.Harma = <I.WRESTLING>
-	END IF
+	ENDIF
 	
 	FLOAT.hanatomia = <I.Anatomy>
 	FLOAT.htacticas = <I.Tactics>
@@ -102,27 +126,14 @@ ON=@HitMiss
 	
 	LOCAL.pAcierto = <EVAL 100 - {<EVAL 100 - <LOCAL.pAcierto>> 0} >
 	
-	SRC.SYSMESSAGE NPC probabilidad: <LOCAL.pAcierto>
+	I.SYSMESSAGE probabilidad Player: <LOCAL.pAcierto>
 
 	IF {0 100} < <LOCAL.pAcierto>
+		SAY Acerte
 		RETURN 0
 	ELSE
+		SAY falle...
+		SOUND {snd_weapons_swish01 1 snd_weapons_swish02 1 snd_weapons_swish03 1 snd_weapons_blunt01 1 snd_weapons_axe01 1}
 		RETURN 1
-		
-ON=@GetHit
-	IF <ARGN1> != 0
-		SAY NPC: Me haces: <ARGN1>
-		SAY TIPO <ARGN2>
-	END IF
-	if ( <argn2> & 04 )
-	if (<serv.skill.<src.action>.key>==magery) || (<serv.skill.<src.action>.key>==necromancy)
-	argn1 -= <eval <eval <argn1> *<eval <magicresistance> /3>> /<skillclass.magicresistance>>
-	if (<argn1> < 1) || !(rand(<eval 30 +<eval <eval 30 *<eval <magicresistance> /3>> /<skillclass.magicresistance>>>))
-	emote resist the spell.
-	return 1
-	endif
-	endif
-	endif
-	return 0
 
 [EOF]

@@ -133,7 +133,8 @@
 	SRC.addcliloc 1042971 , <LOCAL.name>
 	
 	LOCAL.tooltip = <DEF.BFONT_white>
-	LOCAL.tooltip = Armadura: <EVAL <LOCAL.armor>> (<EVAL <LOCAL.armorCompleta>>)
+	//LOCAL.tooltip = Armadura: <EVAL <LOCAL.armor>> (<EVAL <LOCAL.armorCompleta>>)
+	LOCAL.tooltip = Armadura: <EVAL <UID.<ARGN1>.TAG0.ARMOR> >
 	
 	IF <LOCAL.resFire>
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_FIRE>+ <EVAL <LOCAL.resFire>> Resist. fuego
