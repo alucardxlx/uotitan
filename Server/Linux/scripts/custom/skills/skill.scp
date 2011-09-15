@@ -1,16 +1,32 @@
 
 //Addition to swordsmanship.
 [SKILL 40]
-on=@start
+on=@start	
 	LOCAL.pos = <I.P>
-	LOCAL.dist = <I.DISTANCE <I.TAG0.attackTo>>
-	I.SYSMESSAGE @133,3 Dist between us: <LOCAL.dist>
+	LOCAL.dist = <I.DISTANCE <I.TAG.attackTo>>
 	
 	IF <LOCAL.dist> <= 1
-		Local.Speed = <QVAL <Weapon> ? <Weapon.Speed> : 20> //Speed weapon or 20.
-		//Formula: LOCAL.speed = [...]
-		
-		I.SYSMESSAGE @133,3 Speed final to wait: <Local.Speed>
+		IF <BRAIN>
+			LOCAL.speed = <TAG.SPEED>
+		ELSE
+			LOCAL.speed = <f_combat_calc_speed_weapon <I.UID>  <I.WEAPON.UID> >
+		ENDIF
+		timerd = <Local.Speed>
+	ELSE
+		RETURN 1
+	ENDIF
+	
+[SKILL 43]
+on=@start
+	LOCAL.pos = <I.P>
+	LOCAL.dist = <I.DISTANCE <I.TAG.attackTo>>
+	
+	IF <LOCAL.dist> <= 1
+		IF <BRAIN>
+			LOCAL.speed = <TAG.SPEED>
+		ELSE
+			LOCAL.speed = <f_combat_calc_speed_weapon <I.UID>  <I.WEAPON.UID> >
+		ENDIF
 		timerd = <Local.Speed>
 	ELSE
 		RETURN 1
