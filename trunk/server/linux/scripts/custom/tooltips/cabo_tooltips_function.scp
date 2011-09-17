@@ -164,4 +164,61 @@
 	
 	addcliloc 1070722 , <LOCAL.tooltip>
 
+[FUNCTION f_tooltip_powergem]
+	LOCAL.name = <UID.<ARGN1>.NAME>
+	LOCAL.level = <UID.<ARGN1>.TAG.LEVEL>
+	LOCAL.min = <UID.<ARGN1>.TAG.MIN>
+	LOCAL.max = <UID.<ARGN1>.TAG.MAX>
+	LOCAL.type = <UID.<ARGN1>.TAG.TYPE>
+	
+	SYSMESSAGE Rango: [ <LOCAL.min> , <LOCAL.max> ]
+	
+	LOCAL.client = <ARGN2>
+	
+	addcliloc 1042971 , <LOCAL.name>
+	
+	LOCAL.tooltip = <DEF.BFONT_white>
+	IF <LOCAL.level> == pg_level_comun
+		LOCAL.tooltip = <LOCAL.tooltip>[Comun]
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Huecos: <EVAL <DEF.pg_hueco_comun>>
+	ELSEIF <LOCAL.level> == pg_level_pococomun
+		LOCAL.tooltip = <LOCAL.tooltip>[Poco Comun]
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Huecos: <EVAL <DEF.pg_hueco_pococomun>>
+	ELSEIF <LOCAL.level> == pg_level_raro
+		LOCAL.tooltip = <LOCAL.tooltip>[Raro]
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Huecos: <EVAL <DEF.pg_hueco_raro>>
+	ELSEIF <LOCAL.level> == pg_level_inusual
+		LOCAL.tooltip = <LOCAL.tooltip>[Inusual]
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Huecos: <EVAL <DEF.pg_hueco_inusual>>
+	ELSEIF <LOCAL.level> == pg_level_especial
+		LOCAL.tooltip = <LOCAL.tooltip>[Especial]
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Huecos: <EVAL <DEF.pg_hueco_especial>>
+	ENDIF
+	
+	IF <LOCAL.type> == pg_type_fire
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_C_FIRE>
+	ELSEIF <LOCAL.type> == pg_type_cold
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_C_COLD>
+	ELSEIF <LOCAL.type> == pg_type_poison
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_C_POISON>
+	ELSEIF <LOCAL.type> == pg_type_energy
+		LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_C_ENERGY>
+	ENDIF
+	
+	LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>[
+	IF <LOCAL.min> > 0
+		LOCAL.tooltip = <LOCAL.tooltip>+<EVAL <LOCAL.min>>
+	ELSE
+		LOCAL.tooltip = <LOCAL.tooltip><EVAL <LOCAL.min>>
+	ENDIF
+	
+	IF <LOCAL.max> > 0
+		LOCAL.tooltip = <LOCAL.tooltip> +<EVAL <LOCAL.max>>
+	ELSE
+		LOCAL.tooltip = <LOCAL.tooltip> <EVAL <LOCAL.max>>
+	ENDIF
+	LOCAL.tooltip = <LOCAL.tooltip>]
+	
+	addcliloc 1070722 , <LOCAL.tooltip>
+
 [EOF]
