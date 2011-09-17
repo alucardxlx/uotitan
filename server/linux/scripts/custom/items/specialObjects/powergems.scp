@@ -1,0 +1,271 @@
+[DEFNAME defs_powergem]
+	pg_level_comun 1
+	pg_level_pococomun 2
+	pg_level_raro 3
+	pg_level_inusual 4
+	pg_level_especial 5
+	
+	pg_type_fire 1
+	pg_type_poison 2
+	pg_type_cold 3
+	pg_type_energy 4
+	
+	pg_hueco_comun 1
+	pg_hueco_pococomun 2
+	pg_hueco_raro 3
+	pg_hueco_inusual 4
+	pg_hueco_especial 4
+
+[TYPEDEF t_powergem]
+on=@clienttooltip
+	SRC.f_tooltip_powergem <I.UID>
+	
+	RETURN 1
+
+//workaround.
+[FUNCTION powergeminit]
+	LOCAL.p = <EVAL {1 45 2 45 3 10}>
+	IF <TAG.LEVEL> == pg_level_comun
+		IF <LOCAL.p> == 1
+			TAG.MIN = <EVAL {-1 0} >
+			TAG.MAX = <EVAL 1>
+		ELSEIF <LOCAL.p> == 2
+			TAG.MIN = <EVAL 1>
+			TAG.MAX = <EVAL {-1 0}>
+		ELSE
+			TAG.MIN = <EVAL 1>
+			TAG.MAX = <EVAL 1>
+		ENDIF
+		TAG.HUECO = pg_hueco_comun
+	ELSEIF <TAG.LEVEL> == pg_level_pococomun
+		IF <LOCAL.p> == 1
+			TAG.MIN = <EVAL {-2 0} >
+			TAG.MAX = <EVAL {2 3}>
+		ELSEIF <LOCAL.p> == 2
+			TAG.MIN = <EVAL {2 3}>
+			TAG.MAX = <EVAL {-2 0}>
+		ELSE
+			TAG.MIN = <EVAL {2 3}>
+			TAG.MAX = <EVAL {2 3}>
+		ENDIF
+		TAG.HUECO = pg_hueco_pococomun
+	ELSEIF <TAG.LEVEL> == pg_level_raro
+		IF <LOCAL.p> == 1
+			TAG.MIN = <EVAL {-3 0} >
+			TAG.MAX = <EVAL {4 5}>
+		ELSEIF <LOCAL.p> == 2
+			TAG.MIN = <EVAL {4 5}>
+			TAG.MAX = <EVAL {-3 0}>
+		ELSE
+			TAG.MIN = <EVAL {4 5}>
+			TAG.MAX = <EVAL {4 5}>
+		ENDIF
+		TAG.HUECO = pg_hueco_raro
+	ELSEIF <TAG.LEVEL> == pg_level_inusual
+		IF <LOCAL.p> == 1
+			TAG.MIN = <EVAL {-3 0} >
+			TAG.MAX = <EVAL {6 8}>
+		ELSEIF <LOCAL.p> == 2
+			TAG.MIN = <EVAL {6 8}>
+			TAG.MAX = <EVAL {-3 0}>
+		ELSE
+			TAG.MIN = <EVAL {6 8}>
+			TAG.MAX = <EVAL {6 8}>
+		ENDIF
+		TAG.HUECO = pg_hueco_inusual
+	ELSEIF <TAG.LEVEL> == pg_level_especial
+		IF <LOCAL.p> == 1
+			TAG.MIN = <EVAL {-3 0} >
+			TAG.MAX = <EVAL {9 10}>
+		ELSEIF <LOCAL.p> == 2
+			TAG.MIN = <EVAL {9 10}>
+			TAG.MAX = <EVAL {-3 0}>
+		ELSE
+			TAG.MIN = <EVAL {9 10}>
+			TAG.MAX = <EVAL {9 10}>
+		ENDIF
+		TAG.HUECO = pg_hueco_especial
+	ENDIF
+	DISPID = random_jewel
+
+[ITEMDEF i_powergem_fire_comun]
+ID=i_worldgem_bit
+NAME = Gema de Fuego
+TYPE=t_powergem
+TAG.TYPE = pg_type_fire
+TAG.LEVEL = pg_level_comun
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_fire_pococomun]
+ID=i_worldgem_bit
+NAME = Gema de Fuego
+TYPE=t_powergem
+TAG.TYPE = pg_type_fire
+TAG.LEVEL = pg_level_pococomun
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_fire_raro]
+ID=i_worldgem_bit
+NAME = Gema de Fuego
+TYPE=t_powergem
+TAG.TYPE = pg_type_fire
+TAG.LEVEL = pg_level_raro
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_fire_inusual]
+ID=i_worldgem_bit
+NAME = Gema de Fuego
+TYPE=t_powergem
+TAG.TYPE = pg_type_fire
+TAG.LEVEL = pg_level_inusual
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_fire_especial]
+ID=i_worldgem_bit
+NAME = Gema de Fuego
+TYPE=t_powergem
+TAG.TYPE = pg_type_fire
+TAG.LEVEL = pg_level_especial
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_poison_comun]
+ID=i_worldgem_bit
+NAME = Gema de Veneno
+TYPE=t_powergem
+TAG.TYPE = pg_type_poison
+TAG.LEVEL = pg_level_comun
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_poison_pococomun]
+ID=i_worldgem_bit
+NAME = Gema de Veneno
+TYPE=t_powergem
+TAG.TYPE = pg_type_poison
+TAG.LEVEL = pg_level_pococomun
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_poison_raro]
+ID=i_worldgem_bit
+NAME = Gema de Veneno
+TYPE=t_powergem
+TAG.TYPE = pg_type_poison
+TAG.LEVEL = pg_level_raro
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_poison_inusual]
+ID=i_worldgem_bit
+NAME = Gema de Veneno
+TYPE=t_powergem
+TAG.TYPE = pg_type_poison
+TAG.LEVEL = pg_level_inusual
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_poison_especial]
+ID=i_worldgem_bit
+NAME = Gema de Veneno
+TYPE=t_powergem
+TAG.TYPE = pg_type_poison
+TAG.LEVEL = pg_level_especial
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_cold_comun]
+ID=i_worldgem_bit
+NAME = Gema de Frio
+TYPE=t_powergem
+TAG.TYPE = pg_type_cold
+TAG.LEVEL = pg_level_comun
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_cold_pococomun]
+ID=i_worldgem_bit
+NAME = Gema de Frio
+TYPE=t_powergem
+TAG.TYPE = pg_type_cold
+TAG.LEVEL = pg_level_pococomun
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_cold_raro]
+ID=i_worldgem_bit
+NAME = Gema de Frio
+TYPE=t_powergem
+TAG.TYPE = pg_type_cold
+TAG.LEVEL = pg_level_raro
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_cold_inusual]
+ID=i_worldgem_bit
+NAME = Gema de Frio
+TYPE=t_powergem
+TAG.TYPE = pg_type_cold
+TAG.LEVEL = pg_level_inusual
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_cold_especial]
+ID=i_worldgem_bit
+NAME = Gema de Frio
+TYPE=t_powergem
+TAG.TYPE = pg_type_cold
+TAG.LEVEL = pg_level_especial
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_energy_comun]
+ID=i_worldgem_bit
+NAME = Gema de Energia
+TYPE=t_powergem
+TAG.TYPE = pg_type_energy
+TAG.LEVEL = pg_level_comun
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_energy_pococomun]
+ID=i_worldgem_bit
+NAME = Gema de Energia
+TYPE=t_powergem
+TAG.TYPE = pg_type_energy
+TAG.LEVEL = pg_level_pococomun
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_energy_raro]
+ID=i_worldgem_bit
+NAME = Gema de Energia
+TYPE=t_powergem
+TAG.TYPE = pg_type_energy
+TAG.LEVEL = pg_level_raro
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_energy_inusual]
+ID=i_worldgem_bit
+NAME = Gema de Energia
+TYPE=t_powergem
+TAG.TYPE = pg_type_energy
+TAG.LEVEL = pg_level_inusual
+on=@create
+	I.powergeminit
+
+[ITEMDEF i_powergem_energy_especial]
+ID=i_worldgem_bit
+NAME = Gema de Energia
+TYPE=t_powergem
+TAG.TYPE = pg_type_energy
+TAG.LEVEL = pg_level_especial
+on=@create
+	I.powergeminit
+
+[EOF]
