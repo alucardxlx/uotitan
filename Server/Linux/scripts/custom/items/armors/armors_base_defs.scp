@@ -1,0 +1,157 @@
+//**********Armaduras de Ringmail (anillas)**********
+
+//Ringmail gloves
+[ITEMDEF 013eb]
+DEFNAME=i_ringmail_gloves_base
+TYPE=T_ARMOR
+WEIGHT=2
+FLIP=1
+REQSTR=20
+CATEGORY=Provisions - Armor
+SUBSECTION=Ringmail Armor
+DESCRIPTION=Ringmail Gloves
+
+//Ringmail leggings
+[ITEMDEF 013f0]
+DEFNAME=i_ringmail_leggings_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=15
+REQSTR=20
+CATEGORY=Provisions - Armor
+SUBSECTION=Ringmail Armor
+DESCRIPTION=Ringmail Leggings
+
+//Ringmail sleeves
+[ITEMDEF 013ee]
+DEFNAME=i_ringmail_sleeves_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=13
+REQSTR=20
+CATEGORY=Provisions - Armor
+SUBSECTION=Ringmail Armor
+DESCRIPTION=Ringmail Sleeves
+
+//Ringmail tunic
+[ITEMDEF 013ec]
+DEFNAME=i_ringmail_tunic_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=15
+REQSTR=20
+CATEGORY=Provisions - Armor
+SUBSECTION=Ringmail Armor
+DESCRIPTION=Ringmail Tunic
+
+//**********Armaduras de Chainmail (Cota de Malla)**********
+//Chainmail coif
+[ITEMDEF 013bb]
+DEFNAME=i_chainmail_coif_base
+TYPE=T_ARMOR
+WEIGHT=7
+FLIP=1
+REQSTR=20
+CATEGORY=Provisions - Armor
+SUBSECTION=Chainmail Armor
+DESCRIPTION=Chainmail Coif
+
+//Chainmail leggings
+[ITEMDEF 013be]
+DEFNAME=i_chainmail_leggings_base
+TYPE=T_ARMOR
+WEIGHT=10
+FLIP=1
+REQSTR=20
+CATEGORY=Provisions - Armor
+SUBSECTION=Chainmail Armor
+DESCRIPTION=Chainmail Leggings
+
+//Chainmail Tunic
+[ITEMDEF 013bf]
+DEFNAME=i_chainmail_tunic_base
+TYPE=T_ARMOR
+WEIGHT=15
+FLIP=1
+REQSTR=20
+CATEGORY=Provisions - Armor
+SUBSECTION=Chainmail Armor
+DESCRIPTION=Chainmail Tunic Hanging
+
+//**********Armaduras de platemail (Coraza)**********
+//Platemail helm
+[ITEMDEF 01412]
+DEFNAME=i_platemail_helm_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=10
+REQSTR=60
+CATEGORY=Provisions - Armor
+SUBSECTION=Platemail Armor
+DESCRIPTION=Platemail Helm
+
+//Platemail arms
+[ITEMDEF 01410]
+DEFNAME=i_platemail_arms_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=18
+REQSTR=40
+CATEGORY=Provisions - Armor
+SUBSECTION=Platemail Armor
+DESCRIPTION=Platemail Arms
+
+//Platemail gloves
+[ITEMDEF 01414]
+DEFNAME=i_platemail_gloves_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=5
+REQSTR=30
+CATEGORY=Provisions - Armor
+SUBSECTION=Platemail Armor
+DESCRIPTION=Platemail Gauntlets
+
+//Platemail gorget
+[ITEMDEF 01413]
+DEFNAME=i_platemail_gorget_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=6
+REQSTR=30
+CATEGORY=Provisions - Armor
+SUBSECTION=Platemail Armor
+DESCRIPTION=Platemail Gorget
+
+//Platemail legs
+[ITEMDEF 01411]
+DEFNAME=i_platemail_leggings_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=20
+REQSTR=40
+CATEGORY=Provisions - Armor
+SUBSECTION=Platemail Armor
+DESCRIPTION=Platemail Legs
+
+//Platemail Tunic
+[ITEMDEF 01415]
+DEFNAME=i_platemail_chest_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=23
+REQSTR=60
+CATEGORY=Provisions - Armor
+SUBSECTION=Platemail Armor
+DESCRIPTION=Platemail Breastplate
+
+//Female Plate
+[ITEMDEF 01c04]
+DEFNAME=i_armor_female_plate_base
+TYPE=T_ARMOR
+FLIP=1
+WEIGHT=6
+REQSTR=45
+CATEGORY=Provisions - Armor
+SUBSECTION=Female Armor
+DESCRIPTION=Female Plate Armor

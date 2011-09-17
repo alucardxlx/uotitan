@@ -1,0 +1,521 @@
+
+[ITEMDEF 013f6]
+//Knife Butcher
+DEFNAME=i_knife_butcher_base
+RESOURCES=1 i_BOARD, 1 i_ingot_iron
+WEIGHT=2
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=17
+SKILL=Swordsmanship
+REQSTR=5
+TWOHANDS=N
+CATEGORY=Provisions - Weapons
+SUBSECTION=Knives & Daggers
+DESCRIPTION=Butchers Knife
+//DUPELIST=013f7
+	
+[ITEMDEF 0ec2]
+//Cleaver
+//Used for fighting?
+//Shouldn't this be also a non-fighting action type?
+DEFNAME=i_cleaver_meat_base
+TYPE=T_WEAPON_SWORD
+FLIP=1
+RESOURCES=3 i_ingot_iron
+SPEED=19
+SKILL=Swordsmanship
+REQSTR=10
+TWOHANDS=N
+WEIGHT=1
+//DUPELIST=0ec3
+SKILLMAKE=TINKERING 20.0
+CATEGORY=Provisions - Weapons
+SUBSECTION=Knives & Daggers
+DESCRIPTION=Cleaver
+
+[ITEMDEF 0ec4]
+//Used for Fencing?
+// Skinning Knife
+//Shouldn't this be also a non-fighting action type?
+DEFNAME=i_knife_skinning_base
+TYPE=T_WEAPON_FENCE
+FLIP=1
+RESOURCES=2 i_ingot_iron
+SKILLMAKE=TINKERING 25.0
+SPEED=17
+SKILL=Swordsmanship
+REQSTR=5
+TWOHANDS=N
+WEIGHT=1
+//DUPELIST=0ec5
+CATEGORY=Provisions - Weapons
+SUBSECTION=Knives & Daggers
+DESCRIPTION=Skinning Knife
+
+[ITEMDEF 0f60]
+//Longsword
+DEFNAME=i_sword_long_base
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=26
+SKILL=Swordsmanship
+REQSTR=35
+TWOHANDS=N
+WEIGHT=7
+//DUPELIST=0f61
+CATEGORY=Provisions - Weapons
+SUBSECTION=Swords
+DESCRIPTION=Longsword
+
+[ITEMDEF 01440]
+DEFNAME=i_cutlass_base
+RESOURCES=8 i_ingot_iron
+WEIGHT=8
+TYPE=T_WEAPON_SWORD
+FLIP=1
+//DAM=11,13
+SPEED=19
+SKILL=Swordsmanship
+REQSTR=25
+TWOHANDS=N
+//DUPELIST=01441
+SKILLMAKE=BLACKSMITHING 24.3
+CATEGORY=Provisions - Weapons
+SUBSECTION=Swords
+DESCRIPTION=Cutlass
+
+[ITEMDEF 013fe]
+DEFNAME=i_katana_base
+RESOURCES=8 i_ingot_iron
+WEIGHT=8
+TYPE=T_WEAPON_SWORD
+FLIP=1
+//DAM=11,13
+SPEED=19
+SKILL=Swordsmanship
+REQSTR=25
+TWOHANDS=N
+//DUPELIST=013ff
+SKILLMAKE=BLACKSMITHING 44.1
+CATEGORY=Provisions - Weapons
+SUBSECTION=Swords
+DESCRIPTION=Katana
+
+[ITEMDEF 013b5]
+DEFNAME=i_scimitar_base
+RESOURCES=10 i_ingot_iron
+WEIGHT=8
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=23
+SKILL=Swordsmanship
+REQSTR=25
+TWOHANDS=N
+//DUPELIST=013b6
+SKILLMAKE=BLACKSMITHING 31.7
+CATEGORY=Provisions - Weapons
+SUBSECTION=Swords
+DESCRIPTION=Scimitar
+
+[ITEMDEF 0f5e]
+//Broadsword
+//Using swordsmanship type below
+DEFNAME=i_sword_broad_base
+RESOURCES=10 i_ingot_iron
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=24
+SKILL=Swordsmanship
+REQSTR=30
+TWOHANDS=N
+WEIGHT=6
+SKILLMAKE=BLACKSMITHING 35.4
+//DUPELIST=0f5f
+CATEGORY=Provisions - Weapons
+SUBSECTION=Swords
+DESCRIPTION=Broadsword
+
+[ITEMDEF 013b9]
+DEFNAME=i_sword_viking_base
+RESOURCES=14 i_ingot_iron
+WEIGHT=8
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=28
+//SPEED=3000
+SKILL=Swordsmanship
+REQSTR=40
+TWOHANDS=N
+//DUPELIST=013ba
+SKILLMAKE=BLACKSMITHING 24.3
+CATEGORY=Provisions - Weapons
+SUBSECTION=Swords
+DESCRIPTION=Viking Sword
+
+
+[ITEMDEF 027a8]
+DEFNAME=i_bokuto_base
+NAME=Bokuto
+TYPE=t_weapon_sword
+RESOURCES=6 i_log
+SKILLMAKE=CARPENTRY 70.0, t_carpentry
+TWOHANDS=N
+LAYER=1
+REQSTR=20
+WEIGHT=2.5
+SPEED=15
+VALUE=85
+//DUPELIST=027f3
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Samurai Empire
+DESCRIPTION=Bokuto
+
+[ITEMDEF 026bb]
+DEFNAME=i_bone_harvester_base
+NAME=Bone Harvester
+TYPE=t_weapon_sword
+SKILL=Swordsmanship
+REQSTR=25
+TWOHANDS=N
+WEIGHT=3.0
+SPEED=23
+SKILLMAKE=BLACKSMITHING 33.0
+RESOURCES=10 i_ingot_iron
+VALUE=30
+//DUPELIST=026c5
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Age of Shadows
+DESCRIPTION=Bone Harvester
+
+[ITEMDEF 02d29]
+DEFNAME=i_elven_Machete_base
+Name=Elven Machete
+TYPE=T_WEAPON_SWORD
+SKILL=Swordsmanship
+REQSTR=20
+TWOHANDS=N
+SPEED=28
+WEIGHT=7
+RESOURCES=14 i_ingot_iron
+SKILLMAKE=BLACKSMITHING 70.0
+//DUPELIST=02d35
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Mondain Legacy
+DESCRIPTION=Elven Machete
+
+[ITEMDEF 02d27]
+DEFNAME=i_Radiant_Scimitar_base
+Name=Radiant Scimitar
+TYPE=T_WEAPON_SWORD
+SKILL=Swordsmanship
+REQSTR=20
+TWOHANDS=N
+SPEED=19
+WEIGHT=6
+RESOURCES=15 i_ingot_iron
+SKILLMAKE=BLACKSMITHING 75.0
+//DUPELIST=02d33
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Mondain Legacy
+DESCRIPTION=Radiant Scimitar
+
+[ITEMDEF 027a4]
+DEFNAME=i_wakizashi_base
+NAME=Wakizashi
+TYPE=t_weapon_sword
+RESOURCES=8 i_ingot_iron
+SKILLMAKE=BLACKSMITHING 50.0
+TWOHANDS=Y
+LAYER=2
+REQSTR=20
+VALUE=92
+SPEED=19
+//DUPELIST=027ef
+VALUE=92
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Samurai Empire
+DESCRIPTION=Wakizashi
+
+//A dos manos
+
+[ITEMDEF 01442]
+DEFNAME=i_axe_two_hand_base
+RESOURCES=16 i_ingot_iron
+WEIGHT=8
+TYPE=T_WEAPON_AXE
+FLIP=1
+SPEED=23
+SKILL=Swordsmanship
+REQSTR=40
+TWOHANDS=Y
+//DUPELIST=01443
+SKILLMAKE=BLACKSMITHING 33.0
+CATEGORY=Provisions - Weapons
+SUBSECTION=Axes
+DESCRIPTION=Two Handed Axe
+
+[ITEMDEF 0f4d]
+//Bardiche
+//Using Sword type below
+DEFNAME=i_bardiche_base
+RESOURCES=18 i_ingot_iron
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=28
+SKILL=Swordsmanship
+REQSTR=45
+TWOHANDS=Y
+WEIGHT=7
+SKILLMAKE=BLACKSMITHING 31.7
+//DUPELIST=0f4e
+CATEGORY=Provisions - Weapons
+SUBSECTION=Polearms
+DESCRIPTION=Bardiche
+
+[ITEMDEF 0f47]
+//Battle Axe
+DEFNAME=i_axe_battle_base
+RESOURCES=14 i_ingot_iron
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=26
+SKILL=Swordsmanship
+REQSTR=35
+TWOHANDS=Y
+WEIGHT=4
+SKILLMAKE=BLACKSMITHING 30.5
+//DUPELIST=0f48
+CATEGORY=Provisions - Weapons
+SUBSECTION=Axes
+DESCRIPTION=Battle Axe
+
+[ITEMDEF 0f49]
+//Axe
+DEFNAME=i_axe_base
+RESOURCES=14 i_ingot_iron
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=23
+SKILL=Swordsmanship
+REQSTR=35
+TWOHANDS=Y
+WEIGHT=4
+SKILLMAKE=BLACKSMITHING 34.2
+//DUPELIST=0f4a
+CATEGORY=Provisions - Weapons
+SUBSECTION=Axes
+DESCRIPTION=Axe
+
+[ITEMDEF 026c1]
+DEFNAME=i_crescent_blade_base
+NAME=Crescent Blade
+TYPE=t_weapon_sword
+RESOURCES=14 i_ingot_iron
+SKILLMAKE=BLACKSMITHING 45.0
+WEIGHT=4.0
+SPEED=19
+VALUE=110
+//DUPELIST=026cb
+REQSTR=55
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Age of Shadows
+DESCRIPTION=Double Blade
+
+[ITEMDEF 027a9]
+DEFNAME=i_daisho_base
+NAME=Daisho
+TYPE=t_weapon_sword
+SPEED=20
+SKILL=Swordsmanship
+REQSTR=40
+TWOHANDS=Y
+WEIGHT=4.0
+CATEGORY=Provisions - Weapons
+SUBSECTION=Samurai Empire
+DESCRIPTION=Daisho
+SKILLMAKE=BLACKSMITHING 60.0
+RESOURCES=15 i_ingot_iron
+//DUPELIST=027f4
+VALUE=242
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Samurai Empire
+DESCRIPTION=Daisho
+
+[ITEMDEF 0f4b]
+//Double Axe
+DEFNAME=i_axe_double_base
+RESOURCES=12 i_ingot_iron
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=24
+SKILL=Swordsmanship
+REQSTR=45
+TWOHANDS=Y
+WEIGHT=8
+SKILLMAKE=BLACKSMITHING 29.3
+//DUPELIST=0f4c
+CATEGORY=Provisions - Weapons
+SUBSECTION=Axes
+DESCRIPTION=Double Axe
+
+[ITEMDEF 0f45]
+//Executioner's Axe
+DEFNAME=i_axe_exec_base
+RESOURCES=14 i_ingot_iron
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=24
+SKILL=Swordsmanship
+REQSTR=40
+TWOHANDS=Y
+WEIGHT=8
+SKILLMAKE=BLACKSMITHING 34.2
+//DUPELIST=0f46
+CATEGORY=Provisions - Weapons
+SUBSECTION=Axes
+DESCRIPTION=Executioner's Axe
+
+[ITEMDEF 0143e]
+DEFNAME=i_halberd_base
+RESOURCES=20 i_ingot_iron
+WEIGHT=10
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=36
+SKILL=Swordsmanship
+REQSTR=95
+TWOHANDS=Y
+//DUPELIST=0143f
+SKILLMAKE=BLACKSMITHING 39.1
+CATEGORY=Provisions - Weapons
+SUBSECTION=Polearms
+DESCRIPTION=Halberd
+
+[ITEMDEF 0f43]
+//Hatchet
+DEFNAME=i_hatchet_base
+RESOURCES=4 i_ingot_iron
+TYPE=T_WEAPON_SWORD
+FLIP=1
+SPEED=20
+SKILL=Swordsmanship
+REQSTR=20
+TWOHANDS=N
+WEIGHT=4
+SKILLMAKE=TINKERING 30.0, t_tinker_tools
+//DUPELIST=0f44
+CATEGORY=Provisions - Weapons
+SUBSECTION=Axes
+DESCRIPTION=Hatchet
+
+[ITEMDEF 013fa]
+//DEFNAME2=double_battle_axe
+DEFNAME=i_axe_battle_large_base
+RESOURCES=12 i_ingot_iron
+SKILLMAKE=BLACKSMITHING 28.0
+WEIGHT=12
+TYPE=T_WEAPON_AXE
+FLIP=1
+SPEED=28
+SKILL=Swordsmanship
+REQSTR=80
+TWOHANDS=Y
+//DUPELIST=013fb
+CATEGORY=Provisions - Weapons
+SUBSECTION=Axes
+DESCRIPTION=Large Battle Axe
+
+[ITEMDEF 027a2]
+DEFNAME=i_no_dachi_base
+NAME=No-dachi
+TYPE=t_weapon_sword
+SPEED=26
+SKILL=Swordsmanship
+REQSTR=40
+TWOHANDS=Y
+WEIGHT=9
+RANGE=2
+SKILLMAKE=BLACKSMITHING 75.0
+RESOURCES=18 i_ingot_iron
+//DUPELIST=027ed
+VALUE=280
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Samurai Empire
+DESCRIPTION=No-dachi
+
+[ITEMDEF 02d28]
+DEFNAME=i_Ornate_Axe_base
+Name=Ornate Axe
+TYPE=T_WEAPON_SWORD
+SKILL=Swordsmanship
+REQSTR=45
+TWOHANDS=Y
+SPEED=26
+WEIGHT=8
+RESOURCES=18 i_ingot_iron
+SKILLMAKE=BLACKSMITHING 70.0
+//DUPELIST=02d34
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Mondain Legacy
+DESCRIPTION=Ornate Axe
+
+[ITEMDEF 026ce]
+DEFNAME=i_sword_paladin_base
+NAME=Paladin Sword
+TYPE=t_weapon_sword
+SKILL=swordsmanship
+REQSTR=90
+SPEED=38
+SKILLMAKE=BLACKSMITHING 46.0
+RESOURCES=16 i_ingot_iron
+WEIGHT=6.0
+VALUE=210
+//DUPELIST=026cf
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Age of Shadows
+DESCRIPTION=Paladin Sword
+
+[ITEMDEF 02d26]
+DEFNAME=i_Rune_Blade_base
+Name=Rune Blade
+TYPE=T_WEAPON_SWORD
+SKILL=Swordsmanship
+REQSTR=30
+TWOHANDS=Y
+SPEED=23
+WEIGHT=6
+RESOURCES=15 i_ingot_iron
+SKILLMAKE=BLACKSMITHING 70.0
+//DUPELIST=02d32
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Mondain Legacy
+DESCRIPTION=Rune Blade
+
+[ITEMDEF 026ba]
+DEFNAME=i_scythe_base
+NAME=Scythe
+TYPE=t_weapon_fence
+RESOURCES=14 i_ingot_iron
+SKILLMAKE=BLACKSMITHING 39.0
+WEIGHT=5.5
+SPEED=26
+REQSTR=45
+RANGE=2
+VALUE=120
+//DUPELIST=026c4
+
+CATEGORY=Provisions - Weapons
+SUBSECTION=Age of Shadows
+DESCRIPTION=Scythe
