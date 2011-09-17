@@ -1,10 +1,10 @@
 TITLE=Sphere World Script
 VERSION=0.56b-Nightly
-TIME=1430220
-SAVECOUNT=107
+TIME=1510009
+SAVECOUNT=116
 
 [TIMERF]
-CurTick=0
+CurTick=6
 
 [GLOBALS]
 028.factordificultad=02
