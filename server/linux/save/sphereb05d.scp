@@ -1,27 +1,12 @@
 TITLE=Sphere World Script
 VERSION=0.56b-Nightly
-TIME=1442220
-SAVECOUNT=108
+TIME=1510180
+SAVECOUNT=116
 
 [TIMERF]
 CurTick=5
 
 [GLOBALS]
-028.factordificultad=02
-boxeospeed=014
-cs.028.factorunidad="10,15"
-factorboxeomax=04
-factorboxeomin=0a
-factorcuracionlibr="0.5"
-factorcuracionlibre="0.5"
-factorcuracionocupado="0.666"
-factorhungry=08
-factormaxlibre=064
-factormaxocupado=04b
-factorminpower=03
-factorspeed="0.5"
-pbloodybandage=021
-timerheal="5,7"
 
 [WORLDSCRIPT a_brit_mine2_1]
 NAME=Brit Mine2
