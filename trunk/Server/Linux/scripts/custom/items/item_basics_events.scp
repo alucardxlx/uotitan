@@ -1,0 +1,13 @@
+[EVENTS e_uot_playerInteractItem]
+on=@ItemEquip
+	//If chungo y rápido pero habría que comprobar que el item es de tipo
+	//"armadura" (armor, ropa, piel, etc...)
+	//y NO es otra cosa como una daga, etc...
+	IF <ACT.ISARMOR>
+		f_recalc_armor <I.UID> <ACT.UID>
+	ENDIF
+	
+on=@ItemUnEquip
+	IF <ACT.ISARMOR>
+		f_recalc_armorUnequip <I.UID> <ACT.UID>
+	ENDIF

@@ -1,0 +1,136 @@
+[DIALOG d_cs_healing]
+0,0
+tilepic 0 0 0e21
+tilepic 5 5 0e21
+tilepic 0 10 0e21
+tilepic 10 0 0e21
+nomove
+noclose
+
+
+
+[DIALOG d_cs_addSpawn]
+50,50
+resizepic 0 0 3600 600 200
+page 0
+checkertrans 15 15 570 170
+dtext 0 0 33 Menu de Spawn
+
+Dorigin 30 165
+	f_cs_SM_SpecialButtonBack
+
+//Zona de Seleccion
+//<TAG0.spawnMenu.actualPage> //La pagina en la que estamos.
+//<TAG0.spawnMenu.actualZone> //La ZONA actual
+//<TAG0.spawnMenu.actualNumZone> //La ZONA NUMERADA actual
+page 1
+Dorigin 30 10
+	f_cs_SM_ZONEBritain
+	button +100 +50 1209 1210 1 0 500
+
+//Zonas Numeradas de una misma Zona
+page 2
+Dorigin 30 10
+IF <TAG0.spawnMenu.actualZone> == cs_SM_zoneBritain
+	f_cs_SM_NZONEBrit_Cemen
+	f_cs_SM_NZONEBrit_BosqueNorte
+END IF
+
+page 3
+Dorigin 30 10
+	IF <TAG0.spawnMenu.actualZone> == cs_SM_zoneBritain
+		IF <TAG0.spawnMenu.actualNumZone> == cs_SM_numZoneCemen
+			f_cs_SM_SPAWNGrimReaper
+			f_cs_SM_SPAWNZombie
+			f_cs_SM_SPAWNSkeleton
+			f_cs_SM_SPAWNSkeletonMage
+			f_cs_SM_SPAWNSkeletonSwordAndShield
+			f_cs_SM_SPAWNSkeletonSpectro
+			f_cs_SM_SPAWNLiche
+		ELIF <TAG0.spawnMenu.actualNumZone> == cs_SM_numZoneBosqueNorte
+			//
+		END IF
+	END IF
+	
+
+Dorigin 300 30
+dtext +0 +0 33 Cantidad (amount)
+dtext +0 *40 33 Dist. Home
+dtext +0 *40 33 Tiempo1
+dtext +0 *40 33 Tiempo2
+
+Dorigin 450 25
+resizepic +0 +0 2620 100 30 //Amount
+dtextentry +10 +5 95 20 color_snow 1 <EVAL <TAG0.spawnMenu.amount>>
+
+resizepic +0 *40 2620 100 30 //Dist home
+dtextentry +10 +5 95 20 color_snow 2 <EVAL <TAG0.spawnMenu.dist_home>>
+
+resizepic +0 *40 2620 100 30 //Tiempo1
+dtextentry +10 +5 95 20 color_snow 3 <EVAL <TAG0.spawnMenu.time1>>
+
+resizepic +0 *40 2620 100 30 //Tiempo2
+dtextentry +10 +5 95 20 color_snow 4 <EVAL <TAG0.spawnMenu.time2>>
+
+[DIALOG d_cs_addSpawn BUTTON]
+ON=0
+	TAG.spawnMenu.actualPage =
+	TAG.spawnMenu.actualZone =
+	TAG.spawnMenu.actualNumZone =
+	SYSMESSAGE Dialogo Cerrado.
+ON=1 5
+	TAG0.spawnMenu.actualPage = cs_SM_numZones
+	IF <ARGN1> == cs_SM_zoneBritain
+		TAG0.spawnMenu.actualZone = cs_SM_zoneBritain
+		SYSMESSAGE Acceder a Britain.
+		SDIALOG=d_cs_addSpawn cs_SM_numZones
+	ELIF <ARGN1> == cs_SM_zoneMinoc
+		TAG0.spawnMenu.actualZone = cs_SM_zoneMinoc
+		SYSMESSAGE Acceder a Minoc.
+		SDIALOG=d_cs_addSpawn cs_SM_numZones
+	END IF
+	
+ON=100 105
+	IF <ARGN1> == 100
+		TAG0.spawnMenu.actualNumZone = cs_SM_numZoneCemen
+	ELIF <ARGN1> == 101
+		TAG0.spawnMenu.actualNumZone = cs_SM_numZoneBosqueNorte
+	END IF
+	
+	TAG0.spawnMenu.actualPage = cs_SM_spawn
+	SDIALOG=d_cs_addSpawn cs_SM_spawn
+	
+ON=999
+	IF <TAG0.spawnMenu.actualPage> == cs_SM_numZones
+		TAG0.spawnMenu.actualPage = cs_SM_zones
+		SDIALOG=d_cs_addSpawn cs_SM_zones
+	ELIF <TAG0.spawnMenu.actualPage> == cs_SM_spawn
+		TAG0.spawnMenu.actualPage = cs_SM_numZones
+		SDIALOG=d_cs_addSpawn cs_SM_numZones
+	END IF
+
+ON=1000 9999
+
+	TAG.spawnMenu.amount = <ARGTXT[1]>
+	TAG.spawnMenu.dist_home = <ARGTXT[2]>
+	TAG.spawnMenu.time1 = <ARGTXT[3]>
+	TAG.spawnMenu.time2 = <ARGTXT[4]>
+	
+	IF <ARGN1> == cs_SM_spawn_zombie
+		LOCAL.spawn = c_zombie
+	ELIF <ARGN1> == cs_SM_spawn_liche
+		LOCAL.spawn = c_liche
+	ELIF <ARGN1> == cs_SM_spawn_Grim_Reaper
+		LOCAL.spawn = c_grim_reaper
+	END IF
+	
+	I.f_cs_SM_CreateSpawn <LOCAL.spawn>
+
+	sDIALOG=d_cs_addSpawn cs_SM_spawn
+	
+
+[FUNCTION caboOpen]
+	SDIALOG = d_cs_addSpawn 1
+
+
+[EOF]
