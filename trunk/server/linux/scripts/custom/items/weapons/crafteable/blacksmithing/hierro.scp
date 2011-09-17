@@ -4,291 +4,349 @@
 ID=i_knife_butcher_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {1 3}>, <EVAL {4 7}>
+	TAG.DMGFISIC = <EVAL {1 3}>, <EVAL {4 7}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 
 [ITEMDEF i_cleaver_meat_iron]
 ID=i_cleaver_meat_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 3}>, <EVAL {5 8}>
+	TAG.DMGFISIC = <EVAL {2 3}>, <EVAL {5 8}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_knife_skinning_iron]
 ID=i_knife_skinning_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {1 2}>, <EVAL {5 7}>
+	TAG.DMGFISIC = <EVAL {1 2}>, <EVAL {5 7}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_cutlass_iron]
 ID=i_cutlass_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 4}>, <EVAL {7 10}>
+	TAG.DMGFISIC = <EVAL {2 4}>, <EVAL {7 10}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_katana_iron]
 ID=i_katana_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 5}>, <EVAL {7 8}>
+	TAG.DMGFISIC = <EVAL {2 5}>, <EVAL {7 8}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_sword_long_iron]
 ID=i_sword_long_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {4 6}>, <EVAL {7 11}>
+	TAG.DMGFISIC = <EVAL {4 6}>, <EVAL {7 11}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 	
 [ITEMDEF i_scimitar_iron]
 ID=i_scimitar_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 4}>, <EVAL {7 12}>
+	TAG.DMGFISIC = <EVAL {2 4}>, <EVAL {7 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_sword_broad_iron]
 ID=i_sword_broad_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 4}>, <EVAL {6 10}>
+	TAG.DMGFISIC = <EVAL {2 4}>, <EVAL {6 10}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_sword_viking_iron]
 ID=i_sword_viking_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {4 6}>, <EVAL {8 12}>
+	TAG.DMGFISIC = <EVAL {4 6}>, <EVAL {8 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 
 [ITEMDEF i_bone_harvester_iron]
 ID=i_bone_harvester_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 5}>, <EVAL {8 12}>
+	TAG.DMGFISIC = <EVAL {2 5}>, <EVAL {8 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 
 [ITEMDEF i_elven_Machete_iron]
 ID=i_elven_Machete_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 4}>, <EVAL {9 12}>
+	TAG.DMGFISIC = <EVAL {2 4}>, <EVAL {9 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_Radiant_Scimitar_iron]
 ID=i_Radiant_Scimitar_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 4}>, <EVAL {7 11}>
+	TAG.DMGFISIC = <EVAL {2 4}>, <EVAL {7 11}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_wakizashi_iron]
 ID=i_wakizashi_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {3 6}>, <EVAL {7 8}>
+	TAG.DMGFISIC = <EVAL {3 6}>, <EVAL {7 8}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 
 [ITEMDEF i_axe_iron]
 ID=i_axe_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 4}>, <EVAL {7 11}>
+	TAG.DMGFISIC = <EVAL {2 4}>, <EVAL {7 11}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 	
 [ITEMDEF i_bardiche_iron]
 ID=i_bardiche_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {9 12}>, <EVAL {13 14}>
+	TAG.DMGFISIC = <EVAL {9 12}>, <EVAL {13 14}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_axe_battle_iron]
 ID=i_axe_battle_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {4 6}>, <EVAL {8 12}>
+	TAG.DMGFISIC = <EVAL {4 6}>, <EVAL {8 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_crescent_blade_iron]
 ID=i_crescent_blade_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {3 6}>, <EVAL {8 10}>
+	TAG.DMGFISIC = <EVAL {3 6}>, <EVAL {8 10}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_daisho_iron]
 ID=i_daisho_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {3 5}>, <EVAL {7 12}>
+	TAG.DMGFISIC = <EVAL {3 5}>, <EVAL {7 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 
 [ITEMDEF i_axe_double_iron]
 ID=i_axe_double_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {4 6}>, <EVAL {8 12}>
+	TAG.DMGFISIC = <EVAL {4 6}>, <EVAL {8 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_axe_exec_iron]
 ID=i_axe_exec_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {4 7}>, <EVAL {9 12}>
+	TAG.DMGFISIC = <EVAL {4 7}>, <EVAL {9 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_halberd_iron]
 ID=i_halberd_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {8 11}>, <EVAL {12 14}>
+	TAG.DMGFISIC = <EVAL {8 11}>, <EVAL {12 14}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_hatchet_iron]
 ID=i_hatchet_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {2 4}>, <EVAL {7 12}>
+	TAG.DMGFISIC = <EVAL {2 4}>, <EVAL {7 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 
 [ITEMDEF i_axe_battle_large_iron]
 ID=i_axe_battle_large_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {5 7}>, <EVAL {8 12}>
+	TAG.DMGFISIC = <EVAL {5 7}>, <EVAL {8 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_no_dachi_iron]
 ID=i_no_dachi_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {5 7}>, <EVAL {9 12}>
+	TAG.DMGFISIC = <EVAL {5 7}>, <EVAL {9 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_iron_Ornate_Axe_iron]
 ID=i_Ornate_Axe_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {11 13}>, <EVAL {12 15}>
+	TAG.DMGFISIC = <EVAL {11 13}>, <EVAL {12 15}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_sword_paladin_iron]
 ID=i_sword_paladin_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {12 15}>, <EVAL {16 20}>
+	TAG.DMGFISIC = <EVAL {12 15}>, <EVAL {16 20}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_Rune_Blade_iron]
 ID=i_Rune_Blade_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {4 7}>, <EVAL {9 12}>
+	TAG.DMGFISIC = <EVAL {4 7}>, <EVAL {9 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 	
 [ITEMDEF i_scythe_iron]
 ID=i_scythe_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {7 10}>, <EVAL {13 14}>
+	TAG.DMGFISIC = <EVAL {7 10}>, <EVAL {13 14}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4
 
 [ITEMDEF i_axe_two_hand_iron]
 ID=i_axe_two_hand_base
 ON=@Create
 	HITPOINTS={50 60} //Revisar
-	TAG0.DMGFISIC = <EVAL {5 7}>, <EVAL {8 12}>
+	TAG.DMGFISIC = <EVAL {5 7}>, <EVAL {8 12}>
 	TAG0.DMGFIRE=0,0
 	TAG0.DMGCOLD=0,0
 	TAG0.DMGENERGY=0,0
 	TAG0.DMGPOISON=0,0
+	TAG.Ohuecos = 4
+	TAG.huecos=4

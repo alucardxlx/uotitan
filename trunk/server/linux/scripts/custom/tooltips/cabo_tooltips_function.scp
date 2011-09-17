@@ -7,21 +7,23 @@
 	LOCAL.maxDura = <UID.<ARGN1>.MAXHITS>
 	LOCAL.actDura = <UID.<ARGN1>.HITPOINTS>
 	LOCAL.peso = <UID.<ARGN1>.WEIGHT>
+	LOCAL.hlibres = <UID.<ARGN1>.TAG0.huecos>
+	LOCAL.Ohuecos = <UID.<ARGN1>.TAG0.Ohuecos>
 	
-	IF <UID.<ARGN1>.TAG.DMGFIRE>
+	IF (<UID.<ARGN1>.TAG0.DMGFIRE>)
 		LOCAL.damFireMin = <min <UID.<ARGN1>.TAG0.DMGFIRE>>
 		LOCAL.damFireMax = <max <UID.<ARGN1>.TAG0.DMGFIRE>>
 	ENDIF
 	
-	IF <UID.<ARGN1>.TAG.DMGCOLD>
+	IF (<UID.<ARGN1>.TAG0.DMGCOLD>)
 		LOCAL.damColdMin = <min <UID.<ARGN1>.TAG0.DMGCOLD>>
 		LOCAL.damColdMax = <max <UID.<ARGN1>.TAG0.DMGCOLD>>
 	ENDIF
-	IF <UID.<ARGN1>.TAG.DMGPOISON>
+	IF (<UID.<ARGN1>.TAG0.DMGPOISON>)
 		LOCAL.damPoisonMin = <min <UID.<ARGN1>.TAG0.DMGPOISON>>
 		LOCAL.damPoisonMax = <max <UID.<ARGN1>.TAG0.DMGPOISON>>
 	ENDIF
-	IF <UID.<ARGN1>.TAG.DMGENERGY>
+	IF (<UID.<ARGN1>.TAG0.DMGENERGY>)
 		LOCAL.damEnergyMin = <min <UID.<ARGN1>.TAG0.DMGENERGY>>
 		LOCAL.damEnergyMax = <max <UID.<ARGN1>.TAG0.DMGENERGY>>
 	ENDIF
@@ -44,33 +46,34 @@
 	LOCAL.tooltip = Daño: <EVAL <LOCAL.dwmin>> - <EVAL <LOCAL.dwmax>><DEF.BR>
 	LOCAL.tooltip = <LOCAL.tooltip>Velocidad: <FVAL <LOCAL.speed>> s
 	
-	IF <LOCAL.damFireMax>
+	IF (<LOCAL.damFireMax>)
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_FIRE>+ Daño Fuego: <EVAL <LOCAL.damFireMin>> - <EVAL <LOCAL.damFireMax>>
 	ENDIF
-	IF <LOCAL.damColdMax>
+	IF (<LOCAL.damColdMax>)
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_COLD>+ Daño Frío: <EVAL <LOCAL.damColdMin>> - <EVAL <LOCAL.damColdMax>>
 	ENDIF
-	IF <LOCAL.damPoisonMax>
+	IF (<LOCAL.damPoisonMax>)
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_POISON>+ Daño Veneno: <EVAL <LOCAL.damPoisonMin>> - <EVAL <LOCAL.damPoisonMax>>
 	ENDIF
-	IF <LOCAL.damEnergyMax>
+	IF (<LOCAL.damEnergyMax>)
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_C_ENERGY>+ Daño Energía: <EVAL <LOCAL.damEnergyMin>> - <EVAL <LOCAL.damEnergyMax>>
 	ENDIF
 	
-	IF <LOCAL.reqstr>
+	IF (<LOCAL.reqstr>)
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Fuerza req.: <EVAL <LOCAL.reqstr>>
 	ENDIF
-	IF <LOCAL.reqdex>
+	IF (<LOCAL.reqdex>)
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Destreza req.: <EVAL <LOCAL.reqdex>>
 	ENDIF
-	IF <LOCAL.reqint>
+	IF (<LOCAL.reqint>)
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Inteligencia req.: <EVAL <LOCAL.reqint>>
 	ENDIF
 	
-	LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_white>
+	LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_white><DEF.BR>Huecos Libres: <EVAL <LOCAL.hlibres>> / <EVAL <LOCAL.Ohuecos>>
 	LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Durabilidad: <EVAL <LOCAL.actDura>> / <EVAL <LOCAL.maxDura>>
 	
 	addcliloc 1070722 , <LOCAL.tooltip>
+
 	
 [FUNCTION f_cs_tooltip_armor]
 
