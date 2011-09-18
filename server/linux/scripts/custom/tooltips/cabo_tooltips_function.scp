@@ -78,6 +78,8 @@
 [FUNCTION f_cs_tooltip_armor]
 
 	LOCAL.name = <UID.<ARGN1>.NAME>
+	LOCAL.hlibres = <UID.<ARGN1>.TAG0.huecos>
+	LOCAL.Ohuecos = <UID.<ARGN1>.TAG0.Ohuecos>
 	
 	IF (<UID.<ARGN1>.LAYER> == layer_helm)
 		LOCAL.percZones = armor_helm_percentage
@@ -162,7 +164,7 @@
 		LOCAL.tooltip = <LOCAL.tooltip><DEF.BR><DEF.BFONT_LRED>Inteligencia req.: <EVAL <LOCAL.reqint>>
 	ENDIF
 	
-	LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_white>
+	LOCAL.tooltip = <LOCAL.tooltip><DEF.BFONT_white><DEF.BR>Huecos Libres: <EVAL <LOCAL.hlibres>> / <EVAL <LOCAL.Ohuecos>>
 	LOCAL.tooltip = <LOCAL.tooltip><DEF.BR>Durabilidad: <EVAL <LOCAL.actDura>> / <EVAL <LOCAL.maxDura>>
 	
 	addcliloc 1070722 , <LOCAL.tooltip>
@@ -221,6 +223,8 @@
 		LOCAL.tooltip = <LOCAL.tooltip> <EVAL <LOCAL.max>>
 	ENDIF
 	LOCAL.tooltip = <LOCAL.tooltip>]
+	
+	LOCAL.tooltip = <LOCAL.tooltip> (<EVAL <max <LOCAL.min> <LOCAL.max>> >)
 	
 	addcliloc 1070722 , <LOCAL.tooltip>
 

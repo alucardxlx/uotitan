@@ -26,15 +26,20 @@ on=@DClick
 	TARGET Selecciona el arma donde aplicar la gema.
 	Return 1
 on=@TargOn_Item
-	IF <I.TAG.LEVEL> == pg_level_comun
+
+	IF !(<ARGO.ISARMOR>) && !(<ARGO.ISWEAPON>)
+		SRC.SYSMESSAGE Solo se puede aplicar a una arma o a una armadura.
+	ENDIF
+
+	IF (<I.TAG.LEVEL> == pg_level_comun)
 		LOCAL.huecos = <DEF.pg_hueco_comun>
-	ELSEIF <I.TAG.LEVEL> == pg_level_pococomun
+	ELSEIF (<I.TAG.LEVEL> == pg_level_pococomun)
 		LOCAL.huecos = <DEF.pg_hueco_pococomun>
-	ELSEIF <I.TAG.LEVEL> == pg_level_raro
+	ELSEIF (<I.TAG.LEVEL> == pg_level_raro)
 		LOCAL.huecos = <DEF.pg_hueco_raro>
-	ELSEIF <I.TAG.LEVEL> == pg_level_inusual
+	ELSEIF (<I.TAG.LEVEL> == pg_level_inusual)
 		LOCAL.huecos = <DEF.pg_hueco_inusual>
-	ELSEIF <I.TAG.LEVEL> == pg_level_especial
+	ELSEIF (<I.TAG.LEVEL> == pg_level_especial)
 		LOCAL.huecos = <DEF.pg_hueco_especial>
 	ENDIF
 	
@@ -47,62 +52,76 @@ on=@TargOn_Item
 		ARGO.TAG.huecos = <LOCAL.hlibres>
 	ENDIF
 	
-	IF <I.TAG.TYPE> == pg_type_fire
-		LOCAL.min = <min <ARGO.TAG.DMGFIRE>>
-		LOCAL.max = <max <ARGO.TAG.DMGFIRE>>
+	IF (<ARGO.ISWEAPON>)
+		IF (<I.TAG.TYPE> == pg_type_fire)
+			LOCAL.min = <min <ARGO.TAG.DMGFIRE>>
+			LOCAL.max = <max <ARGO.TAG.DMGFIRE>>
 		
-		LOCAL.min += <EVAL <I.TAG.min>>
-		LOCAL.max += <EVAL <I.TAG.max>>
+			LOCAL.min += <EVAL <I.TAG.min>>
+			LOCAL.max += <EVAL <I.TAG.max>>
 		
-		LOCAL.min = <max <EVAL <LOCAL.min>> 0>
-		LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
-		LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
+			LOCAL.min = <max <EVAL <LOCAL.min>> 0>
+			LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
+			LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
 		
-		ARGO.TAG.DMGFIRE = <LOCAL.min>,<LOCAL.max>
-	ELSEIF <I.TAG.TYPE> == pg_type_poison
-		LOCAL.min = <min <ARGO.TAG.DMGPOISON>>
-		LOCAL.max = <max <ARGO.TAG.DMGPOISON>>
+			ARGO.TAG.DMGFIRE = <LOCAL.min>,<LOCAL.max>
+		ELSEIF (<I.TAG.TYPE> == pg_type_poison)
+			LOCAL.min = <min <ARGO.TAG.DMGPOISON>>
+			LOCAL.max = <max <ARGO.TAG.DMGPOISON>>
 		
-		LOCAL.min += <EVAL <I.TAG.min>>
-		LOCAL.max += <EVAL <I.TAG.max>>
+			LOCAL.min += <EVAL <I.TAG.min>>
+			LOCAL.max += <EVAL <I.TAG.max>>
 		
-		LOCAL.min = <max <EVAL <LOCAL.min>> 0>
-		LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
-		LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
+			LOCAL.min = <max <EVAL <LOCAL.min>> 0>
+			LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
+			LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
 		
-		ARGO.TAG.DMGPOISON = <LOCAL.min>,<LOCAL.max>
+			ARGO.TAG.DMGPOISON = <LOCAL.min>,<LOCAL.max>
 	
-	ELSEIF <I.TAG.TYPE> == pg_type_cold
+		ELSEIF (<I.TAG.TYPE> == pg_type_cold)
 	
-		LOCAL.min = <min <ARGO.TAG.DMGCOLD>>
-		LOCAL.max = <max <ARGO.TAG.DMGCOLD>>
+			LOCAL.min = <min <ARGO.TAG.DMGCOLD>>
+			LOCAL.max = <max <ARGO.TAG.DMGCOLD>>
 		
-		SRC.sysmessage mIN: <LOCAL.min> max: <LOCAL.max>
+			SRC.sysmessage mIN: <LOCAL.min> max: <LOCAL.max>
 		
-		LOCAL.min += <EVAL <I.TAG.min>>
-		LOCAL.max += <EVAL <I.TAG.max>>
+			LOCAL.min += <EVAL <I.TAG.min>>
+			LOCAL.max += <EVAL <I.TAG.max>>
 		
-		LOCAL.min = <max <EVAL <LOCAL.min>> 0>
-		LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
-		LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
+			LOCAL.min = <max <EVAL <LOCAL.min>> 0>
+			LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
+			LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
 		
-		SRC.SYSMESSAGE Nuevo MIN:  <LOCAL.min> max: <LOCAL.max>
+			SRC.SYSMESSAGE Nuevo MIN:  <LOCAL.min> max: <LOCAL.max>
 		
-		ARGO.TAG.DMGCOLD = <EVAL <LOCAL.min>>,<EVAL <LOCAL.max>>
-		SRC.SYSMESSAGE Nuevo arma: <ARGO.TAG.DMGCOLD>
+			ARGO.TAG.DMGCOLD = <EVAL <LOCAL.min>>,<EVAL <LOCAL.max>>
+			SRC.SYSMESSAGE Nuevo arma: <ARGO.TAG.DMGCOLD>
 	
-	ELSEIF <I.TAG.TYPE> == pg_type_energy
-		LOCAL.min = <min <ARGO.TAG.DMGENERGY>>
-		LOCAL.max = <max <ARGO.TAG.DMGENERGY>>
+		ELSEIF (<I.TAG.TYPE> == pg_type_energy)
+			LOCAL.min = <min <ARGO.TAG.DMGENERGY>>
+			LOCAL.max = <max <ARGO.TAG.DMGENERGY>>
 		
-		LOCAL.min += <EVAL <I.TAG.min>>
-		LOCAL.max += <EVAL <I.TAG.max>>
+			LOCAL.min += <EVAL <I.TAG.min>>
+			LOCAL.max += <EVAL <I.TAG.max>>
 		
-		LOCAL.min = <max <EVAL <LOCAL.min>> 0>
-		LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
-		LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
+			LOCAL.min = <max <EVAL <LOCAL.min>> 0>
+			LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
+			LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
 		
-		ARGO.TAG.DMGENERGY = <LOCAL.min>,<LOCAL.max>
+			ARGO.TAG.DMGENERGY = <LOCAL.min>,<LOCAL.max>
+		ENDIF
+	ELSE
+		LOCAL.newArmor = <EVAL <max <I.TAG.min> <I.TAG.max>> >
+		
+		IF (<I.TAG.TYPE> == pg_type_fire)
+			ARGO.TAG0.RESFIRE += <EVAL <LOCAL.newArmor>>
+		ELSEIF (<I.TAG.TYPE> == pg_type_poison)
+			ARGO.TAG0.RESPOISON += <EVAL <LOCAL.newArmor>>
+		ELSEIF (<I.TAG.TYPE> == pg_type_cold)
+			ARGO.TAG0.RESCOLD += <EVAL <LOCAL.newArmor>>
+		ELSEIF (<I.TAG.TYPE> == pg_type_energy)
+			ARGO.TAG0.RESENERGY += <EVAL <LOCAL.newArmor>>
+		ENDIF
 	ENDIF
 	
 	I.REMOVE
