@@ -75,10 +75,10 @@ ON=@Hit
 	SRC.DAMAGE <LOCAL.daFinal> , <ARGO.TYPE> , <I.UID>
 
 	//ARGN1 = 0
-	LOCAL.id = <serv.LOOKUPSKILL swordsmanship>
+	//LOCAL.id = <serv.LOOKUPSKILL swordsmanship>
 	
-	I.f_cs_checkSkill 40 0
-
+	f_checkSkill <I.UID> 40
+	
 	RETURN 1
 
 ON=@hitmiss

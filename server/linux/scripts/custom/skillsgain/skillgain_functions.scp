@@ -1,39 +1,50 @@
 [FUNCTION f_skillgain]
 	LOCAL.I = <ARGN1>
 	LOCAL.Ihabilidad = <ARGN2> //Nº de habilidad
+	
 	LOCAL.habilidad = <serv.skill.<LOCAL.Ihabilidad>.KEY>
 	LOCAL.nivel = <UID.<LOCAL.I>.<LOCAL.habilidad>>
 	
 	LOCAL.maxLevel = <SKILLCLASS.<LOCAL.Ihabilidad>>
 	IF <EVAL <LOCAL.maxLevel> - <LOCAL.nivel>> <= 0 //¡Tope de habilidad alcanzado!
+		UID.<LOCAL.I>.SYSMESSAGE Nivel maximo de habilidad alcanzado por fin.
 		UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertos =
 		UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertosT = 
 		RETURN 1
 	END IF
 	
 	LOCAL.aciertoAHacer = <EVAL <EVAL <LOCAL.nivel>> * <EVAL <VAR.<LOCAL.Ihabilidad>.factorDificultad>> >
-	LOCAL.aciertoAHacer = <EVAL {(<LOCAL.aciertoAHacer> - (<LOCAL.acierto>/2)) (<LOCAL.acierto> + (<LOCAL.acierto>/2))}>
+	LOCAL.maxAciertoMin = <FEVAL <FLOATVAL <EVAL <LOCAL.aciertoAHacer>> - (<EVAL <LOCAL.aciertoAHacer>>/2)>>
+	LOCAL.maxAciertoMax = <FEVAL <FLOATVAL <EVAL <LOCAL.aciertoAHacer>> + (<EVAL <LOCAL.aciertoAHacer>>/2)>>
 	
-	UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertosT = <LOCAL.acierto>
+	UID.<LOCAL.I>.SYSMESSAGE Resumen nuevos aciertos: A Hacer: <EVAL <LOCAL.aciertoAHacer>> Rango: [<EVAL <LOCAL.maxAciertoMin>> <EVAL <LOCAL.maxAciertoMax>>]
+
+	LOCAL.aciertoAHacer = <EVAL {<LOCAL.maxAciertoMin> <LOCAL.maxAciertoMax>}>
+	
+	UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertosT = <LOCAL.aciertoAHacer>
 	UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertos = 0
 	RETURN 0
 	
 [FUNCTION f_pSkillGain]
 	LOCAL.I = <ARGN1>
 	LOCAL.Ihabilidad = <ARGN2> //Nº de habilidad
-	LOCAL.aciertos = <UID.<LOCAL.I>.TAG0.<LOCAL.Ihabilidad>.aciertos>
-	LOCAL.aciertosT = <UID.<LOCAL.I>.TAG0.<LOCAL.Ihabilidad>.aciertosT>
+	LOCAL.aciertos = <UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertos>
+	LOCAL.aciertosT = <UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertosT>
 	
 	LOCAL.p = <FEVAL <FLOATVAL (<EVAL <LOCAL.aciertos>> / <EVAL <LOCAL.aciertosT>>)*100 >>
+	
+	LOCAL.p = <>
 	
 	UID.<LOCAL.I>.SYSMESSAGE @700 Resumen habilidad AC: <LOCAL.aciertos> ACT: <LOCAL.aciertosT> P: <eval <LOCAL.p>>%
 	
 	IF {0 100} <= <LOCAL.p>
 		UID.<LOCAL.I>.<LOCAL.Ihabilidad> += 1
+		SAY Incremento! :D
 		
 		f_skillgain <LOCAL.I> <LOCAL.Ihabilidad> //Recalculamos aciertosT
 		RETURN 0
 	ELSE
+		UID.<LOCAL.I>.SYSMESSAGE No ganas incrmento.
 		RETURN 1
 	END IF
 
@@ -46,8 +57,10 @@
 	LOCAL.nivel = <UID.<LOCAL.I>.<serv.skill.<LOCAL.Ihabilidad>.KEY>>
 	LOCAL.maxLevel = <SKILLCLASS.<LOCAL.Ihabilidad>>
 	
-	if <EVAL (<EVAL <LOCAL.maxLevel>> - <EVAL <LOCAL.nivel>>)> <= 0
+	IF <EVAL (<EVAL <LOCAL.maxLevel>> - <EVAL <LOCAL.nivel>>)> <= 0
 		//Nivel maximo de la habilidad alcanzado.
+		UID.<LOCAL.I>.SYSMESSAGE Nivel maximo de habilidad alcanzado.
+		UID.<LOCAL.I>.SYSMESSAGE MaxLevel: <EVAL <LOCAL.maxLevel>> con Level: <EVAL <LOCAL.nivel>>
 		UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertos =
 		UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertosT =
 		RETURN
@@ -64,9 +77,14 @@
 		ENDIF
 	END IF
 	
-	UID.<LOCAL.I>.TAG0.<LOCAL.Ihabilidad>.aciertos += <EVAL <LOCAL.incremento>>
+	LOCAL.aciertos = <UID.<LOCAL.I>.TAG0.<LOCAL.Ihabilidad>.aciertos>	
+	UID.<LOCAL.I>.SYSMESSAGE Aciertos que ya tenemos: <EVAL <LOCAL.aciertos>> con incremento: <EVAL <LOCAL.incremento>>
 	
-	<UID.<LOCAL.I>.SYSMESSAGE @33,3 Aciertos actuales para <SERV.SKILL.<LOCAL.ihabilidad>.NAME>: <UID.<LOCAL.I>.TAG.cs.<LOCAL.Ihabilidad>.aciertos>
+	LOCAL.aciertos += <EVAL <LOCAL.incremento>>
+	
+	UID.<LOCAL.I>.TAG0.<LOCAL.Ihabilidad>.aciertos = <LOCAL.aciertos>
+	
+	UID.<LOCAL.I>.SYSMESSAGE @33,3 Aciertos actuales para <SERV.SKILL.<LOCAL.ihabilidad>.NAME>: <EVAL <UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertos>>
 	
 	f_pSkillGain <LOCAL.I> <LOCAL.Ihabilidad>
 
