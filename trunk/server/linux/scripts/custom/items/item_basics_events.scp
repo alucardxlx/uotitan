@@ -5,9 +5,33 @@ on=@ItemEquip
 	//y NO es otra cosa como una daga, etc...
 	IF <ACT.ISARMOR>
 		f_recalc_armor <I.UID> <ACT.UID>
+		IF (<ACT.TAG0.RESFIRE>)
+			f_recalc_resist <I.UID> <ACT.UID> <DEF.elem_fire>
+		ENDIF
+		IF (<ACT.TAG0.RESCOLD>)
+			f_recalc_resist <I.UID> <ACT.UID> <DEF.elem_cold>
+		ENDIF
+		IF (<ACT.TAG0.RESPOISON>)
+			f_recalc_resist <I.UID> <ACT.UID> <DEF.elem_poison>
+		ENDIF
+		IF (<ACT.TAG0.RESENERGY>)
+			f_recalc_resist <I.UID> <ACT.UID> <DEF.elem_energy>
+		ENDIF
 	ENDIF
 	
 on=@ItemUnEquip
 	IF <ACT.ISARMOR>
 		f_recalc_armorUnequip <I.UID> <ACT.UID>
+		IF (<ACT.TAG0.RESFIRE>)
+			f_recalc_resistUnequip <I.UID> <ACT.UID> <DEF.elem_fire>
+		ENDIF
+		IF (<ACT.TAG0.RESCOLD>)
+			f_recalc_resistUnequip <I.UID> <ACT.UID> <DEF.elem_cold>
+		ENDIF
+		IF (<ACT.TAG0.RESPOISON>)
+			f_recalc_resistUnequip <I.UID> <ACT.UID> <DEF.elem_poison>
+		ENDIF
+		IF (<ACT.TAG0.RESENERGY>)
+			f_recalc_resistUnequip <I.UID> <ACT.UID> <DEF.elem_energy>
+		ENDIF
 	ENDIF

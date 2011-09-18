@@ -63,8 +63,12 @@ on=@TargOn_Item
 			LOCAL.min = <max <EVAL <LOCAL.min>> 0>
 			LOCAL.max = <max <EVAL <LOCAL.MAX>> 0>
 			LOCAL.min = <min <EVAL <LOCAL.min>> <EVAL <LOCAL.max>> >
+			
+			SRC.SYSMESSAGE Nuevo MIN:  <LOCAL.min> max: <LOCAL.max>
 		
 			ARGO.TAG.DMGFIRE = <LOCAL.min>,<LOCAL.max>
+			
+			SRC.SYSMESSAGE Nuevo arma: <ARGO.TAG.DMGFIRE>
 		ELSEIF (<I.TAG.TYPE> == pg_type_poison)
 			LOCAL.min = <min <ARGO.TAG.DMGPOISON>>
 			LOCAL.max = <max <ARGO.TAG.DMGPOISON>>
@@ -113,6 +117,19 @@ on=@TargOn_Item
 	ELSE
 		LOCAL.newArmor = <EVAL <max <I.TAG.min> <I.TAG.max>> >
 		
+		IF (<SRC.FINDLAYER.<ARGO.LAYER>.UID> == <ARGO.UID>) //Si la pieza que mejoramos esta actualmente equipada
+			IF (<I.TAG.TYPE> == pg_type_fire)
+				LOCAL.res = <DEF.elem_fire>
+			ELSEIF (<I.TAG.TYPE> == pg_type_poison)
+				LOCAL.res = <DEF.elem_poison>
+			ELSEIF (<I.TAG.TYPE> == pg_type_cold)
+				LOCAL.res = <DEF.elem_cold>
+			ELSEIF (<I.TAG.TYPE> == pg_type_energy)
+				LOCAL.res = <DEF.elem_energy>
+			ENDIF
+			f_recalc_resistUnequip <SRC.UID> <ARGO.UID> <LOCAL.res> //Desequipamos la armadura
+		ENDIF
+		
 		IF (<I.TAG.TYPE> == pg_type_fire)
 			ARGO.TAG0.RESFIRE += <EVAL <LOCAL.newArmor>>
 		ELSEIF (<I.TAG.TYPE> == pg_type_poison)
@@ -122,10 +139,13 @@ on=@TargOn_Item
 		ELSEIF (<I.TAG.TYPE> == pg_type_energy)
 			ARGO.TAG0.RESENERGY += <EVAL <LOCAL.newArmor>>
 		ENDIF
+		IF (<SRC.FINDLAYER.<ARGO.LAYER>.UID> == <ARGO.UID>)
+			f_recalc_resist <SRC.UID> <ARGO.UID> <LOCAL.res> //Recalculamos la resistencia
+		ENDIF
 	ENDIF
 	
 	I.REMOVE
-	ARGO.RESENDTOOLTIP
+	ARGO.RESENDTOOLTIP		
 	RETURN 1
 
 //workaround.

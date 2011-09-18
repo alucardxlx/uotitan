@@ -15,7 +15,8 @@ on=@start
 	ELSE
 		RETURN 1
 	ENDIF
-	
+
+//Boxeo
 [SKILL 43]
 on=@start
 	LOCAL.pos = <I.P>
@@ -29,5 +30,6 @@ on=@start
 		ENDIF
 		timerd = <Local.Speed>
 	ELSE
+		I.TAG.combatFail =
 		RETURN 1
 	ENDIF
