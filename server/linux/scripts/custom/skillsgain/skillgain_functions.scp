@@ -1,69 +1,73 @@
-[FUNCTION f_cs_skillgain]
-	LOCAL.Ihabilidad = <ARGN1> //Nº de habilidad
+[FUNCTION f_skillgain]
+	LOCAL.I = <ARGN1>
+	LOCAL.Ihabilidad = <ARGN2> //Nº de habilidad
 	LOCAL.habilidad = <serv.skill.<LOCAL.Ihabilidad>.KEY>
-	FLOAT.nivel = <I.<LOCAL.habilidad>>
+	LOCAL.nivel = <UID.<LOCAL.I>.<LOCAL.habilidad>>
 	
-	IF <FEVAL <FLOATVAL (<FLOAT.nivel>/<skillclass.<LOCAL.habilidad>>)>> >= 1 //Tope de habilidad
-		I.TAG.cs.<LOCAL.Ihabilidad>.aciertos =
-		I.TAG.cs.<LOCAL.Ihabilidad>.aciertosT = 
+	LOCAL.maxLevel = <SKILLCLASS.<LOCAL.Ihabilidad>>
+	IF <EVAL <LOCAL.maxLevel> - <LOCAL.nivel>> <= 0 //¡Tope de habilidad alcanzado!
+		UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertos =
+		UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertosT = 
 		RETURN 1
 	END IF
 	
-	LOCAL.acierto = <FEVAL <FLOATVAL <FLOAT.nivel> * <VAR.<LOCAL.Ihabilidad>.factorDificultad> >>
-	LOCAL.acierto = <EVAL {(<LOCAL.acierto> - (<LOCAL.acierto>/2)) (<LOCAL.acierto> + (<LOCAL.acierto>/2))}>
+	LOCAL.aciertoAHacer = <EVAL <EVAL <LOCAL.nivel>> * <EVAL <VAR.<LOCAL.Ihabilidad>.factorDificultad>> >
+	LOCAL.aciertoAHacer = <EVAL {(<LOCAL.aciertoAHacer> - (<LOCAL.acierto>/2)) (<LOCAL.acierto> + (<LOCAL.acierto>/2))}>
 	
-	TRY I.TAG.cs.<LOCAL.Ihabilidad>.aciertosT = <LOCAL.acierto>
-	TRY I.TAG.cs.<LOCAL.Ihabilidad>.aciertos = 0
+	UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertosT = <LOCAL.acierto>
+	UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertos = 0
 	RETURN 0
 	
-[FUNCTION f_cs_pSkillGain]
-	LOCAL.Ihabilidad = <ARGN1> //Nº de habilidad
-	LOCAL.aciertos = <I.TAG0.cs.<LOCAL.Ihabilidad>.aciertos>
-	LOCAL.aciertosT = <I.TAG0.cs.<LOCAL.Ihabilidad>.aciertosT>
+[FUNCTION f_pSkillGain]
+	LOCAL.I = <ARGN1>
+	LOCAL.Ihabilidad = <ARGN2> //Nº de habilidad
+	LOCAL.aciertos = <UID.<LOCAL.I>.TAG0.<LOCAL.Ihabilidad>.aciertos>
+	LOCAL.aciertosT = <UID.<LOCAL.I>.TAG0.<LOCAL.Ihabilidad>.aciertosT>
 	
 	LOCAL.p = <FEVAL <FLOATVAL (<EVAL <LOCAL.aciertos>> / <EVAL <LOCAL.aciertosT>>)*100 >>
 	
-	I.SYSMESSAGE AC: <LOCAL.aciertos> ACT: <LOCAL.aciertosT> P: <eval <LOCAL.p>>%
+	UID.<LOCAL.I>.SYSMESSAGE @700 Resumen habilidad AC: <LOCAL.aciertos> ACT: <LOCAL.aciertosT> P: <eval <LOCAL.p>>%
 	
 	IF {0 100} <= <LOCAL.p>
-		LOCAL.habilidad = <serv.skill.<LOCAL.Ihabilidad>.KEY>
-		TRY I.<LOCAL.habilidad> = <EVAL <I.<LOCAL.habilidad>> + 0.1>
+		UID.<LOCAL.I>.<LOCAL.Ihabilidad> += 1
 		
-		I.f_cs_skillgain <LOCAL.Ihabilidad> //Recalculamos aciertosT
+		f_skillgain <LOCAL.I> <LOCAL.Ihabilidad> //Recalculamos aciertosT
 		RETURN 0
 	ELSE
 		RETURN 1
 	END IF
 
-
-[FUNCTION f_cs_checkSkill]
-	LOCAL.Ihabilidad = <ARGN1> //Nº de habilidad
-	LOCAL.proporcional = <ARGN2> //1 := Si se aplica la proporcionalidad
-	FLOAT.nHabObjeto = <ARGN3> //Si se le pasa entonces LOCAL.proporcional != 0
+//Hacer uso de una skill.
+[FUNCTION f_checkSkill]
+	LOCAL.I = <ARGN1>
+	LOCAL.Ihabilidad = <ARGN2> //Nº de habilidad
+	LOCAL.nHabObjeto = <ARGN3> //Si se le pasa entonces LOCAL.proporcional != 0 (lo que valdría el acierto entonces) //**** revisar
 	
-	FLOAT.nivel = <I.<serv.skill.<LOCAL.Ihabilidad>.KEY>>
+	LOCAL.nivel = <UID.<LOCAL.I>.<serv.skill.<LOCAL.Ihabilidad>.KEY>>
+	LOCAL.maxLevel = <SKILLCLASS.<LOCAL.Ihabilidad>>
 	
-	IF <FEVAL <FLOATVAL (<FLOAT.nivel>/<skillclass.<LOCAL.habilidad>>)>> >= 1 //Tope de habilidad
-		I.TAG.cs.<LOCAL.Ihabilidad>.aciertos =
-		I.TAG.cs.<LOCAL.Ihabilidad>.aciertosT =
+	if <EVAL (<EVAL <LOCAL.maxLevel>> - <EVAL <LOCAL.nivel>>)> <= 0
+		//Nivel maximo de la habilidad alcanzado.
+		UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertos =
+		UID.<LOCAL.I>.TAG.<LOCAL.Ihabilidad>.aciertosT =
 		RETURN
-	END IF
-		
-	LOCAL.factorMax = <max <VAR.cs.<LOCAL.Ihabilidad>.factorUnidad>>
-	LOCAL.factorMin = <min <VAR.cs.<LOCAL.Ihabilidad>.factorUnidad>>
-
+	ENDIF
 	
-	IF !(<LOCAL.proporcional>) || (<FLOAT.nivel> < <LOCAL.factorMax>)
+	IF !(<LOCAL.nHabObjeto>)
 		LOCAL.incremento = 1
 	ELSE
-		LOCAL.incremento = <FEVAL <FLOATVAL <FLOAT.nHabObjeto> / <EVAL {<LOCAL.factorMax> <LOCAL.factorMin>} > > >
+		LOCAL.dif = <EVAL <LOCAL.nivel> - <LOCAL.nHabObjeto>>
+		IF (<LOCAL.dif> < 100)
+			LOCAL.incremento = <EVAL <LOCAL.nivel> / <LOCAL.dif> >
+		ELSE
+			LOCAL.incremento = <EVAL <LOCAL.nivel> / 100> // incr = nAct / (nAct - (nAct-100)) :: nivel inmediatamente anterior.
+		ENDIF
 	END IF
 	
-	I.SYSMESSAGE Incrementamos: <LOCAL.incremento>
-	TRY I.TAG0.cs.<LOCAL.Ihabilidad>.aciertos =  <EVAL <I.TAG0.cs.<LOCAL.Ihabilidad>.aciertos> + <LOCAL.incremento> >
+	UID.<LOCAL.I>.TAG0.<LOCAL.Ihabilidad>.aciertos += <EVAL <LOCAL.incremento>>
 	
-	I.SYSMESSAGE @33,3 Incremento Actual: <I.TAG.cs.<LOCAL.Ihabilidad>.aciertos>
+	<UID.<LOCAL.I>.SYSMESSAGE @33,3 Aciertos actuales para <SERV.SKILL.<LOCAL.ihabilidad>.NAME>: <UID.<LOCAL.I>.TAG.cs.<LOCAL.Ihabilidad>.aciertos>
 	
-	I.f_cs_pSkillGain <LOCAL.Ihabilidad>
+	f_pSkillGain <LOCAL.I> <LOCAL.Ihabilidad>
 
 [EOF]
