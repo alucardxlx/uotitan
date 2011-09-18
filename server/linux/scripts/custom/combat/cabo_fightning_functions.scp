@@ -220,7 +220,7 @@
 [FUNCTION f_cs_fighting_calc_elem]
 	LOCAL.dawHI = <ARGN1> //Daño weapon Hi
 	LOCAL.dawLO = <ARGN2> //Daño weapon LO
-	LOCAL.armor = <ARGN3> //Armor de victima
+	LOCAL.armor = <ARGN3> //Resistencia al elemento
 	
 	IF <I.WEAPON.ISWEAPON> //Is a weapon
 		IF (<I.WEAPON.TYPE> == t_weapon_sword) || (<I.WEAPON.TYPE> == t_weapon_axe)
@@ -257,7 +257,26 @@
 	
 	LOCAL.damInfMin = <min <LOCAL.damInfMax> , <LOCAL.damInfMin>>
 	
-	RETURN <EVAL {<LOCAL.damInfMax> <LOCAL.damInfMin>}>
+	I.SYSMESSAGE @75,1 Rango Danyo Infligido Elemento: <EVAL <LOCAL.damInfMin>>-<EVAL <LOCAL.damInfMax>>
+	SRC.SYSMESSAGE @75,1 Rango Danyo Infligido Elemento: <EVAL <LOCAL.damInfMin>>-<EVAL <LOCAL.damInfMax>>
+	
+	LOCAL.damInf = <EVAL {<LOCAL.damInfMax> <LOCAL.damInfMin>}>
+	
+	I.SYSMESSAGE @75,1 Danyo Infligido Elemento: <EVAL <LOCAL.damInf>>
+	SRC.SYSMESSAGE @75,1 Danyo Infligido Elemento: <EVAL <LOCAL.damInf>>
+	
+	IF <LOCAL.damInf> == 0
+		RETURN 0
+	ENDIF
+	
+	LOCAL.damInf = <EVAL <LOCAL.damInf>-<LOCAL.armor>>
+	
+	LOCAL.damInf = <max <EVAL <LOCAL.damInf>>, 0>
+	
+	I.SYSMESSAGE @75,1 Danyo Infligido - Resistencia Enemigo : <EVAL <LOCAL.damInf>>
+	SRC.SYSMESSAGE @75,1 Danyo Infligido - Resistencia Enemigo : <EVAL <LOCAL.damInf>>
+	
+	RETURN <LOCAL.damInf>
 	
 [FUNCTION f_boxeo_calc]
 	LOCAL.I = <ARGN1>

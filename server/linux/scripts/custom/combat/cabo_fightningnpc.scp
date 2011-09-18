@@ -4,9 +4,11 @@ on=@Attack
 	I.TAG.attackTo = <SRC.UID> //Guarda a quien estás atacando.
 		
 ON=@Hit
-	IF <I.TRIGGER @HitMiss> == 1
+	IF (<I.TAG.combatFail> == 1)
+		TRIGGER @hitmiss
 		RETURN 1
 	ENDIF
+	SAY Acerte...
 
 	//Zona de golpeo
 	LOCAL.zona = <EVAL { cs_zone_head armor_helm_percentage cs_zone_neck armor_gorget_percentage cs_zone_chest armor_chest_percentage cs_zone_back armor_back_percentage cs_zone_arms armor_arms_percentage cs_zone_hands armor_gloves_percentage cs_zone_legs armor_legs_percentage cs_zone_feet armor_shoes_percentage }>
@@ -18,7 +20,7 @@ ON=@Hit
 		LOCAL.armorZone = <f_ar_zone <SRC.UID> <EVAL <LOCAL.zona>> >
 	ENDIF
 	
-	SRC.SYSMESSAGE @33,1 "** Sistema de Combate MALO **"
+	SRC.SYSMESSAGE @33,1 "** Sistema de Combate ENEMIGO **"
 	
 	SRC.SYSMESSAGE @16,1 "--Enemigo--"
 	SRC.SYSMESSAGE @16,1 Zona que golpeo: <EVAL <LOCAL.zona>>
@@ -27,27 +29,27 @@ ON=@Hit
 	LOCAL.daFinal = 0
 	IF <ARGO.ISWEAPON>
 		//Fisical damage
-		IF <ARGO.TAG0.DMGFISIC> != 0
+		IF !(<isVacio <ARGO.TAG0.DMGFISIC> >)
 			LOCAL.daFis =  <I.f_cs_fighting_calc <max <ARGO.TAG0.DMGFISIC>> <min <ARGO.TAG0.DMGFISIC>> <LOCAL.armorZone>>
 		ENDIF
 		
 		//FireDamage
-		IF <ARGO.TAG0.DMGFIRE> != 0
+		IF !(<isVacio <ARGO.TAG0.DMGFIRE> >)
 			LOCAL.daFire = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGFIRE>> <min <ARGO.TAG0.DMGFIRE>> <SRC.RESFIRE>>
 		ENDIF
 		
 		//Cold Damage
-		IF <ARGO.TAG0.DMGCOLD> != 0
+		IF !(<isVacio <ARGO.TAG0.DMGCOLD> >)
 			LOCAL.daCold = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGCOLD>> <min <ARGO.TAG0.DMGCOLD>> <SRC.RESCOLD>>
 		ENDIF
 		
 		//Poison Damage
-		IF <ARGO.TAG0.DMGPOISON> != 0
+		IF !(<isVacio <ARGO.TAG0.DMGPOISON> >)
 			LOCAL.daPoison = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGPOISON>> <min <ARGO.TAG0.DMGPOISON>> <SRC.RESPOISON>>
 		ENDIF
 		
 		//Energy Damage
-		IF <ARGO.TAG0.DMGENERGY> != 0
+		IF !(<isVacio <ARGO.TAG0.DMGENERGY> >)
 			LOCAL.daEnergy = <I.f_cs_fighting_calc_elem <max <ARGO.TAG0.DMGENERGY>> <min <ARGO.TAG0.DMGENERGY>> <SRC.RESENERGY>>
 		ENDIF
 		
@@ -71,22 +73,22 @@ ON=@Hit
 			LOCAL.daFis <I.f_cs_fighting_calc <I.DAM.HI> <I.DAM.LO> <LOCAL.armorZone>>
 			
 			//FireDamage
-			IF <I.TAG0.DMGFIRE> != 0
+			IF !(<isVacio <I.TAG0.DMGFIRE>>)
 				LOCAL.daFire = <I.f_cs_fighting_calc_elem <max <I.TAG0.DMGFIRE>> <min <I.TAG0.DMGFIRE>> <SRC.RESFIRE>>
 			ENDIF
 		
 			//Cold Damage
-			IF <I.TAG0.DMGCOLD> != 0
+			IF !(<isVacio <I.TAG0.DMGCOLD>>)
 				LOCAL.daCold = <I.f_cs_fighting_calc_elem <max <I.TAG0.DMGCOLD>> <min <I.TAG0.DMGCOLD>> <SRC.RESCOLD>>
 			ENDIF
 		
 			//Poison Damage
-			IF <I.TAG0.DMGPOISON> != 0
+			IF !(<isVacio <I.TAG0.DMGPOISON>>)
 				LOCAL.daPoison = <I.f_cs_fighting_calc_elem <max <I.TAG0.DMGPOISON>> <min <I.TAG0.DMGPOISON>> <SRC.RESPOISON>>
 			ENDIF
 		
 			//Energy Damage
-			IF <I.TAG0.DMGENERGY> != 0
+			IF !(<isVacio <I.TAG0.DMGENERGY>>)
 				LOCAL.daEnergy = <I.f_cs_fighting_calc_elem <max <I.TAG0.DMGENERGY>> <min <I.TAG0.DMGENERGY>> <SRC.RESENERGY>>
 			ENDIF
 			
@@ -106,7 +108,19 @@ ON=@Hit
 
 	RETURN 1
 	
-ON=@HitMiss
+ON=@hitmiss
+	IF (<I.TAG.combatFail> != 1)
+		I.TRIGGER @hit
+	ELSE	
+		SAY falle...
+		SOUND {snd_weapons_swish01 1 snd_weapons_swish02 1 snd_weapons_swish03 1 snd_weapons_blunt01 1 snd_weapons_axe01 1}
+	ENDIF
+	
+	I.TAG.combatFail =
+	
+	RETURN 1
+	
+ON=@hittry
 	IF <I.WEAPON.ISWEAPON>
 		IF (<I.WEAPON.TYPE> == t_weapon_sword) || (<I.WEAPON.TYPE> == t_weapon_axe)
 			FLOAT.Harma = <I.swordsmanship>
@@ -129,11 +143,8 @@ ON=@HitMiss
 	I.SYSMESSAGE probabilidad Player: <LOCAL.pAcierto>
 
 	IF {0 100} < <LOCAL.pAcierto>
-		SAY Acerte
-		RETURN 0
+		I.TAG.combatFail = 0
 	ELSE
-		SAY falle...
-		SOUND {snd_weapons_swish01 1 snd_weapons_swish02 1 snd_weapons_swish03 1 snd_weapons_blunt01 1 snd_weapons_axe01 1}
-		RETURN 1
+		I.TAG.combatFail = 1
 
 [EOF]

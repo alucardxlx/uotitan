@@ -6,6 +6,11 @@ RETURN <QVAL <ARGN2> < <ARGN1>? <ARGN1> : <ARGN2>>
 [FUNCTION min]
 RETURN <QVAL <ARGN2> < <ARGN1>? <ARGN2> : <ARGN1>>
 
-
+[FUNCTION isVacio]
+	IF (<min <ARGS>>) || (<max <ARGS>>)
+		RETURN 0
+	ELSE
+		RETURN 1
+	ENDIF
 
 [EOF]
