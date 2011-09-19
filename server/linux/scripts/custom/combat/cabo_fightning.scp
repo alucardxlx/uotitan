@@ -122,6 +122,7 @@ ON=@hitmiss
 
 	IF {0 100} < <LOCAL.pAcierto>
 		I.TAG.combatFail = 2 //Acierto
+		SAY Acerte...
 	ELSE
 		I.TAG.combatFail = 1 //Fallo
 		SAY falle...

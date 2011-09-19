@@ -4,11 +4,20 @@ on=@Attack
 	I.TAG.attackTo = <SRC.UID> //Guarda a quien estás atacando.
 		
 ON=@Hit
+	//Nunca hubo ejecución (0)
+	IF !(<I.TAG0.combatFail>)
+		I.TAG0.combatFail = 2 //Decimos, simplemente, que hemos pasado por hit.
+		I.TRIGGER @hitmiss
+	ENDIF
+	
+	//Hubo ejecución y el resultado fue de fallo.
 	IF (<I.TAG.combatFail> == 1)
-		TRIGGER @hitmiss
+		I.TAG.combatFail =
 		RETURN 1
 	ENDIF
-	SAY Acerte...
+	I.TAG.combatFail =
+	
+	//Continuará si es de acierto (!= 0 && != 1 && == 2)
 
 	//Zona de golpeo
 	LOCAL.zona = <EVAL { cs_zone_head armor_helm_percentage cs_zone_neck armor_gorget_percentage cs_zone_chest armor_chest_percentage cs_zone_back armor_back_percentage cs_zone_arms armor_arms_percentage cs_zone_hands armor_gloves_percentage cs_zone_legs armor_legs_percentage cs_zone_feet armor_shoes_percentage }>
@@ -109,18 +118,14 @@ ON=@Hit
 	RETURN 1
 	
 ON=@hitmiss
-	IF (<I.TAG.combatFail> != 1)
-		I.TRIGGER @hit
-	ELSE	
-		SAY falle...
-		SOUND {snd_weapons_swish01 1 snd_weapons_swish02 1 snd_weapons_swish03 1 snd_weapons_blunt01 1 snd_weapons_axe01 1}
+
+	//Hit se ha ejecutado alguna vez?
+	IF !(<I.TAG0.combatFail>)
+		LOCAL.execHit = 1
+	ELSE
+		LOCAL.execHit = 0
 	ENDIF
 	
-	I.TAG.combatFail =
-	
-	RETURN 1
-	
-ON=@hittry
 	IF <I.WEAPON.ISWEAPON>
 		IF (<I.WEAPON.TYPE> == t_weapon_sword) || (<I.WEAPON.TYPE> == t_weapon_axe)
 			FLOAT.Harma = <I.swordsmanship>
@@ -132,19 +137,32 @@ ON=@hittry
 	ELSE
 		FLOAT.Harma = <I.WRESTLING>
 	ENDIF
-	
+
 	FLOAT.hanatomia = <I.Anatomy>
 	FLOAT.htacticas = <I.Tactics>
-	
-	LOCAL.pAcierto = <FEVAL <FLOATVAL (((2*<FLOAT.Harma>)+<FLOAT.hanatomia>+<FLOAT.htacticas>)/4)> >
-	
+	IF <I.FOOD> < <VAR.factorHungry>
+		LOCAL.pAcierto = <FEVAL <FLOATVAL (((2*<FLOAT.Harma>)+<FLOAT.hanatomia>+<FLOAT.htacticas>)/4)*(<I.FOOD>/<VAR.factorHungry>)> >
+	ELSE
+		LOCAL.pAcierto = <FEVAL <FLOATVAL (((2*<FLOAT.Harma>)+<FLOAT.hanatomia>+<FLOAT.htacticas>)/4)> >
+	ENDIF
+
 	LOCAL.pAcierto = <EVAL 100 - {<EVAL 100 - <LOCAL.pAcierto>> 0} >
-	
-	I.SYSMESSAGE probabilidad Player: <LOCAL.pAcierto>
+
+	SRC.SYSMESSAGE Probabilidad Monstruo: <LOCAL.pAcierto>
 
 	IF {0 100} < <LOCAL.pAcierto>
-		I.TAG.combatFail = 0
+		I.TAG.combatFail = 2 //Acierto
+		SAY Acerte...
 	ELSE
-		I.TAG.combatFail = 1
+		I.TAG.combatFail = 1 //Fallo
+		SAY falle...
+		SOUND {snd_weapons_swish01 1 snd_weapons_swish02 1 snd_weapons_swish03 1 snd_weapons_blunt01 1 snd_weapons_axe01 1}
+	ENDIF
+	
+	IF (<LOCAL.execHit>)
+		I.TRIGGER @hit //Se ejecuta Hit sino se ha ejecutado anteriormente.
+	ENDIF
+	
+	RETURN 1
 
 [EOF]
