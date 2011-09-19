@@ -30,6 +30,5 @@ on=@start
 		ENDIF
 		timerd = <Local.Speed>
 	ELSE
-		I.TAG.combatFail =
 		RETURN 1
 	ENDIF
