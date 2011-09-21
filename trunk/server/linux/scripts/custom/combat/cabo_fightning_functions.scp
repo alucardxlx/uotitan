@@ -164,7 +164,9 @@
 			FLOAT.Harma = <I.Fencing>
 		ELSEIF (<I.WEAPON.TYPE> == t_weapon_mace_pick) || (<I.WEAPON.TYPE> == t_weapon_mace_smith) || (<I.WEAPON.TYPE> == t_weapon_mace_sharp) || (<I.WEAPON.TYPE> == t_weapon_mace_staff) || (<I.WEAPON.TYPE> == t_weapon_mace_crook)
 			FLOAT.Harma = <I.Macefighting>
-		END IF
+		ELSEIF (<I.WEAPON.TYPE> == t_weapon_bow)
+			FLOAT.Harma = <I.Archery>
+		ENDIF
 	ELSE
 		FLOAT.Harma = <I.WRESTLING>
 	END IF
@@ -229,7 +231,9 @@
 			FLOAT.Harma = <I.Fencing>
 		ELSEIF (<I.WEAPON.TYPE> == t_weapon_mace_pick) || (<I.WEAPON.TYPE> == t_weapon_mace_smith) || (<I.WEAPON.TYPE> == t_weapon_mace_sharp) || (<I.WEAPON.TYPE> == t_weapon_mace_staff) || (<I.WEAPON.TYPE> == t_weapon_mace_crook)
 			FLOAT.Harma = <I.Macefighting>
-		END IF
+		ELSEIF (<I.WEAPON.TYPE> == t_weapon_bow)
+			FLOAT.Harma = <I.Archery>
+		ENDIF
 	ELSE
 		FLOAT.Harma = <I.WRESTLING>
 	END IF

@@ -32,3 +32,20 @@ on=@start
 	ELSE
 		RETURN 1
 	ENDIF
+	
+//Arquero
+[SKILL 31]
+on=@start
+	LOCAL.pos = <I.P>
+	LOCAL.dist = <I.DISTANCE <I.TAG.attackTo>>
+	
+	IF <LOCAL.dist> <= <I.WEAPON.TAG0.DIST> //Que el defensor este dentro de la distancia de alcanza del arco
+		IF <BRAIN>
+			LOCAL.speed = <TAG.SPEED>
+		ELSE
+			LOCAL.speed = <f_combat_calc_speed_weapon <I.UID>  <I.WEAPON.UID> >
+		ENDIF
+		timerd = <Local.Speed>
+	ELSE
+		RETURN 1
+	ENDIF
