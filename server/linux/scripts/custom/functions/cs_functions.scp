@@ -9,7 +9,9 @@
 			FLOAT.Harma = <I.Fencing>
 		ELSEIF (<UID.<LOCAL.w>.TYPE> == t_weapon_mace_pick) || (<UID.<LOCAL.w>.TYPE> == t_weapon_mace_smith) || (<UID.<LOCAL.w>.TYPE> == t_weapon_mace_sharp) || (<UID.<LOCAL.w>.TYPE> == t_weapon_mace_staff) || (<UID.<LOCAL.w>.TYPE> == t_weapon_mace_crook)
 			FLOAT.Harma = <UID.<LOCAL.I>.Macefighting>
-		END IF
+		ELSEIF (<I.WEAPON.TYPE> == t_weapon_bow)
+			FLOAT.Harma = <UID.<LOCAL.I>.Archery>
+		ENDIF
 		LOCAL.SPEED = <UID.<LOCAL.w>.SPEED>
 	ELSE
 		FLOAT.Harma = <UID.<LOCAL.I>.WRESTLING>

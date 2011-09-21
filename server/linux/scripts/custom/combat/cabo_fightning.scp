@@ -74,6 +74,8 @@ ON=@Hit
 			SOUND {snd_weapons_sword1  1 snd_weapons_sword7 1} 
 		ELSEIF (<I.WEAPON.TYPE> == t_weapon_mace_pick) || (<I.WEAPON.TYPE> == t_weapon_mace_smith) || (<I.WEAPON.TYPE> == t_weapon_mace_sharp) || (<I.WEAPON.TYPE> == t_weapon_mace_staff) || (<I.WEAPON.TYPE> == t_weapon_mace_crook)|| (<I.WEAPON.TYPE> == t_weapon_axe)
 			SOUND {snd_weapons_hvyswrd1  1 snd_weapons_hvyswrd4 1}
+		ELSEIF (<I.WEAPON.TYPE> == t_weapon_bow)
+			SOUND snd_weapons_crossbow
 		ENDIF
 			
 	ELSE //Si no tiene arma.
@@ -103,6 +105,8 @@ ON=@hitmiss
 			FLOAT.Harma = <I.Fencing>
 		ELSEIF (<I.WEAPON.TYPE> == t_weapon_mace_pick) || (<I.WEAPON.TYPE> == t_weapon_mace_smith) || (<I.WEAPON.TYPE> == t_weapon_mace_sharp) || (<I.WEAPON.TYPE> == t_weapon_mace_staff) || (<I.WEAPON.TYPE> == t_weapon_mace_crook)
 			FLOAT.Harma = <I.Macefighting>
+		ELSEIF (<I.WEAPON.TYPE> == t_weapon_bow)
+			FLOAT.Harma = <I.Archery>
 		ENDIF
 	ELSE
 		FLOAT.Harma = <I.WRESTLING>

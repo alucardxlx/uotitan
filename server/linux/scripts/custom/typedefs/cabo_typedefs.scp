@@ -4,6 +4,12 @@ on=@clienttooltip
 	
 	RETURN 1
 	
+[typedef t_weapon_bow]
+on=@clienttooltip
+	SRC.f_cs_tooltip_weapon <I.UID>
+	
+	RETURN 1
+	
 [typedef t_armor]
 on=@clienttooltip
 	SRC.f_cs_tooltip_armor <I.UID>
