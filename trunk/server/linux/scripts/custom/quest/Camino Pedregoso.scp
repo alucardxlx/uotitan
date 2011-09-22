@@ -1,0 +1,62 @@
+//Quest: Camino Pedregoso
+
+[DEFNAME quest_camino_pedregoso]
+	q_cp q_camino_pedregroso
+	q_cp_origen 1,2,3 //Posición de origen de la quest
+
+//Función que se debe ejecutar para hacer que el jugador pueda empezar la quest.
+[FUNCTION f_camino_pedregoso_start]
+	IF (<I.CTAG0.<DEF.q_cp>.playing> != 0)
+		I.SYSMESSAGE Ya estas dentro de la quest.
+		RETURN 1
+	ELSE
+		I.CTAG.<DEF.q_cp>.playing = 1
+		I.SYSMESSAGE Acabas de entrar a la quest.
+	ENDIF
+	
+	//Posición original del jugador antes de ser teletransportado.
+	I.CTAG.<DEF.q_cp>.original_position = <I.P>
+	
+	f_camino_pedregroso_set_level 0
+
+[FUNCTION f_camino_pedregoso_restart]
+
+[FUNCTION f_camino_pedregoso_ends]
+	I.GO <I.CTAG.<DEF.q_cp>.original_position>
+	I.CTAG.<DEF.q_cp>.playing = 0
+	
+	I.CTAG.<DEF.q_cp>.playing =
+	I.CTAG.<DEF.q_cp>.original_position =
+	
+[FUNCTION f_camino_pedregroso_set_level]
+	LOCAL.level = <ARGN1>
+	
+	FOR x 1 20
+		I.FINDLAYER.<LOCAL.x>.REMOVE
+	ENDFOR
+	//21 is layer_pack:: http://wiki.sphere.torfo.org/index.php/Layer
+	FOR x 22 24
+		I.FINDLAYER.<LOCAL.x>.REMOVE
+	ENDFOR
+	
+	FORCONT <FINDLAYER.21.UID>
+		REMOVE
+	ENDFOR
+	
+	IF (<LOCAL.level> == 0)
+		I.GO <DEF.q_cp_origen>
+		
+		I.STR = 50
+		I.HITS = 50
+		I.DEX = 50
+		I.STAM = 50
+		I.FOOD = 15
+		
+		I.Anatomy = 30
+		I.Healing = 30
+		I.Tactics = 30
+		I.Swordsmanship = 30
+	ENDIF (<LOCAL.level> == 1)
+	ENDIF
+	
+
