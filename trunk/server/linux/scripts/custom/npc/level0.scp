@@ -1,0 +1,29 @@
+[CHARDEF 03]
+DEFNAME=c_zombie
+NAME=Zombie
+SOUND=snd_MONSTER_ZOMBIE1
+ICON=i_pet_ZOMBIE
+ANIM=078c7f
+CAN=MT_WALK
+DAM=2,8
+ARMOR=20
+RESOURCES=10 t_eerie_stuff
+FOODTYPE=20 t_meat_raw
+DESIRES=i_gold, t_corpse
+AVERSIONS=t_TRAP
+BLOODCOLOR=colors_green
+TEVENTS=e_undead
+CATEGORY=Monstruos
+SUBSECTION=No Muertos
+DESCRIPTION=Zombie
+TAG.SPEED=30
+
+ON=@Create
+	NPC=brain_undead
+	STR={40 50}
+	ANATOMY={30 50}
+	TACTICS={30 50}
+	WRESTLING={30 50}
+
+ON=@NPCRestock
+	ITEM=loot_ZOMBIE
