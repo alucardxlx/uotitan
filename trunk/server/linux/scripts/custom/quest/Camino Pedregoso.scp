@@ -1,8 +1,9 @@
 //Quest: Camino Pedregoso
 
 [DEFNAME quest_camino_pedregoso]
-	q_cp q_camino_pedregroso
-	q_cp_origen 1,2,3 //Posición de origen de la quest
+	q_cp q_camino_pedregoso
+	q_cp_origen 1,2 //Posición de origen de la quest
+	q_cp_level1 2,3
 
 //Función que se debe ejecutar para hacer que el jugador pueda empezar la quest.
 [FUNCTION f_camino_pedregoso_start]
@@ -17,18 +18,18 @@
 	//Posición original del jugador antes de ser teletransportado.
 	I.CTAG.<DEF.q_cp>.original_position = <I.P>
 	
-	f_camino_pedregroso_set_level 0
+	f_camino_pedregoso_set_level 0
 
 [FUNCTION f_camino_pedregoso_restart]
 
-[FUNCTION f_camino_pedregoso_ends]
+[FUNCTION f_camino_pedregoso_end]
 	I.GO <I.CTAG.<DEF.q_cp>.original_position>
 	I.CTAG.<DEF.q_cp>.playing = 0
 	
 	I.CTAG.<DEF.q_cp>.playing =
 	I.CTAG.<DEF.q_cp>.original_position =
 	
-[FUNCTION f_camino_pedregroso_set_level]
+[FUNCTION f_camino_pedregoso_set_level]
 	LOCAL.level = <ARGN1>
 	
 	FOR x 1 20
@@ -46,17 +47,72 @@
 	IF (<LOCAL.level> == 0)
 		I.GO <DEF.q_cp_origen>
 		
+		//Habilidades del player.
 		I.STR = 50
 		I.HITS = 50
 		I.DEX = 50
-		I.STAM = 50
-		I.FOOD = 15
 		
+		//Habilidades
 		I.Anatomy = 30
-		I.Healing = 30
 		I.Tactics = 30
+		
+		//Extras (H. curación)
+		I.Healing = 30
+		
+		//Habilidad de curación y arma.
 		I.Swordsmanship = 30
-	ENDIF (<LOCAL.level> == 1)
+		SERV.NEWITEM i_sword_viking_iron
+		I.EQUIP <NEW.UID>
+		
+		//Armadura y escudo.
+		SERV.NEWITEM i_ringmail_gloves_iron
+		I.EQUIP <NEW.UID>
+		SERV.NEWITEM i_ringmail_leggings_iron
+		I.EQUIP <NEW.UID>
+		SERV.NEWITEM i_ringmail_sleeves_iron
+		I.EQUIP <NEW.UID>
+		SERV.NEWITEM i_ringmail_tunic_iron
+		I.EQUIP <NEW.UID>
+		
+	ELSEIF (<LOCAL.level> == 1)
+		I.GO <DEF.q_cp_level1>
+		
+		I.STR = 50
+		I.HITS = 50
+		I.DEX = 50
+		
+		//Habilidades
+		I.Anatomy = 30
+		I.Tactics = 30
+		
+		//Extras (H. curación)
+		I.Healing = 30
+		
+		//Habilidad de curación y arma.
+		I.Swordsmanship = 30
+		SERV.NEWITEM i_sword_viking_old_copper
+		I.EQUIP <NEW.UID>
+		
+		//Armadura y escudo.
+		SERV.NEWITEM i_platemail_helm_iron
+		I.EQUIP <NEW.UID>
+		SERV.NEWITEM i_platemail_arms_iron
+		I.EQUIP <NEW.UID>
+		SERV.NEWITEM i_platemail_gloves_iron
+		I.EQUIP <NEW.UID>
+		SERV.NEWITEM i_platemail_gorget_iron
+		I.EQUIP <NEW.UID>
+		SERV.NEWITEM i_platemail_leggings_iron
+		I.EQUIP <NEW.UID>
+		SERV.NEWITEM i_platemail_chest_iron
+		I.EQUIP <NEW.UID>
+	ELSEIF (<LOCAL.level> == 2)
+	ELSEIF (<LOCAL.level> == 3)
+	ELSEIF (<LOCAL.level> == 4)
+	ELSEIF (<LOCAL.level> == 5)
+	ELSEIF (<LOCAL.level> == 6)
 	ENDIF
 	
+	I.FOOD = 15
+	I.STAM = <I.DEX>
 
