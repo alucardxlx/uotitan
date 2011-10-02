@@ -28,10 +28,9 @@
 	
 	I.CTAG.<DEF.q_cp>.playing =
 	I.CTAG.<DEF.q_cp>.original_position =
-	
-[FUNCTION f_camino_pedregoso_set_level]
-	LOCAL.level = <ARGN1>
-	
+
+//Vacía de objetos al player.
+[FUNCTION f_camino_pedregoso_limpiarPlayer]
 	FOR x 1 20
 		I.FINDLAYER.<LOCAL.x>.REMOVE
 	ENDFOR
@@ -44,75 +43,162 @@
 		REMOVE
 	ENDFOR
 	
+[FUNCTION f_camino_pedregoso_set_level]
+	LOCAL.level = <ARGN1>
+
 	IF (<LOCAL.level> == 0)
 		I.GO <DEF.q_cp_origen>
 		
+		f_camino_pedregoso_limpiarPlayer
+				
 		//Habilidades del player.
-		I.STR = 50
-		I.HITS = 50
-		I.DEX = 50
+		LOCAL.states = 50
 		
 		//Habilidades
-		I.Anatomy = 30
-		I.Tactics = 30
+		LOCAL.basicH = 30
 		
-		//Extras (H. curación)
-		I.Healing = 30
-		
-		//Habilidad de curación y arma.
-		I.Swordsmanship = 30
-		SERV.NEWITEM i_sword_viking_iron
-		I.EQUIP <NEW.UID>
-		
-		//Armadura y escudo.
-		SERV.NEWITEM i_ringmail_gloves_iron
-		I.EQUIP <NEW.UID>
-		SERV.NEWITEM i_ringmail_leggings_iron
-		I.EQUIP <NEW.UID>
-		SERV.NEWITEM i_ringmail_sleeves_iron
-		I.EQUIP <NEW.UID>
-		SERV.NEWITEM i_ringmail_tunic_iron
-		I.EQUIP <NEW.UID>
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
 		
 	ELSEIF (<LOCAL.level> == 1)
 		I.GO <DEF.q_cp_level1>
 		
-		I.STR = 50
-		I.HITS = 50
-		I.DEX = 50
+		//Habilidades del player.
+		LOCAL.states = 55
 		
 		//Habilidades
-		I.Anatomy = 30
-		I.Tactics = 30
+		LOCAL.basicH = 34
 		
-		//Extras (H. curación)
-		I.Healing = 30
-		
-		//Habilidad de curación y arma.
-		I.Swordsmanship = 30
-		SERV.NEWITEM i_sword_viking_old_copper
-		I.EQUIP <NEW.UID>
-		
-		//Armadura y escudo.
-		SERV.NEWITEM i_platemail_helm_iron
-		I.EQUIP <NEW.UID>
-		SERV.NEWITEM i_platemail_arms_iron
-		I.EQUIP <NEW.UID>
-		SERV.NEWITEM i_platemail_gloves_iron
-		I.EQUIP <NEW.UID>
-		SERV.NEWITEM i_platemail_gorget_iron
-		I.EQUIP <NEW.UID>
-		SERV.NEWITEM i_platemail_leggings_iron
-		I.EQUIP <NEW.UID>
-		SERV.NEWITEM i_platemail_chest_iron
-		I.EQUIP <NEW.UID>
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
 	ELSEIF (<LOCAL.level> == 2)
+		I.GO <DEF.q_cp_level2>
+		
+		//Habilidades del player.
+		LOCAL.states = 60
+		
+		//Habilidades
+		LOCAL.basicH = 37
+		
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
 	ELSEIF (<LOCAL.level> == 3)
+		I.GO <DEF.q_cp_level3>
+		
+		//Habilidades del player.
+		LOCAL.states = 65
+		
+		//Habilidades
+		LOCAL.basicH = 41
+		
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
 	ELSEIF (<LOCAL.level> == 4)
+		I.GO <DEF.q_cp_level4>
+		
+		//Habilidades del player.
+		LOCAL.states = 70
+		
+		//Habilidades
+		LOCAL.basicH = 44
+		
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
 	ELSEIF (<LOCAL.level> == 5)
+		I.GO <DEF.q_cp_level5>
+		//Habilidades del player.
+		LOCAL.states = 75
+		//Habilidades
+		LOCAL.basicH = 48
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
 	ELSEIF (<LOCAL.level> == 6)
+		I.GO <DEF.q_cp_level6>
+		//Habilidades del player.
+		LOCAL.states = 80
+		//Habilidades
+		LOCAL.basicH = 51
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
+	ELSEIF (<LOCAL.level> == 7)
+		I.GO <DEF.q_cp_level7>
+		//Habilidades del player.
+		LOCAL.states = 85
+		//Habilidades
+		LOCAL.basicH = 54
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
+	ELSEIF (<LOCAL.level> == 8)
+		I.GO <DEF.q_cp_level8>
+		//Habilidades del player.
+		LOCAL.states = 90
+		//Habilidades
+		LOCAL.basicH = 58
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
+	ELSEIF (<LOCAL.level> == 9)
+		I.GO <DEF.q_cp_level6>
+		//Habilidades del player.
+		LOCAL.states = 95
+		//Habilidades
+		LOCAL.basicH = 61
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
+	ELSEIF (<LOCAL.level> == 10)
+		I.GO <DEF.q_cp_level6>
+		//Habilidades del player.
+		LOCAL.states = 100
+		//Habilidades
+		LOCAL.basicH = 64
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
+	ELSEIF (<LOCAL.level> == 11)
+		I.GO <DEF.q_cp_level6>
+		//Habilidades del player.
+		LOCAL.states = 100
+		//Habilidades
+		LOCAL.basicH = 68
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
+	ELSEIF (<LOCAL.level> == 12)
+		I.GO <DEF.q_cp_level6>
+		//Habilidades del player.
+		LOCAL.states = 100
+		//Habilidades
+		LOCAL.basicH = 71
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
+	ELSEIF (<LOCAL.level> == 13)
+		I.GO <DEF.q_cp_level6>
+		//Habilidades del player.
+		LOCAL.states = 100
+		//Habilidades
+		LOCAL.basicH = 74
+		//Habilidad de arma.
+		LOCAL.harma = <LOCAL.basicH>
+	ELSEIF (<LOCAL.level> == 14)
+	ELSEIF (<LOCAL.level> == 15)
+	ELSEIF (<LOCAL.level> == 16)
+	ELSEIF (<LOCAL.level> == 17)
+	ELSEIF (<LOCAL.level> == 18)
+	ELSEIF (<LOCAL.level> == 19)
+	ELSEIF (<LOCAL.level> == 20)
 	ENDIF
 	
+	I.STR = <LOCAL.states>
+	I.HITS = <LOCAL.states>
+	I.DEX = <LOCAL.states>
+	
+	I.Anatomy = <LOCAL.basicH>
+	I.Tactics = <LOCAL.basicH>
+	I.Healing = <LOCAL.basicH>
+	
+	I.Swordsmanship = <LOCAL.harma>
+	I.Fencing = <LOCAL.harma>
+	I.Macefighting = <LOCAL.harma>
+	I.Archery = <LOCAL.harma>
+	I.Wrestling = <LOCAL.harma>
+
 	I.FOOD = 15
 	I.STAM = <I.DEX>
 
