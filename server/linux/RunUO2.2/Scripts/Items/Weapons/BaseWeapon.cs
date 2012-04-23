@@ -155,6 +155,31 @@ namespace Server.Items
 
 		public virtual SkillName AccuracySkill { get { return SkillName.Tactics; } }
 		#endregion
+		
+		#region uot_save
+		private int m_uotMinDamage = 0;
+		private int m_uotMaxDamage = 0;
+		private int m_uotLevel = 0;
+		#endregion
+		
+		#region uot_virtual
+		public virtual int uotMinMinDamage {get{return 0;}}
+		public virtual int uotMinMaxDamage {get{return 0;}}
+		public virtual int uotMaxMinDamage {get{return 0;}}
+		public virtual int uotMaxMaxDamage {get{return 0;}}
+		
+		[CommandProperty(AccessLevel.Counselor, AccessLevel.GameMaster)]
+		public int uotMinDamage {get{return m_uotMinDamage;} set{m_uotMinDamage=value;}}
+		
+		[CommandProperty(AccessLevel.Counselor, AccessLevel.GameMaster)]
+		public int uotMaxDamage {get{return m_uotMaxDamage;} set{m_uotMaxDamage=value;}}
+		
+		[CommandProperty(AccessLevel.Counselor, AccessLevel.GameMaster)]
+		public virtual float uotSpeed  {get{return 5f;}}
+		
+		[CommandProperty(AccessLevel.Counselor, AccessLevel.GameMaster)]
+		public int uotLevel {get{return m_uotLevel;} set{m_uotLevel = value;}}
+		#endregion
 
 		#region Getters & Setters
 		[CommandProperty( AccessLevel.GameMaster )]
@@ -2467,7 +2492,13 @@ namespace Server.Items
 		{
 			base.Serialize( writer );
 
-			writer.Write( (int) 9 ); // version
+			writer.Write( (int) 10 ); // version
+			
+			//uot start
+			writer.Write(m_uotMinDamage);
+			writer.Write(m_uotMaxDamage);
+			writer.Write(m_uotLevel);
+			//uot end
 
 			SaveFlag flags = SaveFlag.None;
 
@@ -2591,6 +2622,7 @@ namespace Server.Items
 
 			if( GetSaveFlag( flags, SaveFlag.EngravedText ) )
 				writer.Write( (string) m_EngravedText );
+			
 		}
 
 		[Flags]
@@ -2638,6 +2670,11 @@ namespace Server.Items
 
 			switch ( version )
 			{
+				case 10: //UOT
+					m_uotMinDamage = reader.ReadInt();
+					m_uotMaxDamage = reader.ReadInt();
+					m_uotLevel = reader.ReadInt();
+					goto case 9;
 				case 9:
 				case 8:
 				case 7:
