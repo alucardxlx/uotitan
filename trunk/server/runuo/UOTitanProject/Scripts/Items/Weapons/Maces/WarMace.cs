@@ -9,8 +9,15 @@ namespace Server.Items
 	{
 		public override WeaponAbility PrimaryAbility{ get{ return WeaponAbility.CrushingBlow; } }
 		public override WeaponAbility SecondaryAbility{ get{ return WeaponAbility.BleedAttack; } }
-
-		public override int AosStrengthReq{ get{ return 80; } }
+		
+		public override int uotMinMinDamage{ get{ return 5;} }
+		public override int uotMinMaxDamage{ get{ return 7;} }
+		public override int uotMaxMinDamage{ get{ return 8;} }
+		public override int uotMaxMaxDamage{ get{ return 14;} }
+		
+		public override float uotSpeed{ get{ return 3.4f;} }
+		
+		/*public override int AosStrengthReq{ get{ return 80; } }
 		public override int AosMinDamage{ get{ return 16; } }
 		public override int AosMaxDamage{ get{ return 17; } }
 		public override int AosSpeed{ get{ return 26; } }
@@ -19,7 +26,7 @@ namespace Server.Items
 		public override int OldStrengthReq{ get{ return 30; } }
 		public override int OldMinDamage{ get{ return 10; } }
 		public override int OldMaxDamage{ get{ return 30; } }
-		public override int OldSpeed{ get{ return 32; } }
+		public override int OldSpeed{ get{ return 32; } }*/
 
 		public override int InitMinHits{ get{ return 31; } }
 		public override int InitMaxHits{ get{ return 110; } }
