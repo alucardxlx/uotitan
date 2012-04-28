@@ -2819,4 +2819,7 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Output\Scripts.CS.hash" />
+  </ItemGroup>
 </Project>
