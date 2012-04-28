@@ -65,7 +65,47 @@ namespace Server.Items
 		 *  - WeaponAnimation
 		 *  - MaxRange
 		 */
-
+		
+		#region UOT constant fighting
+		static int UOT_SPEED_FACTOR = 3;
+		static int UOT_HUNGRY_FACTOR = 7;
+		#endregion
+		
+		#region UOT variables declaration
+		private int m_uotMinBaseDamage;
+		private int m_uotMaxBaseDamage;
+		#endregion
+		
+		#region UOT virtual declarations
+		public virtual int uotMinMinDamage { get{ return 0; } }
+		public virtual int uotMinMaxDamage { get{ return 0; } }
+		public virtual int uotMaxMinDamage { get{ return 0; } }
+		public virtual int uotMaxMaxDamage { get{ return 0; } }
+		
+		public virtual float uotSpeed { get{ return 0; } }
+		
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int uotMinBaseDamage { 
+			get{ return m_uotMinBaseDamage; } 
+			set { m_uotMinBaseDamage = value;  }
+		}
+		
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int uotMaxBaseDamage { 
+			get{ return m_uotMaxBaseDamage; } 
+			set { m_uotMaxBaseDamage = value;  }
+		}
+		
+		[CommandProperty( AccessLevel.GameMaster )]
+		public float Speed
+		{
+			get
+			{
+				return uotSpeed;
+			}
+		}
+		#endregion
+		
 		#region Var declarations
 
 		// Instance values. These values are unique to each weapon.
@@ -357,7 +397,7 @@ namespace Server.Items
 			set{ m_MaxDamage = value; InvalidateProperties(); }
 		}
 
-		[CommandProperty( AccessLevel.GameMaster )]
+		/*[CommandProperty( AccessLevel.GameMaster )]
 		public float Speed
 		{
 			get
@@ -373,7 +413,7 @@ namespace Server.Items
 				return OldSpeed;
 			}
 			set{ m_Speed = value; InvalidateProperties(); }
-		}
+		}*/
 
 		[CommandProperty( AccessLevel.GameMaster )]
 		public int StrRequirement
@@ -872,17 +912,35 @@ namespace Server.Items
 
 			if ( speed == 0 )
 				return TimeSpan.FromHours( 1.0 );
-
+			
 			double delayInSeconds;
+			
+			int hunger = m.Hunger;
+			
+			float weaponSkill = (float) m.Skills[this.DefSkill].Value;
+			
+			double percentPenality = (0.5*weaponSkill + 0.5*m.Dex)/100;
+				
+			if(hunger < BaseWeapon.UOT_HUNGRY_FACTOR){
+				percentPenality *= (hunger/BaseWeapon.UOT_HUNGRY_FACTOR);
+			}
+			
+			percentPenality = 1 - percentPenality;
+			
+			delayInSeconds = this.uotSpeed + percentPenality * (this.uotSpeed/BaseWeapon.UOT_SPEED_FACTOR);
+			
+			
+			return TimeSpan.FromSeconds( delayInSeconds );
 
+			/*
 			if ( Core.SE )
 			{
-				/*
+				
 				 * This is likely true for Core.AOS as well... both guides report the same
 				 * formula, and both are wrong.
 				 * The old formula left in for AOS for legacy & because we aren't quite 100%
 				 * Sure that AOS has THIS formula
-				 */
+				 
 				int bonus = AosAttributes.GetValue( m, AosAttribute.WeaponSpeed );
 
 				if ( Spells.Chivalry.DivineFurySpell.UnderEffect( m ) )
@@ -976,7 +1034,7 @@ namespace Server.Items
 				delayInSeconds = 15000.0 / v;
 			}
 
-			return TimeSpan.FromSeconds( delayInSeconds );
+			return TimeSpan.FromSeconds( delayInSeconds );*/
 		}
 
 		public virtual void OnBeforeSwing( Mobile attacker, Mobile defender )
@@ -2468,7 +2526,7 @@ namespace Server.Items
 			base.Serialize( writer );
 
 			writer.Write( (int) 9 ); // version
-
+			
 			SaveFlag flags = SaveFlag.None;
 
 			SetSaveFlag( ref flags, SaveFlag.DamageLevel,		m_DamageLevel != WeaponDamageLevel.Regular );
@@ -2504,6 +2562,9 @@ namespace Server.Items
 			SetSaveFlag( ref flags, SaveFlag.EngravedText,		!String.IsNullOrEmpty( m_EngravedText ) );
 
 			writer.Write( (int) flags );
+			
+			writer.Write( (int) uotMaxBaseDamage );
+			writer.Write( (int) uotMinBaseDamage );
 
 			if ( GetSaveFlag( flags, SaveFlag.DamageLevel ) )
 				writer.Write( (int) m_DamageLevel );
@@ -2645,6 +2706,9 @@ namespace Server.Items
 				case 5:
 				{
 					SaveFlag flags = (SaveFlag)reader.ReadInt();
+				
+					m_uotMaxBaseDamage = reader.ReadInt();
+					m_uotMinBaseDamage = reader.ReadInt();
 
 					if ( GetSaveFlag( flags, SaveFlag.DamageLevel ) )
 					{
@@ -2957,6 +3021,10 @@ namespace Server.Items
 
 		public BaseWeapon( int itemID ) : base( itemID )
 		{
+			/* UOT Dynamic Weapon Damages */
+			uotMinBaseDamage = Utility.RandomMinMax(uotMinMinDamage, uotMinMaxDamage);
+			uotMaxBaseDamage = Utility.RandomMinMax(uotMaxMinDamage, uotMaxMaxDamage);
+			
 			Layer = (Layer)ItemData.Quality;
 
 			m_Quality = WeaponQuality.Regular;
