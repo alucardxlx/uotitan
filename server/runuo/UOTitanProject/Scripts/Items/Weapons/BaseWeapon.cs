@@ -20,20 +20,8 @@ namespace Server.Items
 		SlayerName Slayer { get; set; }
 		SlayerName Slayer2 { get; set; }
 	}
-	
-	public interface IHitZones
-	{		
-		Dictionary<Zones,float> probHitZones();
-		Zones getHitZone();
-	}
-	
-	public interface ICriticChance
-	{		
-		float getCriticalChance(Mobile m);	
-		bool isCritical(Mobile m);
-	}
 
-	public abstract class BaseWeapon : Item, IWeapon, IFactionItem, ICraftable, ISlayer, IDurability, IHitZones, ICriticChance
+	public abstract class BaseWeapon : Item, IWeapon, IFactionItem, ICraftable, ISlayer, IDurability
 	{
 		private string m_EngravedText;
 		
@@ -62,18 +50,9 @@ namespace Server.Items
 		}
 		#endregion
 		
-		
-		#region UOT combat constants
-		static int UOT_SPEED_FACTOR = 3;
-		static int UOT_HUNGRY_FACTOR = 7;
-		static float UOT_MAX_WEAPON_SPEED = 5.09f;
-		static float UOT_MIN_WEAPON_SPEED = 1.5f;
-		static float UOT_CRITIC_FACTOR = 20;
-		#endregion
-		
 		#region UOT combat probCritic
 		public float getCriticalChance(Mobile m){
-			float baseCriticalProb = 100*this.Speed/BaseWeapon.UOT_CRITIC_FACTOR;
+			float baseCriticalProb = 100*this.Speed/UOT.combatCriticalFactor;
 			float anatomySkill = (float) m.Skills.Anatomy.Value;
 			
 			return baseCriticalProb*anatomySkill/100;
@@ -117,26 +96,25 @@ namespace Server.Items
 			}
 		}
 		
-		private Dictionary<Zones,float> probHitZones(){
-			float perRedVelArma = (this.Speed-(BaseWeapon.UOT_MIN_WEAPON_SPEED-0.01f))/((BaseWeapon.UOT_MAX_WEAPON_SPEED)-(BaseWeapon.UOT_MIN_WEAPON_SPEED-0.01f));
-			float perRed = ((((percentMax[zone]/percentMin[zone])-1)*perRedVelArma)+1);
+		public Dictionary<Zones,float> probHitZones(){
+			float perRedVelArma = (this.Speed-(UOT.minWeaponSpeed-0.01f))/((UOT.maxWeaponSpeed)-(UOT.minWeaponSpeed-0.01f));
 			
 			Dictionary<Zones,float> percentHitZones = new Dictionary<Zones,float>();
 				
-			percentHitZones.Add(Zones.Head, percentMin[Zones.Head]*perRed);
-			percentHitZones.Add(Zones.Neck, percentMin[Zones.Neck]*perRed);
-			percentHitZones.Add(Zones.Chest, percentMin[Zones.Chest]*perRed);
-			percentHitZones.Add(Zones.Arms, percentMin[Zones.Arms]*perRed);
-			percentHitZones.Add(Zones.Legs, percentMin[Zones.Legs]*perRed);
-			percentHitZones.Add(Zones.Hands, percentMin[Zones.Hands]*perRed);
+			percentHitZones.Add(Zones.Head, percentMin[Zones.Head]*((((percentMax[Zones.Head]/percentMin[Zones.Head])-1)*perRedVelArma)+1));
+			percentHitZones.Add(Zones.Neck, percentMin[Zones.Neck]*((((percentMax[Zones.Neck]/percentMin[Zones.Neck])-1)*perRedVelArma)+1));
+			percentHitZones.Add(Zones.Chest, percentMin[Zones.Chest]*((((percentMax[Zones.Chest]/percentMin[Zones.Chest])-1)*perRedVelArma)+1));
+			percentHitZones.Add(Zones.Arms, percentMin[Zones.Arms]*((((percentMax[Zones.Arms]/percentMin[Zones.Arms])-1)*perRedVelArma)+1));
+			percentHitZones.Add(Zones.Legs, percentMin[Zones.Legs]*((((percentMax[Zones.Legs]/percentMin[Zones.Legs])-1)*perRedVelArma)+1));
+			percentHitZones.Add(Zones.Hands, percentMin[Zones.Hands]*((((percentMax[Zones.Hands]/percentMin[Zones.Hands])-1)*perRedVelArma)+1));
 				
 			return percentHitZones;
 		}
 		
-		private Zones getHitZone(){
+		public Zones getHitZone(){
 			Dictionary<Zones,float> percentHitZones = probHitZones();
 			
-			return UtilityUOT.check<percentMax>(percentHitZones);
+			return UtilityUOT.check<Zones>(percentHitZones);
 		}
 		#endregion
 
@@ -1006,11 +984,11 @@ namespace Server.Items
 			
 			double percentPenality = (0.5*weaponSkill + 0.5*m.Dex)/100;
 				
-			if(hunger < BaseWeapon.UOT_HUNGRY_FACTOR){
-				percentPenality *= (hunger/BaseWeapon.UOT_HUNGRY_FACTOR);
+			if(hunger < UOT.hungryFactor){
+				percentPenality *= (hunger/UOT.hungryFactor);
 			}
 			
-			percentPenality = (1 - percentPenality)/BaseWeapon.UOT_SPEED_FACTOR;
+			percentPenality = (1 - percentPenality)/UOT.combatSpeedFactor;
 			
 			delayInSeconds = this.uotSpeed + percentPenality * this.uotSpeed;
 			

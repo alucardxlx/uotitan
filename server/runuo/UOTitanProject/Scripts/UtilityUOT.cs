@@ -35,7 +35,7 @@ namespace Server
 			value = (float) Math.Round(value, 4);
 			float rest = -0.0001f;
 			
-			if(value < (kvp.Value/100)+rest) return true;
+			if(value < (chance/100)+rest) return true;
 			else return false;
 		}
 	}
