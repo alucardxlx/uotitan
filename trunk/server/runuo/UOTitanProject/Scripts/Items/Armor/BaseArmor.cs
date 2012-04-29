@@ -29,9 +29,32 @@ namespace Server.Items
 			}
 		}
 		#endregion
-
-
-
+		
+		#region UOT variables		
+		public virtual float uotRelativeArmor{ get { return 0; } set{} }
+		public virtual int uotAbsoluteArmor{ get { return 0; } set{} }
+		public virtual float uotGlobalArmor{ get { return 0; } set{} }
+		
+		[CommandProperty( AccessLevel.GameMaster )]
+		public float relativeArmor { 
+			get { return uotRelativeArmor;} 
+			set { uotRelativeArmor = value; }
+		}
+		
+		[CommandProperty( AccessLevel.GameMaster )]
+		public int absoluteArmor { 
+			get { return uotAbsoluteArmor;} 
+			set{ uotAbsoluteArmor = value; } 
+		}
+		
+		[CommandProperty( AccessLevel.GameMaster )]
+		public float globalArmor { 
+			get { return uotGlobalArmor;} 
+			set { uotGlobalArmor = value; }
+		}
+		
+		#endregion
+		
 		/* Armor internals work differently now (Jun 19 2003)
 		 * 
 		 * The attributes defined below default to -1.
