@@ -20,8 +20,20 @@ namespace Server.Items
 		SlayerName Slayer { get; set; }
 		SlayerName Slayer2 { get; set; }
 	}
+	
+	public interface IHitZones
+	{		
+		Dictionary<Zones,float> probHitZones();
+		Zones getHitZone();
+	}
+	
+	public interface ICriticChance
+	{		
+		float getCriticalChance(Mobile m);	
+		bool isCritical(Mobile m);
+	}
 
-	public abstract class BaseWeapon : Item, IWeapon, IFactionItem, ICraftable, ISlayer, IDurability
+	public abstract class BaseWeapon : Item, IWeapon, IFactionItem, ICraftable, ISlayer, IDurability, IHitZones, ICriticChance
 	{
 		private string m_EngravedText;
 		
@@ -49,6 +61,84 @@ namespace Server.Items
 			}
 		}
 		#endregion
+		
+		
+		#region UOT combat constants
+		static int UOT_SPEED_FACTOR = 3;
+		static int UOT_HUNGRY_FACTOR = 7;
+		static float UOT_MAX_WEAPON_SPEED = 5.09f;
+		static float UOT_MIN_WEAPON_SPEED = 1.5f;
+		static float UOT_CRITIC_FACTOR = 20;
+		#endregion
+		
+		#region UOT combat probCritic
+		public float getCriticalChance(Mobile m){
+			float baseCriticalProb = 100*this.Speed/BaseWeapon.UOT_CRITIC_FACTOR;
+			float anatomySkill = (float) m.Skills.Anatomy.Value;
+			
+			return baseCriticalProb*anatomySkill/100;
+		}
+		
+		public bool isCritical(Mobile m){
+			float criticalChance = getCriticalChance(m);
+			
+			return UtilityUOT.checkChance(criticalChance);
+		}
+		#endregion
+		
+		#region UOT combat probHitZone
+		public static Dictionary<Zones,float> percentMax { 
+			get {
+				Dictionary<Zones,float> percentHitZones = new Dictionary<Zones,float>();
+				
+				percentHitZones.Add(Zones.Head, 15);
+				percentHitZones.Add(Zones.Neck, 15);
+				percentHitZones.Add(Zones.Chest, 24);
+				percentHitZones.Add(Zones.Arms, 20);
+				percentHitZones.Add(Zones.Legs, 20);
+				percentHitZones.Add(Zones.Hands, 6);
+				
+				return percentHitZones;				
+			}
+		}
+		
+		public static Dictionary<Zones,float> percentMin { 
+			get {
+				Dictionary<Zones,float> percentHitZones = new Dictionary<Zones,float>();
+				
+				percentHitZones.Add(Zones.Head, 5);
+				percentHitZones.Add(Zones.Neck, 5);
+				percentHitZones.Add(Zones.Chest, 15);
+				percentHitZones.Add(Zones.Arms, 30);
+				percentHitZones.Add(Zones.Legs, 30);
+				percentHitZones.Add(Zones.Hands, 10);
+				
+				return percentHitZones;
+			}
+		}
+		
+		private Dictionary<Zones,float> probHitZones(){
+			float perRedVelArma = (this.Speed-(BaseWeapon.UOT_MIN_WEAPON_SPEED-0.01f))/((BaseWeapon.UOT_MAX_WEAPON_SPEED)-(BaseWeapon.UOT_MIN_WEAPON_SPEED-0.01f));
+			float perRed = ((((percentMax[zone]/percentMin[zone])-1)*perRedVelArma)+1);
+			
+			Dictionary<Zones,float> percentHitZones = new Dictionary<Zones,float>();
+				
+			percentHitZones.Add(Zones.Head, percentMin[Zones.Head]*perRed);
+			percentHitZones.Add(Zones.Neck, percentMin[Zones.Neck]*perRed);
+			percentHitZones.Add(Zones.Chest, percentMin[Zones.Chest]*perRed);
+			percentHitZones.Add(Zones.Arms, percentMin[Zones.Arms]*perRed);
+			percentHitZones.Add(Zones.Legs, percentMin[Zones.Legs]*perRed);
+			percentHitZones.Add(Zones.Hands, percentMin[Zones.Hands]*perRed);
+				
+			return percentHitZones;
+		}
+		
+		private Zones getHitZone(){
+			Dictionary<Zones,float> percentHitZones = probHitZones();
+			
+			return UtilityUOT.check<percentMax>(percentHitZones);
+		}
+		#endregion
 
 		/* Weapon internals work differently now (Mar 13 2003)
 		 * 
@@ -65,11 +155,6 @@ namespace Server.Items
 		 *  - WeaponAnimation
 		 *  - MaxRange
 		 */
-		
-		#region UOT constant fighting
-		static int UOT_SPEED_FACTOR = 3;
-		static int UOT_HUNGRY_FACTOR = 7;
-		#endregion
 		
 		#region UOT variables declaration
 		private int m_uotMinBaseDamage;
@@ -925,9 +1010,9 @@ namespace Server.Items
 				percentPenality *= (hunger/BaseWeapon.UOT_HUNGRY_FACTOR);
 			}
 			
-			percentPenality = 1 - percentPenality;
+			percentPenality = (1 - percentPenality)/BaseWeapon.UOT_SPEED_FACTOR;
 			
-			delayInSeconds = this.uotSpeed + percentPenality * (this.uotSpeed/BaseWeapon.UOT_SPEED_FACTOR);
+			delayInSeconds = this.uotSpeed + percentPenality * this.uotSpeed;
 			
 			
 			return TimeSpan.FromSeconds( delayInSeconds );

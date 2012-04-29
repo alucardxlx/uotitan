@@ -70,6 +70,16 @@ namespace Server.Mobiles
 		Red,
 		Black
 	}
+	
+	public enum Zones
+	{
+		Head = 0,
+		Neck = 1,
+		Arms = 2,
+		Chest = 3,
+		Legs = 4,
+		Hands = 5
+	}
 	#endregion
 
 	public class PlayerMobile : Mobile, IHonorTarget
