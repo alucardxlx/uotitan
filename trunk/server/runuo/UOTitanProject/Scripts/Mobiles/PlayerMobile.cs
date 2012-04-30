@@ -483,6 +483,48 @@ namespace Server.Mobiles
 			set { m_AcceleratedSkill = value; }
 		}
 		#endregion
+		
+		public int resistPhysicalDamage(Zones zone, int damage, bool critical){
+			BaseArmor armor;
+			
+			switch(zone){
+				case Zones.Head:
+					armor = HeadArmor as BaseArmor;
+					break;
+				case Zones.Neck:
+					armor = NeckArmor as BaseArmor;
+					break;
+				case Zones.Arms:
+					armor = ArmsArmor as BaseArmor;
+					break;
+				case Zones.Chest:
+					armor = ChestArmor as BaseArmor;
+					break;
+				case Zones.Legs:
+					armor = LegsArmor as BaseArmor;
+					break;
+				case Zones.Hands:
+					armor = HandArmor as BaseArmor;
+					break;
+				default:
+					armor = null;
+					break;
+			}
+			
+			if(critical){
+				if(armor != null){
+					damage = (int) Math.Round(damage-(1-((armor.relativeArmor/100)*(1-UOT.combatCriticalPenalty))));
+				}
+			} else {
+				if(armor != null){
+					damage = (int) Math.Round(damage-(1-(armor.relativeArmor/100)));
+				}
+			}
+			
+			damage = damage-armor.absoluteArmor;
+			
+			return damage;			
+		}
 
 		public static Direction GetDirection4( Point3D from, Point3D to )
 		{
