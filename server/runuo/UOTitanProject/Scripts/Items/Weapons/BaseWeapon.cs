@@ -1470,7 +1470,7 @@ namespace Server.Items
 
 		public virtual void OnHit( Mobile attacker, Mobile defender, double damageBonus )
 		{
-			if ( MirrorImage.HasClone( defender ) && (defender.Skills.Ninjitsu.Value / 150.0) > Utility.RandomDouble() )
+			/*if ( MirrorImage.HasClone( defender ) && (defender.Skills.Ninjitsu.Value / 150.0) > Utility.RandomDouble() )
 			{
 				Clone bc;
 
@@ -1483,16 +1483,38 @@ namespace Server.Items
 						attacker.SendLocalizedMessage( 1063141 ); // Your attack has been diverted to a nearby mirror image of your target!
 						defender.SendLocalizedMessage( 1063140 ); // You manage to divert the attack onto one of your nearby mirror images.
 
-						/*
+						
 						 * TODO: What happens if the Clone parries a blow?
 						 * And what about if the attacker is using Honorable Execution
 						 * and kills it?
-						 */
+						 
 
 						defender = m;
 						break;
 					}
 				}
+			}*/
+			
+			float weaponSkill = (float) attacker.Skills[this.DefSkill].Value;
+			float tacticsSkill = (float) attacker.Skills.Tactics.Value;
+			
+			int attackerRight = (int) Math.Round(attacker.Str*UOT.combatMaxDamageWeapon*((0.5*weaponSkill+0.5*tacticsSkill)/100));
+			
+			int minWeaponDamage = (int) Math.Round(this.m_uotMinBaseDamage + 30 * weaponSkill/100);
+			int maxWeaponDamage = (int) Math.Round(this.m_uotMinBaseDamage + 30 * weaponSkill/100);
+			
+			maxWeaponDamage = Math.Min(attackerRight, maxWeaponDamage);
+			minWeaponDamage = Math.Min(attackerRight, minWeaponDamage);
+			
+			int damage = (int) Utility.RandomMinMax(minWeaponDamage, maxWeaponDamage);
+			
+			Zones zone = getHitZone();
+			bool isCritic = isCritical(attacker);
+			
+			PlayerMobile player = defender as PlayerMobile;
+			
+			if(player != null){
+				damage = player.resistPhysicalDamage(zone, damage, isCritic);
 			}
 
 			PlaySwingAnimation( attacker );
@@ -1500,14 +1522,15 @@ namespace Server.Items
 
 			attacker.PlaySound( GetHitAttackSound( attacker, defender ) );
 			defender.PlaySound( GetHitDefendSound( attacker, defender ) );
+			
+			UOT.Damage(attacker, defender, damage);
 
-			int damage = ComputeDamage( attacker, defender );
+			//int damage = ComputeDamage( attacker, defender );
 
-			#region Damage Multipliers
 			/*
 			 * The following damage bonuses multiply damage by a factor.
 			 * Capped at x3 (300%).
-			 */
+			 
 			//double factor = 1.0;
 			int percentageBonus = 0;
 
@@ -1639,7 +1662,7 @@ namespace Server.Items
 				damage = 1;
 			else if ( Core.AOS && damage == 0 ) // parried
 			{
-				if ( a != null && a.Validate( attacker ) /*&& a.CheckMana( attacker, true )*/ ) // Parried special moves have no mana cost 
+				if ( a != null && a.Validate( attacker ) /*&& a.CheckMana( attacker, true ) ) // Parried special moves have no mana cost 
 				{
 					a = null;
 					WeaponAbility.ClearCurrentAbility( attacker );
@@ -1872,7 +1895,7 @@ namespace Server.Items
 
 				if ( AnimalForm.UnderTransformation( defender, typeof( BullFrog ) ) )
 					attacker.ApplyPoison( defender, Poison.Regular );
-			}
+			}*/
 		}
 
 		public virtual double GetAosDamage( Mobile attacker, int bonus, int dice, int sides )
