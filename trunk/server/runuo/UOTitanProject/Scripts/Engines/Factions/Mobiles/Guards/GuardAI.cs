@@ -109,7 +109,7 @@ namespace Server.Factions
 	{
 		private BaseFactionGuard m_Guard;
 
-		private BandageContext m_Bandage;
+		private Bandage.HealingContext m_Bandage;
 		private DateTime m_BandageStart;
 
 		private SpellCombo m_Combo;
@@ -137,13 +137,13 @@ namespace Server.Factions
 		{
 			get
 			{
-				if ( m_Bandage != null && m_Bandage.Timer == null )
+				if ( m_Bandage != null && m_Bandage.t == null )
 					m_Bandage = null;
 
 				if ( m_Bandage == null )
 					return TimeSpan.MaxValue;
 
-				TimeSpan ts = ( m_BandageStart + m_Bandage.Timer.Delay ) - DateTime.Now;
+				TimeSpan ts = ( m_BandageStart + m_Bandage.t.Delay ) - DateTime.Now;
 
 				if ( ts < TimeSpan.FromSeconds( -1.0 ) )
 				{
@@ -205,7 +205,9 @@ namespace Server.Factions
 			if ( bandage == null )
 				return false;
 
-			m_Bandage = BandageContext.BeginHeal( m_Guard, m_Guard );
+			Bandage.HealingContext.tryToHeal( m_Guard, m_Guard, (Bandage) bandage );
+			m_Bandage = Bandage.HealingContext.getHealingContext(m_Guard);
+			
 			m_BandageStart = DateTime.Now;
 			return ( m_Bandage != null );
 		}

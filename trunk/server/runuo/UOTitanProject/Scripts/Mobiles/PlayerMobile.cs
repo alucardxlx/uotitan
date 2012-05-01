@@ -2086,13 +2086,13 @@ namespace Server.Mobiles
 			else
 				disruptThreshold = 25;
 
-			if ( amount > disruptThreshold )
+			/* TODO if ( amount > disruptThreshold )
 			{
 				BandageContext c = BandageContext.GetContext( this );
 
 				if ( c != null )
 					c.Slip();
-			}
+			}*/
 
 			if( Confidence.IsRegenerating( this ) )
 				Confidence.StopRegenerating( this );
