@@ -2806,6 +2806,7 @@
     <Compile Include="Targets\PickMoveTarget.cs" />
     <Compile Include="UOT.cs" />
     <Compile Include="UtilityUOT.cs" />
+    <Compile Include="Items\Skill Items\Misc\BloodyBandage.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\runUOsrc\runUOsrc.csproj">
