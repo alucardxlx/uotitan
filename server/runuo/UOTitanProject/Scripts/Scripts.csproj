@@ -2804,6 +2804,8 @@
     <Compile Include="Targets\BladedItemTarget.cs" />
     <Compile Include="Targets\MoveTarget.cs" />
     <Compile Include="Targets\PickMoveTarget.cs" />
+    <Compile Include="UOT.cs" />
+    <Compile Include="UtilityUOT.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\runUOsrc\runUOsrc.csproj">

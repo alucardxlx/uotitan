@@ -11,15 +11,14 @@ namespace Server.Items
 {
 	public class Bandage : Item, IDyable
 	{
-		public static int range = 2;
-		public static double delay = 5;
-		public static int maxHealingBussy = 75;
-		public static double minHealingFactorBussy = 0.666;
-		public static int maxHealingFree = 100;
-		public static double minHealingFactorFree = 0.5;
-		public static double delayMin = 5;
-		public static double delayMax = 7;
-		public static double bloodyBandageChance = 0.33;
+		public static readonly int range = 2;
+		public static readonly double delay = 5;
+		public static readonly int maxHealingBussy = 75;
+		public static readonly double minHealingFactorBussy = 0.666;
+		public static readonly int maxHealingFree = 100;
+		public static readonly double minHealingFactorFree = 0.5;
+		public static readonly double delayMin = 5;
+		public static readonly double delayMax = 7;
 
 		public override double DefaultWeight
 		{
@@ -138,13 +137,13 @@ namespace Server.Items
 			}
 			
 			public static bool tryToHeal(Mobile healer, Mobile patient, Bandage bandage){
-				if(!patient.Alive || patient.Hits < patient.HitsMax || patient.Poisoned ){
+				if(patient.Alive && (patient.Hits < patient.HitsMax || patient.Poisoned) ){
 					if ( healer == patient)
 						patient.SendLocalizedMessage( 1008078, false, healer.Name ); //  : Attempting to heal you.
 					
 					healer.SendLocalizedMessage( 500956 ); // You begin applying the bandages.
 					
-					double finalDelay = new Random().Next()*(delayMax-delayMin)+delayMin;
+					double finalDelay = new Random().NextDouble()*(Bandage.delayMax-Bandage.delayMin)+Bandage.delayMin;
 					contextTable[healer] = new HealingContext(healer, patient, finalDelay);
 					
 					bandage.Consume();
@@ -183,6 +182,7 @@ namespace Server.Items
 				int patientMessage = -1;
 				int poisonMessage = -1;
 				bool playSound = false;
+				bool tryToObtainBloodyBandage = false;
 				
 				//El healer está muerto.
 				if ( !healer.Alive ) {
@@ -195,6 +195,8 @@ namespace Server.Items
 					healerMessage = 500963; // You did not stay close enough to heal your target.
 					patientMessage = -1;
 					playSound = false;
+					
+					tryToObtainBloodyBandage = true;
 					
 				//El patient está vivo.
 				} else if(patient.Alive) {
@@ -213,7 +215,7 @@ namespace Server.Items
 						
 						//TODO pAcierto=100-{(100-pAcierto) 0}
 						
-						if(chance < Utility.RandomDouble()){
+						if( UtilityUOT.checkChance(chance) ){
 						
 							double hmax;
 							double hmin;
@@ -239,16 +241,14 @@ namespace Server.Items
 						} else {
 							healerMessage = 500968; // You apply the bandages, but they barely help.
 						}
+						
+						tryToObtainBloodyBandage = true;
 					}
 					
 					//Está envenenado.
 					if(patient.Poisoned){
 						//TODO
 						poisonMessage = 1010060; // You have failed to cure your target!
-					}
-					
-					if( bloodyBandageChance < Utility.RandomDouble() ){
-						//Generar bloodyBandage ahora. TODO
 					}
 					
 				} else { //TODO Resucitar a los muertos
@@ -268,6 +268,9 @@ namespace Server.Items
 
 				if ( playSound )
 					patient.PlaySound( 0x57 );
+				
+				if(tryToObtainBloodyBandage)
+					BloodyBandage.tryObtainBloodyBandage(healer);
 			}
 		}
 	}
