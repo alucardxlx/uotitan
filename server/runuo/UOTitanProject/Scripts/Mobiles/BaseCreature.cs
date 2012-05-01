@@ -1275,13 +1275,13 @@ namespace Server.Mobiles
 			else
 				disruptThreshold = 25;
 
-			if( amount > disruptThreshold )
+			/* TODO revisar if( amount > disruptThreshold )
 			{
-				BandageContext c = BandageContext.GetContext( this );
+				Bandage.HealingContext c = Bandage.HealingContext.getHealingContext( this );
 
 				if( c != null )
 					c.Slip();
-			}
+			}*/
 
 			if( Confidence.IsRegenerating( this ) )
 				Confidence.StopRegenerating( this );
