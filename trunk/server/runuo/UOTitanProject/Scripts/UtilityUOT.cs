@@ -28,14 +28,11 @@ namespace Server
 			return keys[keys.Length-1];
 		}
 		
-		public static bool checkChance(float chance){
-			float value = (float) Utility.RandomDouble();
+		public static bool checkChance(double chance){
+			double rand = Utility.RandomDouble();
 			
-			/* Correction */
-			value = (float) Math.Round(value, 4);
-			float rest = -0.0001f;
-			
-			if(value < (chance/100)+rest) return true;
+			if(chance > rand)
+				return true;
 			else return false;
 		}
 	}
